@@ -57,7 +57,7 @@ export default function SuperAdminLayout({ children }: AdminLayoutProps){
           </Link>
           <Link href="#" className="flex items-center gap-3 text-2xs">
             <RiInsertColumnRight />
-            Insert
+            Insert Products
           </Link>
           <Link href="#" className="flex items-center gap-3 text-2xs">
             <FaUserGroup />

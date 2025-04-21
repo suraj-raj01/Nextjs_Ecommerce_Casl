@@ -93,8 +93,8 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       </header>
       <div id="vendor-main" className="flex">
         <div id="vendordashboard" style={{ display: 'block' }}>
-          <br />
-        <a className='mt-2 pb-2'> Welcome <span className='text-red-500 text-transform-capitalize'>{user?.fullName}</span></a>
+        <p></p>
+        <a> Welcome <span className='text-red-500 text-transform-capitalize'>{user?.fullName}</span></a>
           <hr className='text-white'/>
           <Link href="/admindashboard" className="flex items-center gap-3 text-2xs">
             <AiFillDashboard />

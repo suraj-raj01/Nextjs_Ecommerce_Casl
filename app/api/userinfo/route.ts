@@ -1,16 +1,12 @@
-import type { NextApiRequest, NextApiResponse } from "next";
-import { PrismaClient } from "@prisma/client";
 
-const prisma = new PrismaClient();
+import { NextResponse } from 'next/server';
+import { prisma } from '../../../lib/prisma';
 
-export default async function handler(
-    req: NextApiRequest,
-    res: NextApiResponse,
-) {
+export async function POST(request: Request) {
+  const body = await request.json();
+  const { title, content } = body;
 
-    if(req.method==="GET"){
-        const profile  = await prisma.userinfo.findMany();
-        return res.status(200).json(profile);
-    }
-    res.status(200).json({name:"John Doe"});
+  // Your insert logic here (e.g., using Prisma)
+  const newUser = await prisma.post.create({ data: { title, content } });
+  return NextResponse.json({ message: 'User created!', newUser }, { status: 201 });
 }

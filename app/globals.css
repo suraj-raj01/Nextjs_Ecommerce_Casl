@@ -327,9 +327,9 @@ body {
   height: 88vh;
   width: 280px;
   background-color: #243e36;
-  border: 1px dotted transparent;
-  border-top-color: #d7d4d4;
-  border-bottom-color: #d7d4d4;
+  border: 1px solid transparent;
+  border-top-color: #838181;
+  border-bottom-color: #838181;
 }
 #vendordashboard a{
   width: 300px;

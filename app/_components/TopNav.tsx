@@ -70,6 +70,7 @@ export default function TopNav(){
                 backgroundColor: 'ghostwhite',
                 height: '30px',
                 width: '30px',
+                cursor:'pointer'
               }}
             />
           </Navbar.Brand>
@@ -93,7 +94,7 @@ export default function TopNav(){
                 className="me-2"
                 aria-label="Search"
               />
-              <Button variant="outline-success">Search</Button>
+              <Button variant="secondary">Search</Button>
             </Form>
 
             <Nav id="icons" className="flex items-center content-center">
@@ -110,7 +111,7 @@ export default function TopNav(){
                 {/* Custom dropdown logic if needed */}
               </Nav.Link>
               <SignedOut>
-                <SignInButton/>
+                <button className='bg-red-400 font-bold p-1.5 pl-3 pr-3 text-white' style={{borderRadius:'6px'}}><SignInButton/></button>
               </SignedOut>
               <SignedIn>
                 <UserButton />
