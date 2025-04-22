@@ -81,20 +81,13 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
           ADMIN DASHBOARD
         </div>
 
-        {/* <FaRegCircleUser /> */}
-        
-        <SignedOut>
-          <SignInButton/>
-        </SignedOut>
-        <SignedIn>
-          <UserButton />
-        </SignedIn>
+        <FaRegCircleUser />
+      
         
       </header>
       <div id="vendor-main" className="flex">
         <div id="vendordashboard" style={{ display: 'block' }}>
         <p></p>
-        <a> Welcome <span className='text-red-500 text-transform-capitalize'>{user?.fullName}</span></a>
           <hr className='text-white'/>
           <Link href="/admindashboard" className="flex items-center gap-3 text-2xs">
             <AiFillDashboard />
@@ -117,14 +110,10 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
             Settings
           </Link>
         </div>
-        <ClerkProvider>
-          <html lang="en">
-            <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-
-              {children}
-            </body>
-          </html>
-        </ClerkProvider></div>
+        <main style={{width:'100%'}}>
+          {children}
+        </main>
+        </div>
       <DashbaordFooter />
       <Modal
         show={smShow}
