@@ -173,17 +173,27 @@ import { useFormState } from 'react-dom'
 import { productData } from '../../actions/products'
 
 const initialstate={
-  success:false,
-  error:""
+  success: undefined,
+  error: ""
 };
 
 export default function Form(){
   const[state,formAction] = useFormState(productData, initialstate);
   return (
     <>
-    <div id="insertform">
-    <form action={formAction} className='flex flex-col items-center p-4'>
-      <p className="text-center font-bold text-2xl">Insert Product</p>
+    <form action={formAction} id="formdata">
+      <div id="main">
+      <div id="insertform">
+      <div id="box">
+      <input type="text" required name="products"  placeholder='Product Name' className='p-2 border-1 mt-2 w-70'/>
+      <input type="text" required name="title"  placeholder='Product Title' className='p-2 border-1 mt-2 w-70'/>
+      <input type="number" required name="price"  placeholder='Product Price'  className='p-2 border-1 mt-2 w-70'/>
+      <textarea name="details" required placeholder="details" rows={4}>
+
+      </textarea>
+      </div>
+
+      <div id="box">
       <select name="category" id="" title="Choose a category">
         <option>Select Category</option>
         <option value="Flowers">Flowers</option>
@@ -195,13 +205,17 @@ export default function Form(){
         <option value="Bulk / Corp Gift">Bulk / Corp Gift</option>
         <option value="Same Day Delivery">Same Day Delivery</option>
       </select>
-      <input type="text" required name="product"  placeholder='Product Name' className='p-2 border-1 mt-2 w-70'/>
-      <input type="number" required name="price"  placeholder='Price'  className='p-2 border-1 mt-2 w-70'/>
-      <input type="text" required name="details"  placeholder='Details'  className='p-2 border-1 mt-2 w-70'/>
-      <input type="file" required placeholder="choose file" className='p-2 border-1 mt-2 w-70'/>
-      <button type="submit" className='p-2 border-1 mt-2 w-70'>Submit</button>
-    </form>
+      <input type="text" required name="proinfo"  placeholder='Product Info' className='p-2 border-1 mt-2 w-70'/>
+      <input type="file" name="imgurl" multiple required placeholder="choose file" className='p-2 border-1 mt-2 w-70'/>
+      </div>
+      
     </div>
+      </div>
+      <div id="btn">
+      <button type="submit" className='p-2 border-1 mt-2 w-70'>Submit</button>
+
+      </div>
+    </form>
     </>
   )
 }

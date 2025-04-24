@@ -94,7 +94,7 @@ export default function TopNav(){
                 className="me-2"
                 aria-label="Search"
               />
-              <Button variant="secondary">Search</Button>
+              {/* <Button variant="secondary">Search</Button> */}
             </Form>
 
             <Nav id="icons" className="flex items-center content-center">

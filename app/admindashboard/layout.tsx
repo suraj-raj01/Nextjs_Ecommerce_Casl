@@ -1,6 +1,6 @@
 'use client';
 
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useEffect } from 'react';
 import Link from 'next/link';
 import { FaBars } from 'react-icons/fa';
 import { ImCancelCircle } from 'react-icons/im';
@@ -12,6 +12,7 @@ import { IoSettingsSharp } from "react-icons/io5";
 import DashbaordFooter from '../_components/DashbaordFooter';
 import { CiLight } from "react-icons/ci";
 import { MdDarkMode } from "react-icons/md";
+import { IoMdLogOut } from "react-icons/io";
 import { MdLaptopChromebook } from "react-icons/md";
 
 import { useState } from 'react';
@@ -38,16 +39,27 @@ import {
 } from '@clerk/nextjs';
 
 import { useUser } from '@clerk/nextjs';
+import { useRouter } from 'next/navigation';
 
 interface AdminLayoutProps {
   children: ReactNode;
 }
 
 export default function AdminLayout({ children }: AdminLayoutProps) {
+
+  useEffect(() => {
+    if (!localStorage.getItem("email")) {
+      alert("Please Login First")
+      router.push("/Auth/login")
+    }
+  }, [])
+
+
   const sidebar = (): void => {
     const dashboard = document.getElementById('vendordashboard');
     const menu = document.getElementById('menu');
     const cancelBtn = document.getElementById('cancelbtn');
+
 
     if (dashboard && menu && cancelBtn) {
       dashboard.style.display = 'block';
@@ -68,9 +80,16 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
     }
   };
 
+  const router = useRouter();
+  const logOut = () => {
+    localStorage.clear();
+    router.push("/Auth/login")
+  }
+
+
   const [smShow, setSmShow] = useState(false);
 
-  const {user} = useUser();
+  const { user } = useUser();
 
   return (
     <main>
@@ -81,14 +100,24 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
           ADMIN DASHBOARD
         </div>
 
-        <FaRegCircleUser />
-      
-        
+        <div style={{display:'flex',alignItems:'center',justifyContent:'center',gap:'10px',fontSize:'18px'}}>
+          <p className='text-center'>{localStorage.getItem("email")}</p>
+
+          {/* <FaRegCircleUser /> */}
+          {localStorage.getItem("email") ? (
+            <p onClick={logOut} className='text-red-500 text-2xs flex items-center content-center gap-1 cursor-pointer'><IoMdLogOut />Logout</p>
+          ) : (
+            " "
+          )
+          }
+        </div>
+
+
       </header>
       <div id="vendor-main" className="flex">
         <div id="vendordashboard" style={{ display: 'block' }}>
-        <p></p>
-          <hr className='text-white'/>
+          <p></p>
+          <hr className='text-white' />
           <Link href="/admindashboard" className="flex items-center gap-3 text-2xs">
             <AiFillDashboard />
             Dashboard
@@ -97,23 +126,27 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
             <RiInsertColumnRight />
             Insert Product
           </Link>
-          <Link href="/admindashboard/display" className="flex items-center gap-3 text-2xs">
+          <Link href="/admindashboard/vendors" className="flex items-center gap-3 text-2xs">
             <FaUserGroup />
-            See Vendors
+            Manage Vendors
           </Link>
           <Link href="/admindashboard/products" className="flex items-center gap-3 text-2xs">
             <AiFillProduct />
-            See Products
+            Manage Products
+          </Link>
+          <Link href="/admindashboard/categories" className="flex items-center gap-3 text-2xs">
+            <AiFillProduct />
+            Categories
           </Link>
           <Link href="#" className="flex items-center gap-3 text-2xs" onClick={() => setSmShow(true)}>
             <IoSettingsSharp />
             Settings
           </Link>
         </div>
-        <main style={{width:'100%'}}>
+        <main style={{ width: '100%' }}>
           {children}
         </main>
-        </div>
+      </div>
       <DashbaordFooter />
       <Modal
         show={smShow}

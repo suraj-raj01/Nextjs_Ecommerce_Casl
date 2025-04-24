@@ -1,6 +1,6 @@
 'use client';
 
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useEffect } from 'react';
 import Link from 'next/link';
 import { FaBars } from 'react-icons/fa';
 import { ImCancelCircle } from 'react-icons/im';
@@ -11,12 +11,14 @@ import { FaEdit } from 'react-icons/fa';
 import { AiFillProduct } from "react-icons/ai";
 import DashbaordFooter from '../_components/DashbaordFooter';
 import { IoSettingsSharp } from "react-icons/io5";
+import { useRouter } from 'next/navigation';
+import { IoMdLogOut } from "react-icons/io";
 
 interface AdminLayoutProps {
   children: ReactNode;
 }
 
-export default function VendorLayout({ children }: AdminLayoutProps){
+export default function VendorLayout({ children }: AdminLayoutProps) {
   const sidebar = (): void => {
     const dashboard = document.getElementById('vendordashboard');
     const menu = document.getElementById('menu');
@@ -41,15 +43,40 @@ export default function VendorLayout({ children }: AdminLayoutProps){
     }
   };
 
+  const router = useRouter();
+  const logOut = () => {
+    localStorage.clear();
+    router.push("/Auth/login")
+  }
+  useEffect(() => {
+    if (!localStorage.getItem("email")) {
+      alert("Please Login First")
+      router.push("/Auth/login")
+    }
+  }, [])
+
+
   return (
     <main>
       <header id="vendor-nav">
         <div className="flex items-center content-center gap-3">
-          <FaBars onClick={sidebar} id="menu" style={{display:'none'}}/>
+          <FaBars onClick={sidebar} id="menu" style={{ display: 'none' }} />
           <ImCancelCircle id="cancelbtn" onClick={cancelbtn} style={{ display: 'block' }} />
           VENDOR DASHBOARD
         </div>
-        <FaRegCircleUser />
+
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', fontSize: '18px' }}>
+          <p className='text-center'>{localStorage.getItem("email")}</p>
+
+          {/* <FaRegCircleUser /> */}
+          {localStorage.getItem("email") ? (
+            <p onClick={logOut} className='text-red-500 text-2xs flex items-center content-center gap-1 cursor-pointer'><IoMdLogOut />Logout</p>
+          ) : (
+            " "
+          )
+          }
+        </div>
+
       </header>
       <div id="vendor-main" className="flex">
         <div id="vendordashboard" style={{ display: 'block' }}>
@@ -62,11 +89,11 @@ export default function VendorLayout({ children }: AdminLayoutProps){
             Insert Product
           </Link>
           <Link href="/vendordashboard/display" className="flex items-center gap-3 text-2xs">
-          <AiFillProduct />
+            <AiFillProduct />
             Display Products
           </Link>
           <Link href="#" className="flex items-center gap-3 text-2xs">
-          <IoSettingsSharp />
+            <IoSettingsSharp />
             Settings
           </Link>
         </div>

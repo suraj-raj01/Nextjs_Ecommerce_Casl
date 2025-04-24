@@ -4,8 +4,6 @@ import React from 'react'
 import logo from "@/public/logo/logo.png"
 import { useRouter } from 'next/navigation'
 
-
-
 const LoginNav = () => {
 
     const router = useRouter();

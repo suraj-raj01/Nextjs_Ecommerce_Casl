@@ -1,13 +1,13 @@
 import { PrismaClient } from "@prisma/client";
 
+// Use a global variable to preserve the PrismaClient across hot reloads in dev
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;
 };
 
-export const prisma =
-  globalForPrisma.prisma ??
-  new PrismaClient({
-    log: ["query"],
-  });
+export const prisma = globalForPrisma.prisma ?? new PrismaClient();
 
-if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
+// Only assign once in development
+if (process.env.NODE_ENV !== "production") {
+  globalForPrisma.prisma = prisma;
+}
