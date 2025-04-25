@@ -22,7 +22,7 @@ const page = () => {
           <td>{key.name}</td>
           <td>{key.email}</td>
           <td>{key.contact}</td>
-          <td>{key.status}</td>
+          <td></td>
         </tr>
       </>
     )
@@ -37,6 +37,7 @@ const page = () => {
             <th>Vendor Name</th>
             <th>Email</th>
             <th>Contact</th>
+            <th>Status</th>
           </tr>
         </thead>
         <tbody>

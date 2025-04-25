@@ -1,7 +1,7 @@
 'use server';
-import { PrismaClient } from "@prisma/client";
+import {prisma} from "../../../lib/prisma"
 import bcrypt from "bcryptjs";
-const prisma = new PrismaClient();
+
 
 export async function registerUser(prevState: any, formData: FormData) {
   const role = formData.get('role') as string
@@ -13,14 +13,15 @@ export async function registerUser(prevState: any, formData: FormData) {
     return { error: 'All fields are required' };
   }
   console.log(formData);
+  if(role==="Admin"){
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
-    const data = await prisma.user.create({
+    const data = await prisma.admin.create({
       data: { 
         role:role,
         name:name,
         email:email,
-        contact:contact,
+        contact: contact.toString(),
         password:hashedPassword
        }
     });
@@ -30,4 +31,24 @@ export async function registerUser(prevState: any, formData: FormData) {
     console.error('Error registering user:', error);
     return { error: 'Failed to register user' };
   }
+}
+else if(role==="Vendor"){
+  try {
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const data = await prisma.vendor.create({
+      data: { 
+        role:role,
+        name:name,
+        email:email,
+        contact:contact.toString(),
+        password:hashedPassword,
+       }
+    });
+    console.log(data);
+    return { success: true };
+  } catch (error) {
+    console.error('Error registering user:', error);
+    return { error: 'Failed to register user' };
+  }
+}
 }

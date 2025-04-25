@@ -24,15 +24,29 @@ CREATE TABLE "Product" (
 );
 
 -- CreateTable
-CREATE TABLE "User" (
+CREATE TABLE "Admin" (
     "id" BIGSERIAL NOT NULL,
     "role" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "contact" TEXT NOT NULL,
-    "status" BOOLEAN NOT NULL DEFAULT false,
+    "status" TEXT DEFAULT 'pending',
     "password" TEXT NOT NULL,
     "created_at" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
-    CONSTRAINT "User_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Admin_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Vendor" (
+    "id" BIGSERIAL NOT NULL,
+    "role" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "contact" TEXT NOT NULL,
+    "status" TEXT DEFAULT 'pending',
+    "password" TEXT NOT NULL,
+    "created_at" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "Vendor_pkey" PRIMARY KEY ("id")
 );
