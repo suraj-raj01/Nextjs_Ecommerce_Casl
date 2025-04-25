@@ -6,7 +6,7 @@ export default async function deActivateVendor(id: any) {
     try {
         const updatedVendor = await prisma.vendor.update({
             where: {
-                id: Number(id),
+                id: id,
             },
             data: {
                 status: "pending"

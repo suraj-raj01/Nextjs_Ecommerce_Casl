@@ -3,9 +3,9 @@
 import { prisma } from "../../../lib/prisma";
 
 
-export default async function deleteVendor(id: any) {
+export default async function deleteVendor(id: number) {
   await prisma.vendor.delete({
-    where: { id: Number(id) },
+    where: { id: id },
   });
   return { success: true }
 }

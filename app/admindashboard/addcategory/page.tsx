@@ -1,5 +1,7 @@
 'use client'
 import { useRouter } from 'next/navigation'
+import { useState, useRef, ChangeEvent } from 'react';
+import Image from 'next/image';
 import React from 'react'
 import "../categories/style.css"
 import { createCategory } from '@/app/actions/categories/createCategory'
@@ -12,7 +14,28 @@ const initialstate={
 
 const page = () => {
     const router = useRouter();
-    const[state,formAction] = useFormState(createCategory, initialstate);
+    const[state,formAction] = React.useActionState(createCategory, initialstate);
+    const [image, setImage] = useState<string | null>(null);
+    const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+    const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+      const file = event.target.files?.[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setImage(reader.result as string);
+        };
+        reader.readAsDataURL(file);
+      }
+    };
+
+    const handleRemoveImage = () => {
+      setImage(null);
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
+    };
+
 
   return (
     <div>
@@ -22,8 +45,15 @@ const page = () => {
         </div>
         <div>
             <form action={formAction} id="cate-form">
-                <input type="text" name='category' placeholder='enter category name' />
-                <input type="file" name='cateurl' placeholder='category image' />
+                <input type="text" name='category' required placeholder='enter category name' />
+                {image && (
+                        <div>
+                          <span onClick={handleRemoveImage} className='text-red-500 cursor-pointer'>X</span>
+                          {/* Image component from Next.js requires the src to be a static path or properly handled with next.config.js */}
+                          <Image src={image}  alt="Selected Image" width={200} height={300} />
+                        </div>
+                      )}
+                <input type="file" name='cateurl' required placeholder='category image' onChange={handleFileChange}/>
                 <button>Add Category</button>
             </form>
         </div>

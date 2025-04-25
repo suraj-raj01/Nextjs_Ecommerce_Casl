@@ -1,5 +1,5 @@
 'use client'
-import "../vendors/style.css"
+import "../managevendor/style.css"
 import React, { useEffect, useState } from 'react'
 import getVendors from '@/app/actions/admin/showVendors'
 import Table from "react-bootstrap/Table"
@@ -12,7 +12,6 @@ import { useFormState } from 'react-dom'
 import Button from "react-bootstrap/Button"
 
 import searchVendor from "@/app/actions/admin/searchVendor"
-import { count } from "console"
 
 
 const initialstate = {

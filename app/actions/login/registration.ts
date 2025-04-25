@@ -26,7 +26,7 @@ export async function registerUser(prevState: any, formData: FormData) {
        }
     });
     console.log(data);
-    return { success: true };
+    return { success: true,message:"Registration success" };
   } catch (error) {
     console.error('Error registering user:', error);
     return { error: 'Failed to register user' };

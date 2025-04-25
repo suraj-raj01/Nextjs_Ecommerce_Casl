@@ -55,13 +55,13 @@ export default function SuperAdminLayout({ children }: AdminLayoutProps){
             <AiFillDashboard />
             Dashboard
           </Link>
-          <Link href="#" className="flex items-center gap-3 text-2xs">
-            <RiInsertColumnRight />
-            Insert Products
+          <Link href="/superadmindashboard/managevendor" className="flex items-center gap-3 text-2xs">
+          <FaUserGroup />
+            Manage Vendors
           </Link>
-          <Link href="#" className="flex items-center gap-3 text-2xs">
+          <Link href="/superadmindashboard/manageadmin" className="flex items-center gap-3 text-2xs">
             <FaUserGroup />
-            See Vendors
+            Manage Admins
           </Link>
           <Link href="#" className="flex items-center gap-3 text-2xs">
             <FaEdit />

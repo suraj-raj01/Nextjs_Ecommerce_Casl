@@ -36,7 +36,7 @@ export default function DisplayPage() {
         <td>{key.proCategory}</td>
         {/* <td>{key.proinfo}</td> */}
         <td>
-          <Image src={key.proimgurl} alt='img' height={100} width={100}/>
+          <Image src={key.proimgurl} alt='img' height={80} width={100}/>
         </td>
       </tr>
       </>

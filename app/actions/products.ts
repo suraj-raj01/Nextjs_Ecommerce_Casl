@@ -47,7 +47,7 @@ export async function productData(prevState: any, formData: FormData) {
       }
     })
     console.log(data);
-    return { success: true };
+    return { success: true,data:"data added successfull!!" };
   } catch (error) {
     console.error('Error registering user:', error);
     return { error: 'Failed to register user' };

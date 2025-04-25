@@ -32,13 +32,6 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-import {
-  SignedIn,
-  SignedOut,
-  UserButton,
-} from '@clerk/nextjs';
-
-import { useUser } from '@clerk/nextjs';
 import { useRouter } from 'next/navigation';
 
 interface AdminLayoutProps {
@@ -47,12 +40,12 @@ interface AdminLayoutProps {
 
 export default function AdminLayout({ children }: AdminLayoutProps) {
 
-  useEffect(() => {
-    if (!localStorage.getItem("email")) {
-      alert("Please Login First")
-      router.push("/Auth/login")
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (!localStorage.getItem("email")) {
+  //     alert("Please Login First")
+  //     router.push("/Auth/login")
+  //   }
+  // }, [])
 
 
   const sidebar = (): void => {
@@ -82,14 +75,12 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
 
   const router = useRouter();
   const logOut = () => {
-    localStorage.clear();
+    // localStorage.clear();
     router.push("/Auth/login")
   }
 
 
   const [smShow, setSmShow] = useState(false);
-
-  const { user } = useUser();
 
   return (
     <main>
@@ -101,15 +92,9 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
         </div>
 
         <div style={{display:'flex',alignItems:'center',justifyContent:'center',gap:'10px',fontSize:'18px'}}>
-          <p className='text-center'>{localStorage.getItem("email")}</p>
 
-          {/* <FaRegCircleUser /> */}
-          {localStorage.getItem("email") ? (
-            <p onClick={logOut} className='text-red-500 text-2xs flex items-center content-center gap-1 cursor-pointer'><IoMdLogOut />Logout</p>
-          ) : (
-            " "
-          )
-          }
+          <FaRegCircleUser />
+         
         </div>
 
 

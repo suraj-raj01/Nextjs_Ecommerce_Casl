@@ -5,14 +5,15 @@ import { useFormState } from 'react-dom'
 import { useRouter } from "next/navigation";
 import {registerUser} from "../../actions/login/registration"
 import LoginNav from "@/app/_components/LoginNav";
+import React from "react";
 
 const initialstate={
   success: undefined,
-  error: ""
+  error: "",
 };
 
 export default function Form(){
-  const[state,formAction] = useFormState(registerUser, initialstate);
+  const[state,formAction] = React.useActionState(registerUser, initialstate);
   const router = useRouter()
   return (
     <>

@@ -8,7 +8,7 @@ import { AiFillDelete } from "react-icons/ai";
 import { FaEdit } from "react-icons/fa";
 import Table from "react-bootstrap/Table"
 import Image from 'next/image'
-const page = () => {
+const page: React.FC = () =>{
   const [category, setCategory] = useState<any>([])
 
   const router = useRouter();
@@ -62,7 +62,7 @@ const page = () => {
         <thead>
           <tr className='border-1 p-2'>
             <th>Category Name</th>
-            <th>Category URL</th>
+            <th>Image</th>
             <th>Delete</th>
             <th>Edit</th>
           </tr>
