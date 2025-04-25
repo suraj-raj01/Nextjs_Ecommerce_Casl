@@ -18,6 +18,7 @@ export default function DisplayPage() {
   const fetchData = async () => {
     const data = await getProduct();
     setData(data);
+    console.log(data);
   };
 
   useEffect(() => {

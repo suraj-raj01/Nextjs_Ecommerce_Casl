@@ -1,13 +1,13 @@
 'use server';
-// import { prisma } from '../../lib/prisma'
-import { PrismaClient } from "@prisma/client";
+import { prisma } from '../../lib/prisma'
+// import { PrismaClient } from "@prisma/client";
 import axios from "axios"
-const prisma = new PrismaClient();
+// const prisma = new PrismaClient();
 
 export async function productData(prevState: any, formData: FormData) {
   const title = formData.get("title") as string
   const products = formData.get("products") as string;
-  const price = (formData.get("price")) as any;
+  const price = Number(formData.get("price"));
   const details = formData.get("details") as string;
   const category = formData.get("category") as string;
   const proinfo = formData.get("proinfo") as string;

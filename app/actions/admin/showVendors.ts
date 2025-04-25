@@ -4,9 +4,7 @@ const prisma = new PrismaClient();
 
 export default async function getVendors() {
   try {
-    const users = await prisma.user.findMany({
-      where: { role: "Vendor" },
-    });
+    const users = await prisma.vendor.findMany();
     console.log(users)
     return users;
   } catch (error) {

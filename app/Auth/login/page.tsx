@@ -16,20 +16,19 @@ export default function Form(){
   const[state,formAction] = useFormState(loginUser, initialstate);
 
   const router = useRouter()
-  
  if(state?.error){
   console.log(state.error)
  }
  else if(state?.data){
      if(state.data.role==="Vendor"){
-      if(state.data.status){
+      if(!(state.data.status==="pending")){
       localStorage.setItem("name",state.data.name)
       localStorage.setItem("email",state.data.email)
       router.push("/vendordashboard")
       }else{
-        alert("Please contact with Admin")
+        alert("You dont have access controll!!!")
       }
-    }
+      }
     else if(state.data.role==="Admin"){
       localStorage.setItem("name",state.data.name)
       localStorage.setItem("email",state.data.email)
@@ -48,7 +47,7 @@ export default function Form(){
     <div id="insertform">
     <form action={formAction} className='flex flex-col items-center p-4'>
       <p className="text-center font-bold text-2xl">Login Page</p>
-      <select name="category" id="" title="Choose Role">
+      <select name="role" id="" title="Choose Role">
         <option>Select Role</option>
         <option value="Vendor">Vendor</option>
         <option value="Admin">Admin</option>
