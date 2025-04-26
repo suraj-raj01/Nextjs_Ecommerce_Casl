@@ -17,7 +17,7 @@ const Footer = () => {
   return (
     <div className='bg-gray-100'>
         <div id="socials" >
-            <div id="box1" class="app">
+            <div id="box1" className="app">
                 <Image src={android} alt='android'/>
                 <Image src={apple} alt='android'/>
             </div>

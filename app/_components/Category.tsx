@@ -1,3 +1,4 @@
+'use client'
 import React from 'react'
 import Image from 'next/image'
 import delivery from "../../public/category-images/delivery.webp"
@@ -8,20 +9,22 @@ import plants from "../../public/category-images/plants.webp"
 import newarrival from "../../public/category-images/newarrivals.webp"
 import international from "../../public/category-images/international.webp"
 import bulkcorpgift from "../../public/category-images/bulkcorpgift.webp"
+import { useRouter } from 'next/navigation'
 
 const Category = () => {
+  const router = useRouter();
   return (
     <>
         <div id='category-main'>
-            <div id='box'>
+            <div id='box' onClick={()=>{router.push("/pages/samedaydelivery")}}>
                 <Image src={delivery} alt='delivery image' height={40}/>
                 <p>Same Day Delivery</p>
             </div>
-            <div id='box'>
+            <div id='box' onClick={()=>{router.push("/pages/flowers")}}>
             <Image src={flowers} alt='delivery image' height={40}/>
             <p>Flowers</p>
             </div>
-            <div id='box'>
+            <div id='box' onClick={()=>{router.push("/pages/cakes")}}>
             <Image src={cakes} alt='delivery image' height={40}/>
             <p>Cakes</p>
             </div>

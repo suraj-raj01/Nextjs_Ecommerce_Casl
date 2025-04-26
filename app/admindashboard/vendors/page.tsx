@@ -92,11 +92,13 @@ export default function VendorsPage() {
     setStatus(true);
   }
   
+  let counter=0;
   const res1 = searchData.map((key:any)=>{
 
     return(
       <>
         <tr>
+          <td>{++counter}</td>
           <td>{key.name}</td>
           <td>{key.email}</td>
           <td>{key.contact}</td>
@@ -117,6 +119,7 @@ export default function VendorsPage() {
     <div>
 
       <div id='search'>
+        <p className="text-2xl font-bold">Vendor List</p>
       <form action={formAction} id="search-form" >
       <input type="text" name="search" placeholder="Search vendors"/>
       <button type="submit" onClick={search}>Search</button>

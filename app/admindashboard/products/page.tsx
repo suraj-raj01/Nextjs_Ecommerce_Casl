@@ -25,23 +25,23 @@ export default function DisplayPage() {
     fetchData();
   }, []);
 
-  const res = data1.map((key:any)=>{
-    return(
-      <>
-      <tr>
-        <td>{key.proname}</td>
-        <td>{key.protitle}</td>
-        <td>{key.proprice}</td>
-        {/* <td>{key.prodesc}</td> */}
-        <td>{key.proCategory}</td>
-        {/* <td>{key.proinfo}</td> */}
-        <td>
-          <Image src={key.proimgurl} alt='img' height={80} width={100}/>
-        </td>
-      </tr>
-      </>
-    )
-  })
+  // const res = data1.map((key:any)=>{
+  //   return(
+  //     <>
+  //     <tr>
+  //       <td>{key.proname}</td>
+  //       <td>{key.protitle}</td>
+  //       <td>{key.proprice}</td>
+  //       {/* <td>{key.prodesc}</td> */}
+  //       <td>{key.proCategory}</td>
+  //       {/* <td>{key.proinfo}</td> */}
+  //       <td>
+  //         <Image src={key.proimgurl} alt='img' height={80} width={100}/>
+  //       </td>
+  //     </tr>
+  //     </>
+  //   )
+  // })
 
   return (
     <div>
@@ -58,7 +58,7 @@ export default function DisplayPage() {
           </tr>
         </thead>
         <tbody>
-         {res}
+         {/* {res} */}
         </tbody>
       </Table>
       <Modal show={show} onHide={handleClose}>

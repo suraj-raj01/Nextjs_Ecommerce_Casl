@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import {ClerkProvider} from '@clerk/nextjs'
 import { Geist, Geist_Mono } from "next/font/google";
-import { ThemeProvider } from "../app/theme-provider"
 
 import "./globals.css";
 import 'bootstrap/dist/css/bootstrap.min.css';

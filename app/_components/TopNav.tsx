@@ -104,8 +104,8 @@ export default function TopNav(){
               <Nav.Link href="#deets">
                 <FaRegHeart className="text-2xl" />
               </Nav.Link>
-              <Nav.Link href="#deets">
-                <IoMdCart className="text-2xl" />
+              <Nav.Link href="/pages/cartitems">
+                <IoMdCart className="text-2xl"/>
               </Nav.Link>
               <Nav.Link>
                 {/* Custom dropdown logic if needed */}
