@@ -12,8 +12,9 @@ import { IoSettingsSharp } from "react-icons/io5";
 import DashbaordFooter from '../_components/DashbaordFooter';
 import { CiLight } from "react-icons/ci";
 import { MdDarkMode } from "react-icons/md";
-import { IoMdLogOut } from "react-icons/io";
 import { MdLaptopChromebook } from "react-icons/md";
+import { IoMdGitPullRequest } from "react-icons/io";
+import { IoMdLogOut } from "react-icons/io";
 
 import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
@@ -75,7 +76,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
 
   const router = useRouter();
   const logOut = () => {
-    // localStorage.clear();
+    localStorage.clear();
     router.push("/Auth/login")
   }
 
@@ -93,7 +94,13 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
 
         <div style={{display:'flex',alignItems:'center',justifyContent:'center',gap:'10px',fontSize:'18px'}}>
 
-          <FaRegCircleUser />
+          {localStorage.getItem("email")}
+          
+          {localStorage.getItem("email")||"undefined"?(
+            <IoMdLogOut className='text-red-600' onClick={logOut}/>
+          ):(
+            "login"
+          )}
          
         </div>
 
@@ -107,10 +114,10 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
             <AiFillDashboard />
             Dashboard
           </Link>
-          <Link href="/admindashboard/insert" className="flex items-center gap-3 text-2xs">
+          {/* <Link href="/admindashboard/insert" className="flex items-center gap-3 text-2xs">
             <RiInsertColumnRight />
             Insert Product
-          </Link>
+          </Link> */}
           <Link href="/admindashboard/vendors" className="flex items-center gap-3 text-2xs">
             <FaUserGroup />
             Manage Vendors
@@ -118,6 +125,10 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
           <Link href="/admindashboard/products" className="flex items-center gap-3 text-2xs">
             <AiFillProduct />
             Manage Products
+          </Link>
+          <Link href="/admindashboard/requestvendor" className="flex items-center gap-3 text-2xs">
+          <IoMdGitPullRequest />
+            Vendors Request
           </Link>
           <Link href="/admindashboard/categories" className="flex items-center gap-3 text-2xs">
             <AiFillProduct />

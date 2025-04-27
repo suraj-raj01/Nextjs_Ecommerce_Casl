@@ -1,24 +1,38 @@
 'use client';
 
-import React, { ReactNode, useEffect } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { FaBars } from 'react-icons/fa';
 import { ImCancelCircle } from 'react-icons/im';
-import { FaRegCircleUser, } from 'react-icons/fa6';
 import { AiFillDashboard } from 'react-icons/ai';
 import { RiInsertColumnRight } from 'react-icons/ri';
-import { FaEdit } from 'react-icons/fa';
 import { AiFillProduct } from "react-icons/ai";
 import DashbaordFooter from '../_components/DashbaordFooter';
 import { IoSettingsSharp } from "react-icons/io5";
 import { useRouter } from 'next/navigation';
 import { IoMdLogOut } from "react-icons/io";
 
-interface AdminLayoutProps {
+interface VendorLayoutProps {
   children: ReactNode;
 }
 
-export default function VendorLayout({ children }: AdminLayoutProps) {
+export default function VendorLayout({ children }: VendorLayoutProps) {
+  const [email, setEmail] = useState<string | null>(null);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const storedEmail = localStorage.getItem("email");
+
+      if (!storedEmail) {
+        alert("Please Login First");
+        router.push("/Auth/login");
+      } else {
+        setEmail(storedEmail);
+      }
+    }
+  }, [router]);
+
   const sidebar = (): void => {
     const dashboard = document.getElementById('vendordashboard');
     const menu = document.getElementById('menu');
@@ -43,18 +57,12 @@ export default function VendorLayout({ children }: AdminLayoutProps) {
     }
   };
 
-  const router = useRouter();
   const logOut = () => {
-    localStorage.clear();
-    router.push("/Auth/login")
-  }
-  useEffect(() => {
-    if (!localStorage.getItem("email")) {
-      alert("Please Login First")
-      router.push("/Auth/login")
+    if (typeof window !== 'undefined') {
+      localStorage.clear();
+      router.push("/Auth/login");
     }
-  }, [])
-
+  };
 
   return (
     <main>
@@ -66,18 +74,13 @@ export default function VendorLayout({ children }: AdminLayoutProps) {
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', fontSize: '18px' }}>
-          <p className='text-center'>{localStorage.getItem("email")}</p>
-
-          {/* <FaRegCircleUser /> */}
-          {localStorage.getItem("email") ? (
+          <p className='text-center'>{email}</p>
+          {email ? (
             <p onClick={logOut} className='text-red-500 text-2xs flex items-center content-center gap-1 cursor-pointer'><IoMdLogOut />Logout</p>
-          ) : (
-            " "
-          )
-          }
+          ) : null}
         </div>
-
       </header>
+
       <div id="vendor-main" className="flex">
         <div id="vendordashboard" style={{ display: 'block' }}>
           <Link href="/vendordashboard" className="flex items-center gap-3 text-2xs">

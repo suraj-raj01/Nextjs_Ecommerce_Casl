@@ -13,6 +13,7 @@ import Button from 'react-bootstrap/Button';
 import { useRouter } from 'next/navigation';
 import { FaPlusCircle } from "react-icons/fa";
 import { FaMinusCircle } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
 const CheckOut: React.FC = () => {
 
     const cartItems = useSelector((state: RootState) => state.cart.cartItems);
@@ -30,13 +31,12 @@ const CheckOut: React.FC = () => {
     }
     let price = 0;
     const res = cartItems.map((key: any) => {
-        price += Number(key.proprice);
+        price += Number(key.proprice*key.quantity);
         return (
             <>
                 <tr>
                     <td>{key.proname}</td>
                     <td>{key.protitle}</td>
-                    <td>{key.prodesc}</td>
                     <td>{key.proprice * key.quantity}</td>
                     <td>
                         <Image src={key.proimgurl} alt='proimage' height={50} width={50} />
@@ -48,7 +48,7 @@ const CheckOut: React.FC = () => {
                             <FaPlusCircle onClick={() => dispatch(incrementQuantity(key.id))} />
                         </span>
                     </td>
-                    <td><Button size='sm' variant='danger' onClick={() => { removeItm(key.id) }}>Delete</Button></td>
+                    <td><Button size='sm' variant='danger' onClick={() => { removeItm(key.id) }}><MdDelete /></Button></td>
                 </tr>
             </>
         )
@@ -57,7 +57,7 @@ const CheckOut: React.FC = () => {
 
     return (
         <div>
-            <p className='text-2xl font-bold text-center p-3 🛒'>Cart Items</p>
+            <p className='text-2xl font-bold text-center p-3'>CheckOuts</p>
             <div id="main">
                 <div id="products">
                     <Table>
@@ -65,7 +65,6 @@ const CheckOut: React.FC = () => {
                             <tr>
                                 <th>Name</th>
                                 <th>Title</th>
-                                <th>Description</th>
                                 <th>Price</th>
                                 <th>Image</th>
                                 <th>Quantity</th>
@@ -77,8 +76,9 @@ const CheckOut: React.FC = () => {
                         </tbody>
                     </Table>
                     <div id='clrbtn'>
-                        <Button size='sm' variant='success' onClick={() => { router.push("/pages/checkout") }}>CheckOut</Button>
+                        <Button size='sm' variant='success' onClick={() => { router.push("/pages/checkout") }}>Make Payment</Button>
                         <Button size='sm' variant='danger' onClick={clearCartItem} >Clear Cart</Button>
+                        <Button size='sm' variant='' ><span className='font-bold'>Total : {price}</span></Button>
                     </div>
                 </div>
                 <div id="deliveryform">

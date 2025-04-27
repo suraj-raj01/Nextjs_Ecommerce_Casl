@@ -68,3 +68,12 @@
     background-color: #243e36;
     color: white;
 }
+
+#tabledata{
+    width: 100%;
+    height: 88vh;
+    overflow-y: scroll;
+}
+#tabledata thead th{
+    padding: 15px 10px;
+}

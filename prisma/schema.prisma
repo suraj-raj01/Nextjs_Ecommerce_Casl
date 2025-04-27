@@ -15,15 +15,28 @@ model AddCategory {
 }
 
 model Product {
-  id          Int      @id @default(autoincrement())
-  proname     String
-  protitle    String
-  proprice    Int
-  prodesc     String
-  proCategory String
-  proinfo     String
-  proimgurl   String
-  createdAt   DateTime @default(now())
+  id              Int      @id @default(autoincrement())
+  proname         String
+  protitle        String
+  proprice        Int
+  prodesc         String
+  proCategory     String
+  proinfo         String
+  samedaydelivery String? @default("no")
+  approve         String? @default("no")
+  proimgurl       String
+  createdAt       DateTime @default(now())
+}
+
+model Vendor {
+  id         BigInt   @id @default(autoincrement())
+  role       String
+  name       String
+  email      String
+  contact    String
+  status     String?  @default("pending")
+  password   String
+  created_at DateTime @default(now()) @db.Timestamptz(6)
 }
 
 model Admin {
@@ -37,13 +50,4 @@ model Admin {
   created_at DateTime @default(now()) @db.Timestamptz(6)
 }
 
-model Vendor {
-  id         BigInt   @id @default(autoincrement())
-  role       String
-  name       String
-  email      String
-  contact    String
-  status     String?  @default("pending")
-  password   String
-  created_at DateTime @default(now()) @db.Timestamptz(6)
-}
+

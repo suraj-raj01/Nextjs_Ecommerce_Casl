@@ -2,10 +2,10 @@
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
-export default async function getVendors() {
+export default async function vendorRequest() {
   try {
     const users = await prisma.vendor.findMany({
-      where :{status:"active"}
+        where: { status:"pending" },
     });
     console.log(users)
     return users;

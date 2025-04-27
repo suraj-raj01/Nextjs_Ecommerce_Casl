@@ -24,9 +24,15 @@ import {
   SignedOut,
   UserButton,
 } from '@clerk/nextjs';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store/store';
 
 export default function TopNav(){
   const router = useRouter();
+
+  const cartItems = useSelector((state: RootState) => state.cart.cartItems);
+  console.log(cartItems);
+  let size=cartItems.length;
 
   const sidebar = (): void => {
     const icon = document.getElementById('icon');
@@ -101,17 +107,18 @@ export default function TopNav(){
               <Nav.Link href="#deets">
                 <HiCurrencyRupee className="text-2xl" />
               </Nav.Link>
-              <Nav.Link href="#deets">
+              <Nav.Link href="/pages/wishlist">
                 <FaRegHeart className="text-2xl" />
               </Nav.Link>
               <Nav.Link href="/pages/cartitems">
-                <IoMdCart className="text-2xl"/>
+                <span className='flex'><IoMdCart className="text-2xl"/><span className=''>{size}</span>
+                </span>
               </Nav.Link>
               <Nav.Link>
                 {/* Custom dropdown logic if needed */}
               </Nav.Link>
               <SignedOut>
-                <button className='bg-red-400 font-bold p-1.5 pl-3 pr-3 text-white' style={{borderRadius:'6px'}}><SignInButton/></button>
+              <SignInButton/>
               </SignedOut>
               <SignedIn>
                 <UserButton />
@@ -131,13 +138,13 @@ export default function TopNav(){
                 <p className="text-2xl font-bold">Top Collections</p>
                 <Image src={bag} alt="bag" />
               </span>
-              <p className="font-bold ml-2 hover:text-red-600 cursor-pointer">
+              <p className="font-bold ml-2 hover:text-red-600 cursor-pointer" onClick={()=>{router.push("/pages/samedaydelivery")}}>
                 Same Day Delivery Gifts
               </p>
-              <p className="font-bold ml-2 hover:text-red-600 cursor-pointer">
+              <p className="font-bold ml-2 hover:text-red-600 cursor-pointer" onClick={()=>{router.push("/pages/cakes")}}>
                 Birthday Gifts
               </p>
-              <p className="font-bold ml-2 hover:text-red-600 cursor-pointer">
+              <p className="font-bold ml-2 hover:text-red-600 cursor-pointer" onClick={()=>{router.push("/pages/personalized")}}>
                 Personalized Gifts
               </p>
             </div>

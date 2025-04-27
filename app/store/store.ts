@@ -1,28 +1,12 @@
-// import { configureStore } from '@reduxjs/toolkit';
-// import cartReducer from './cartSlice';
-
-// export const store = configureStore({
-//   reducer: {
-//     cart: cartReducer,
-//   },
-// });
-
-// export type RootState = ReturnType<typeof store.getState>;
-// export type AppDispatch = typeof store.dispatch;
-
-
 import { configureStore } from '@reduxjs/toolkit';
 import { persistStore, persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
+import storage from 'redux-persist/lib/storage'; 
 import cartReducer from './cartSlice';
 import { combineReducers } from 'redux';
 
-// 1. Combine your reducers
 const rootReducer = combineReducers({
   cart: cartReducer,
 });
-
-// 2. Configure persist
 const persistConfig = {
   key: 'root',
   storage,

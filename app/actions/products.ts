@@ -12,6 +12,7 @@ export async function productData(prevState: any, formData: FormData) {
   const category = formData.get("category") as string;
   const proinfo = formData.get("proinfo") as string;
   const myimg = formData.get("imgurl") as string;
+  const samedaydelivery = formData.get("sameday") as string;
 
   if (!title || !products || !price || !details || !category || !proinfo || !myimg) {
     return { error: 'All fields are required' };
@@ -42,6 +43,7 @@ export async function productData(prevState: any, formData: FormData) {
         proprice:price,
         prodesc:details,
         proCategory:category,
+        samedaydelivery:samedaydelivery,
         proinfo:proinfo,
         proimgurl:imgurl
       }

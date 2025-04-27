@@ -57,7 +57,7 @@ const CartItems: React.FC = () => {
 
     return (
         <>
-            <p className='text-2xl font-bold text-center p-3 '>Cart Items 🛒</p>
+            <p className='text-2xl font-bold text-center p-3 🛒'>Cart Items</p>
             <div id="products">
                 <Table>
                     <thead>

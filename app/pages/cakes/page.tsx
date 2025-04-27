@@ -4,18 +4,19 @@ import getCakes from '@/app/actions/getcategorydata/getCakes'
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Image from 'next/image';
+import { FaRegHeart } from "react-icons/fa";
+import { FaHeart } from "react-icons/fa";
 import "../cakes/style.css"
 
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store/store';
-import { addToCart } from '../../store/cartSlice';
+import { addToCart, addToLike } from '../../store/cartSlice';
 import Category from '@/app/_components/Category';
 
 
 const ProductCard: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const [mydata, setData] = useState<any>([]);
-
 
   
   const fetchData = async () => {
@@ -43,8 +44,25 @@ const ProductCard: React.FC = () => {
       })
     )
   }
+  const addDataToLike = (id: any,proname: any,protitle: any,proprice: any,prodesc: any,proCategory: any,proinfo: any,proimgurl: any) =>{
+    dispatch(
+      addToLike({
+        id:id,
+        proname:proname,
+        protitle:protitle,
+        proprice:proprice,
+        prodesc:prodesc,
+        proCategory:proCategory,
+        proinfo:proinfo,
+        proimgurl:proimgurl,
+        quantity: 1,
+      })
+    )
+  }
 
-  const res = mydata.map((key: any) => {
+
+
+  const res = mydata.map((key: any,index:number) => {
     return (
       <>
         <Card style={{width:'300px'}}>
@@ -55,7 +73,8 @@ const ProductCard: React.FC = () => {
             <p className='text-red-500 font-bold'>Price {key.proprice} {" ₹"}</p>
             <Card.Text>
             </Card.Text>
-            <Button variant="primary"
+            <div style={{display:'flex',alignItems:'center',justifyContent:'space-between'}}>
+            <Button size='sm' variant="primary"
              onClick={() => {
               addDataToCart(
                 key.id,
@@ -69,6 +88,21 @@ const ProductCard: React.FC = () => {
               )
           }}
             >Add To Cart</Button>
+            <FaRegHeart id='like' className='text-2xl' 
+            onClick={() => {
+              addDataToLike(
+                key.id,
+                key.proname,
+                key.protitle,
+                key.proprice,
+                key.prodesc,
+                key.proCategory,
+                key.proinfo,
+                key.proimgurl
+              )
+          }}/>
+            <FaHeart id='dislike' className='text-2xl ' style={{display:'none'}}/>
+            </div>
           </Card.Body>
         </Card>
       </>

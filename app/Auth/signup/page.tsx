@@ -15,6 +15,9 @@ const initialstate={
 export default function Form(){
   const[state,formAction] = React.useActionState(registerUser, initialstate);
   const router = useRouter()
+  if(state?.success===true){
+    router.push("/Auth/login")
+  }
   return (
     <>
     <LoginNav/>

@@ -12,7 +12,7 @@ import Image from "next/image";
 const initialstate = {
   success: undefined,
   error: "",
-  data:undefined
+  data: undefined
 };
 
 export default function Form() {
@@ -63,6 +63,10 @@ export default function Form() {
                 <option value="Internationals">Internationals</option>
                 <option value="Bulk / Corp Gift">Bulk / Corp Gift</option>
                 <option value="Same Day Delivery">Same Day Delivery</option>
+              </select>
+              <select name="sameday" id="" title="Same Day Delivery">
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
               </select>
               <input type="text" required name="proinfo" placeholder='Product Info' className='p-2 border-1 mt-2 w-70' />
               <input type="file" name="imgurl" multiple required placeholder="choose file" className='p-2 border-1 mt-2 w-70' onChange={handleFileChange} />

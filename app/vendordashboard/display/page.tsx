@@ -7,6 +7,7 @@ import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import getProduct from "../../actions/getProduct"
 import Table from "react-bootstrap/Table"
+import "../insert/style.css"
 
 export default function DisplayPage() {
   const [show, setShow] = useState<any>(false);
@@ -17,7 +18,7 @@ export default function DisplayPage() {
 
   const fetchData = async () => {
     const data = await getProduct();
-    setData(data);
+    setData(data || []);
     console.log(data);
   };
 
@@ -25,10 +26,10 @@ export default function DisplayPage() {
     fetchData();
   }, []);
 
-  const res = data1.map((key:any)=>{
+  const res = data1.map((key:any, index:number)=>{
     return(
       <>
-      <tr>
+      <tr key={key.id || index}>
         <td>{key.proname}</td>
         <td>{key.protitle}</td>
         <td>{key.proprice}</td>
@@ -36,7 +37,11 @@ export default function DisplayPage() {
         <td>{key.proCategory}</td>
         {/* <td>{key.proinfo}</td> */}
         <td>
-          <Image src={key.proimgurl} alt='img' height={80} width={80}/>
+        {key.proimgurl ? (
+        <Image src={key.proimgurl} alt='img' height={80} width={80} />
+      ) : (
+        "No Image"
+      )}
         </td>
         <td>
           Pending
@@ -51,7 +56,8 @@ export default function DisplayPage() {
 
   return (
     <div>
-      <Table striped hover responsive>
+     <div id="tabledata">
+     <Table striped hover responsive>
         <thead>
           <tr className='border-1'>
             <th>Product Name</th>
@@ -69,6 +75,7 @@ export default function DisplayPage() {
          {res}
         </tbody>
       </Table>
+     </div>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Modal heading</Modal.Title>

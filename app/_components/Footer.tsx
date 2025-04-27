@@ -13,7 +13,7 @@ import { FaCcVisa } from "react-icons/fa";
 import { FaCcMastercard } from "react-icons/fa";
 import { SiAmericanexpress } from "react-icons/si";
 
-const Footer = () => {
+const Footer: React.FC = () => {
   return (
     <div className='bg-gray-100'>
         <div id="socials" >
@@ -56,4 +56,4 @@ const Footer = () => {
   )
 }
 
-export default Footer
+export default Footer;

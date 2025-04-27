@@ -13,7 +13,11 @@ export interface Product {
 export interface CartItem extends Product {
     quantity: number;
 }
+export interface LikeItem extends Product {
+    quantity: number;
+}
 
 export interface CartState {
     cartItems: CartItem[];
+    likeItems:LikeItem[];
 }

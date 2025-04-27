@@ -28,19 +28,19 @@ const Category = () => {
             <Image src={cakes} alt='delivery image' height={40}/>
             <p>Cakes</p>
             </div>
-            <div id='box'>
+            <div id='box' onClick={()=>{router.push("/pages/personalized")}}>
             <Image src={personalized} alt='delivery image' height={40}/>
             <p>Personalized</p>
             </div>
-            <div id='box'>
+            <div id='box' onClick={()=>{router.push("/pages/plants")}}>
             <Image src={plants} alt='delivery image' height={40}/>
             <p>Plants</p>
             </div>
-            <div id='box'>
+            <div id='box' onClick={()=>{router.push("/pages/newarrivals")}}>
             <Image src={newarrival} alt='delivery image' height={40}/>
             <p>New Arrivals</p>
             </div>
-            <div id='box'>
+            <div id='box' onClick={()=>{router.push("/pages/internationals")}}>
             <Image src={international} alt='delivery image' height={40}/>
             <p>International</p>
             </div>
