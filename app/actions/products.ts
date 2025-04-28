@@ -20,7 +20,7 @@ export async function productData(prevState: any, formData: FormData) {
   let imgurl = "";
 
   if (myimg) {
-    let formData1 = new FormData();
+    const formData1 = new FormData();
     formData1.append("file", myimg);
     formData1.append("upload_preset", "myphotos");
     formData1.append("cloud_name", "dtrpmtbie");

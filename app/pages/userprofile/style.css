@@ -1,0 +1,27 @@
+#main{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+#main #profile{
+    padding: 20px;
+    width: 20%;
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    border: 1px solid transparent;
+    border-right-color: #d7d2d2;
+}
+#main #profile img{
+    border-radius: 50%;
+}
+#main #profile #about{
+    width: 100%;
+    font-weight: bold;
+}
+#main #purchased{
+    width: 75%;
+    height: 80vh;
+}

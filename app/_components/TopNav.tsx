@@ -31,7 +31,6 @@ export default function TopNav(){
   const router = useRouter();
 
   const cartItems = useSelector((state: RootState) => state.cart.cartItems);
-  console.log(cartItems);
   let size=cartItems.length;
 
   const sidebar = (): void => {
@@ -92,7 +91,7 @@ export default function TopNav(){
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto"></Nav>
-
+{/* 
             <Form className="d-flex mr-4">
               <Form.Control
                 type="search"
@@ -100,8 +99,8 @@ export default function TopNav(){
                 className="me-2"
                 aria-label="Search"
               />
-              {/* <Button variant="secondary">Search</Button> */}
-            </Form>
+              <Button variant="secondary">Search</Button>
+            </Form> */}
 
             <Nav id="icons" className="flex items-center content-center">
               <Nav.Link href="#deets">
@@ -111,7 +110,7 @@ export default function TopNav(){
                 <FaRegHeart className="text-2xl" />
               </Nav.Link>
               <Nav.Link href="/pages/cartitems">
-                <span className='flex'><IoMdCart className="text-2xl"/><span className=''>{size}</span>
+                <span className='flex'><IoMdCart className="text-2xl"/>{size}
                 </span>
               </Nav.Link>
               <Nav.Link>

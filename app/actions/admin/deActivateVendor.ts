@@ -1,12 +1,12 @@
 'use server';
 import { prisma } from "../../../lib/prisma";
 
-export default async function deActivateVendor(id: any) {
+export default async function deActivateVendor(id: number) {
 
     try {
         const updatedVendor = await prisma.vendor.update({
             where: {
-                id: id,
+                id: Number(id),
             },
             data: {
                 status: "pending"
