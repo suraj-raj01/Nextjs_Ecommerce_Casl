@@ -1,7 +1,9 @@
 'use server';
 
 import bcrypt from 'bcryptjs';
-import { prisma } from "../../../lib/prisma";
+// import { PrismaClient } from '@prisma/client';
+// const prisma = new PrismaClient();
+import { prisma } from '@/lib/prisma';
 
 export default async function loginUser(prevState: any, formData: FormData) {
   try {
@@ -17,7 +19,7 @@ export default async function loginUser(prevState: any, formData: FormData) {
 
     if (role === "Vendor") {
       user = await prisma.vendor.findFirst({
-        where: { email },
+        where: { email:email },
       });
     } else if (role === "Admin") {
       user = await prisma.admin.findFirst({

@@ -110,7 +110,7 @@ export default function TopNav(){
                 <FaRegHeart className="text-2xl" />
               </Nav.Link>
               <Nav.Link href="/pages/cartitems">
-                <span className='flex'><IoMdCart className="text-2xl"/>{size}
+                <span className='flex'><IoMdCart className="text-2xl"/>{size.toString()}
                 </span>
               </Nav.Link>
               <Nav.Link>

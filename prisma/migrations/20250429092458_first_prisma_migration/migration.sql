@@ -52,3 +52,14 @@ CREATE TABLE "Admin" (
 
     CONSTRAINT "Admin_pkey" PRIMARY KEY ("id")
 );
+
+-- CreateTable
+CREATE TABLE "Customer" (
+    "id" BIGSERIAL NOT NULL,
+    "name" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "contact" TEXT NOT NULL,
+    "created_at" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "Customer_pkey" PRIMARY KEY ("id")
+);

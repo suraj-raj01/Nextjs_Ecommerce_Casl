@@ -1,8 +1,9 @@
 'use server';
-import { prisma } from '../../lib/prisma'
+import { prisma } from "@/lib/prisma";
+
 // import { PrismaClient } from "@prisma/client";
-import axios from "axios"
 // const prisma = new PrismaClient();
+import axios from "axios"
 
 export async function productData(prevState: any, formData: FormData) {
   const title = formData.get("title") as string

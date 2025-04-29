@@ -1,7 +1,8 @@
 'use server';
-import { PrismaClient } from "@prisma/client";
+// import { PrismaClient } from "@prisma/client";
 import axios from "axios"
-const prisma = new PrismaClient();
+// const prisma = new PrismaClient();
+import { prisma } from "@/lib/prisma";
 
 export async function createCategory(prevState: any, formData: FormData) {
   const category = formData.get("category") as string;

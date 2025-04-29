@@ -9,6 +9,9 @@ import getProduct from "../../actions/getProduct"
 import Table from "react-bootstrap/Table"
 import { MdDelete } from "react-icons/md";
 import deleteProduct from '@/app/actions/deleteProduct';
+import "../products/style.css"
+import approveProduct from '@/app/actions/admin/approveProduct';
+import cancelApproveProduct from '@/app/actions/admin/cancelApproveProduct';
 
 export default function DisplayPage() {
   const [show, setShow] = useState<any>(false);
@@ -32,6 +35,15 @@ export default function DisplayPage() {
     fetchData();
   }
 
+  const approve=(id:any)=>{
+    approveProduct(id);
+    fetchData();
+  }
+  const cancelApprove=(id:any)=>{
+    cancelApproveProduct(id);
+    fetchData();
+  }
+
   let sno=0;
   const res = data1.map((key:any,index:number)=>{
     return(
@@ -45,9 +57,15 @@ export default function DisplayPage() {
         <td>
           <Image src={key.proimgurl} alt='img' height={50} width={50}/>
         </td>
+        <td>{key?.approve==="no"?(
+           <Button size='sm' variant='warning' onClick={()=>{approve(key.id)}}>Approve</Button>
+        ):(
+          <Button size='sm' variant='success' onClick={()=>{cancelApprove(key.id)}}>Approved</Button>
+        )}</td>
         <td>
         <Button size='sm' variant='danger'><span onClick={()=>{deleteItem(key.id)}} className='flex items-center content-center gap-1'><MdDelete />Delete</span></Button>
         </td>
+        
       </tr>
       </>
     )
@@ -55,7 +73,8 @@ export default function DisplayPage() {
 
   return (
     <div>
-      <Table striped hover responsive>
+     <div id="admin-content">
+     <Table striped hover responsive>
         <thead>
           <tr className='border-1'>
             <th>SNo</th>
@@ -66,13 +85,16 @@ export default function DisplayPage() {
             <th>Category</th>
             {/* <th>Product Information</th> */}
             <th>Category Image</th>
+            <th>Approve</th>
             <th>Update</th>
+           
           </tr>
         </thead>
         <tbody>
          {res}
         </tbody>
       </Table>
+     </div>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Modal heading</Modal.Title>

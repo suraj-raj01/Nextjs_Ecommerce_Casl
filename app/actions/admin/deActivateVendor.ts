@@ -1,7 +1,8 @@
 'use server';
-import { prisma } from "../../../lib/prisma";
+import { prisma } from "@/lib/prisma";
 
-export default async function deActivateVendor(id: number) {
+
+export default async function deActivateVendor(id: any) {
 
     try {
         const updatedVendor = await prisma.vendor.update({

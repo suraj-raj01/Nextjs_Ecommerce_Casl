@@ -26,10 +26,12 @@ export default function DisplayPage() {
     fetchData();
   }, []);
 
+  let sno=0;
   const res = data1.map((key:any, index:number)=>{
     return(
       <>
       <tr key={key.id || index}>
+        <td>{++sno}</td>
         <td>{key.proname}</td>
         <td>{key.protitle}</td>
         <td>{key.proprice}</td>
@@ -44,7 +46,7 @@ export default function DisplayPage() {
       )}
         </td>
         <td>
-          Pending
+          {key.approve}
         </td>
         <td>
           <Button variant='danger' size='sm'>Delete</Button>
@@ -60,6 +62,7 @@ export default function DisplayPage() {
      <Table striped hover responsive>
         <thead>
           <tr className='border-1'>
+            <th>SNo</th>
             <th>Product Name</th>
             <th>Product Title</th>
             <th>Price</th>

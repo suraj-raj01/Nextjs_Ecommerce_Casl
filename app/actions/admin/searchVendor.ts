@@ -1,5 +1,5 @@
 'use server';
-import { prisma } from "../../../lib/prisma";
+import { prisma } from "@/lib/prisma";
 
 export default async function searchVendor(prevState: any, formData: FormData) {
   const query = formData.get('search')?.toString().toLowerCase();

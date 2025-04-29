@@ -114,7 +114,7 @@ const SameDayDelivery: React.FC = () => {
     <div>
       <Category/>
       <p className='text-center text-2xl font-bold p-2'>SameDayDelivery</p>
-      <div id='products' className='flex items-center flex-wrap justify-center gap-3'>
+      <div id='products' className='flex items-center flex-wrap justify-between gap-3'>
       {res}
       </div>
       <br />

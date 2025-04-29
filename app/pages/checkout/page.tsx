@@ -53,10 +53,10 @@ const CheckOut: React.FC = () => {
                 <td>{item.proprice * item.quantity}</td>
                 <td><Image src={item.proimgurl} alt='proimage' height={50} width={50} /></td>
                 <td>
-                    <span className='flex items-center gap-3'>
-                        <FaMinusCircle onClick={() => dispatch(decrementQuantity(item.id))} />
+                    <span className='flex items-center gap-3 content-center text-center ml-4'>
+                        {/* <FaMinusCircle onClick={() => dispatch(decrementQuantity(item.id))} /> */}
                         {item.quantity}
-                        <FaPlusCircle onClick={() => dispatch(incrementQuantity(item.id))} />
+                        {/* <FaPlusCircle onClick={() => dispatch(incrementQuantity(item.id))} /> */}
                     </span>
                 </td>
                 <td><Button size='sm' variant='danger' onClick={() => removeItm(item.id)}><MdDelete /></Button></td>

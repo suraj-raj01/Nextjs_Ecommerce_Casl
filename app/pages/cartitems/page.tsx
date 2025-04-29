@@ -36,7 +36,6 @@ const CartItems: React.FC = () => {
                 <tr>
                     <td>{key.proname}</td>
                     <td>{key.protitle}</td>
-                    <td>{key.prodesc}</td>
                     <td>{key.proprice*key.quantity}</td>
                     <td>
                         <Image src={key.proimgurl} alt='proimage' height={50} width={50} />
@@ -64,7 +63,6 @@ const CartItems: React.FC = () => {
                         <tr>
                             <th>Name</th>
                             <th>Title</th>
-                            <th>Description</th>
                             <th>Price</th>
                             <th>Image</th>
                             <th>Quantity</th>

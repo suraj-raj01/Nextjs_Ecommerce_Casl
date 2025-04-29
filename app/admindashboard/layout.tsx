@@ -76,7 +76,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
 
   const router = useRouter();
   const logOut = () => {
-    localStorage.clear();
+    // localStorage.clear();
     router.push("/Auth/login")
   }
 
@@ -94,13 +94,13 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
 
         <div style={{display:'flex',alignItems:'center',justifyContent:'center',gap:'10px',fontSize:'18px'}}>
 
-          {localStorage.getItem("email")}
+          {/* {localStorage.getItem("email")}
           
           {localStorage.getItem("email")||"undefined"?(
             <IoMdLogOut className='text-red-600' onClick={logOut}/>
           ):(
             "login"
-          )}
+          )} */}
          
         </div>
 

@@ -118,7 +118,7 @@ export default function VendorsPage() {
     <div>
 
       <div id='search'>
-        <p className="text-2xl font-bold">Vendor List</p>
+        <p className="text-2xl font-bold">Vendor Request List</p>
       <form action={formAction} id="search-form" >
       <input type="text" name="search" placeholder="Search vendors"/>
       <button type="submit" onClick={search}>Search</button>

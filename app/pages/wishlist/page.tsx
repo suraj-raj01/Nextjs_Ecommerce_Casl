@@ -29,26 +29,25 @@ const CartItems: React.FC = () => {
         dispatch(clearCart())
     }
     let price = 0;
-    const res = cartItems.map((key: any) => {
-        price += Number(key.proprice*key.quantity);
+    const res = cartItems.map((data: any,index:number) => {
+        price += Number(data.proprice*data.quantity);
         return (
             <>
-                <tr>
-                    <td>{key.proname}</td>
-                    <td>{key.protitle}</td>
-                    <td>{key.prodesc}</td>
-                    <td>{key.proprice*key.quantity}</td>
+                <tr key={index}>
+                    <td>{data.proname}</td>
+                    <td>{data.protitle}</td>
+                    <td>{data.proprice*data.quantity}</td>
                     <td>
-                        <Image src={key.proimgurl} alt='proimage' height={50} width={50} />
+                        <Image src={data.proimgurl} alt='proimage' height={50} width={50} />
                     </td>
-                    <td>
-                        <span className='flex items-center content-center gap-3'> 
-                            <FaMinusCircle onClick={() => dispatch(decrementQuantity(key.id))}/>
-                                {key.quantity}
-                            <FaPlusCircle onClick={() => dispatch(incrementQuantity(key.id))}/>
+                    {/* <td>
+                        <span className='flex items-center content-center gap-3 ml-5'> 
+                            <FaMinusCircle onClick={() => dispatch(decrementQuantity(data.id))}/>
+                                {data.quantity}
+                            <FaPlusCircle onClick={() => dispatch(incrementQuantity(data.id))}/>
                         </span>
-                    </td>
-                    <td><Button size='sm' variant='danger' onClick={() => { removeItm(key.id) }}>remove</Button></td>
+                    </td> */}
+                    <td><Button size='sm' variant='danger' onClick={() => { removeItm(data.id) }}>remove</Button></td>
                 </tr>
             </>
         )
@@ -64,10 +63,9 @@ const CartItems: React.FC = () => {
                         <tr>
                             <th>Name</th>
                             <th>Title</th>
-                            <th>Description</th>
                             <th>Price</th>
                             <th>Image</th>
-                            <th>Quantity</th>
+                            {/* <th>Quantity</th> */}
                             <th>Remove</th>
                         </tr>
                     </thead>

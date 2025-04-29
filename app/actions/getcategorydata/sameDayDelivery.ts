@@ -1,15 +1,22 @@
 'use server';
-import { prisma } from '../../../lib/prisma';
+
+// import { PrismaClient } from "@prisma/client";
+// const prisma = new PrismaClient();
+import { prisma } from "@/lib/prisma";
 
 export default async function samedayDelivery() {
   try {
-    const users = await prisma.product.findMany({
-        where : {samedaydelivery:"yes"}
+    const products = await prisma.product.findMany({
+      where: {
+        samedaydelivery: "yes"
+      },
     });
-    console.log(users);
-    return users;
+    console.log(products);
+    return products;
   } catch (error) {
-    console.error('Error fetching users:', error);
+    console.error('Error fetching products:', error);
     return [];
+  } finally {
+    await prisma.$disconnect();  // clean up the Prisma client
   }
 }
