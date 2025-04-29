@@ -1,11 +1,8 @@
-
-
-
 "use client"
 import "../../admindashboard/insert/style.css"
-import { useFormState } from 'react-dom'
 import { productData } from '../../actions/products'
-import { useState, useRef, ChangeEvent } from 'react';
+import { useState, useRef, ChangeEvent, useEffect, startTransition } from 'react';
+import getCategory from "@/app/actions/categories/getCategory";
 import React from "react";
 import Image from "next/image";
 
@@ -16,8 +13,11 @@ const initialstate = {
 };
 
 export default function Form() {
+  const id = localStorage.getItem('id');
   const [state, formAction] = React.useActionState(productData, initialstate);
   const [image, setImage] = useState<string | null>(null);
+  const [formdata, setFormData] = useState<any>(null);
+  const [category, setCategory] = useState<any>([]);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -38,9 +38,35 @@ export default function Form() {
     }
   };
 
+  const getCategories = async () => {
+    const data = await getCategory();
+    setCategory(data);
+  }
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    startTransition(() => {
+      const formData = new FormData(event.currentTarget);
+      formData.append('id', id as string);
+      formAction(formData);
+      setFormData(null);
+    });
+  };
+
+  useEffect(() => {
+    if (state.success) {
+      setFormData(null);
+      alert('Data inserted successfully!');
+    }
+  }, [state.success]);
+
+  useEffect(() => {
+    getCategories();
+  }, [])
+
   return (
     <>
-      <form action={formAction} id="formdata">
+      <form onSubmit={handleSubmit} id="formdata">
         <div id="main">
           <div id="insertform">
             <div id="box">
@@ -55,26 +81,35 @@ export default function Form() {
             <div id="box">
               <select name="category" id="" title="Choose a category">
                 <option>Select Category</option>
-                <option value="Flowers">Flowers</option>
-                <option value="Cakes">Cakes</option>
-                <option value="Plants">Plants</option>
-                <option value="Personalized">Personalized</option>
-                <option value="New Arrivals">New Arrivals</option>
-                <option value="Internationals">Internationals</option>
-                <option value="Bulk / Corp Gift">Bulk / Corp Gift</option>
-                <option value="Same Day Delivery">Same Day Delivery</option>
+                {category.map((item: any, index: number) => (
+                  <option key={index} value={item.catename}>{item.catename}</option>
+                ))}
               </select>
+
               <select name="sameday" id="" title="Same Day Delivery">
+                <option value="">Same Day Delivery</option>
                 <option value="yes">Yes</option>
                 <option value="no">No</option>
               </select>
-              <input type="text" required name="proinfo" placeholder='Product Info' className='p-2 border-1 mt-2 w-70' />
+
+              <select name="type" id="" title="Product Type">
+                <option value="">Gift Type</option>
+                <option value="Birthday Gift">Birthday Gift</option>
+                <option value="Aniversary Gift">Aniversary Gift</option>
+                <option value="International">International</option>
+                <option value="Plants">Plants</option>
+                <option value="Personalized">Personalized</option>
+                <option value="Gift Flower">Gift Flower</option>
+              </select>
+
+              <textarea required name="proinfo" placeholder='Product Info' className='p-2 border-1 mt-2 w-70' >
+
+              </textarea>
               <input type="file" name="imgurl" multiple required placeholder="choose file" className='p-2 border-1 mt-2 w-70' onChange={handleFileChange} />
               {image && (
                 <div>
                   <span onClick={handleRemoveImage} className="cursor-pointer text-red-500">X</span>
-                  {/* Image component from Next.js requires the src to be a static path or properly handled with next.config.js */}
-                  <Image src={image} alt="Selected Image" width={100} height={100} />
+                  <Image src={image} alt="Selected Image" width={30} height={30} />
                 </div>
               )}
             </div>

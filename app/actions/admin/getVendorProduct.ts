@@ -4,13 +4,15 @@
 import { prisma } from "../../../lib/prisma";
 
 
-export default async function getVendors() {
+export default async function getVendorsProduct(id:number) {
   try {
-    const users = await prisma.vendor.findMany({
-      where :{status:"active"}
+    const data = await prisma.product.findMany({
+      where :{
+        vendorId:Number(id)
+      }
     });
-    console.log(users)
-    return users;
+    console.log(data)
+    return {success:true,data};
   } catch (error) {
     console.error('Error fetching users:', error);
     return [];

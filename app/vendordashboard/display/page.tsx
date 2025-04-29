@@ -11,7 +11,7 @@ import "../insert/style.css"
 
 export default function DisplayPage() {
   const [show, setShow] = useState<any>(false);
-  const [data1,setData] = useState<any>([]);
+  const [data, setData] = useState<any>([]);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -26,59 +26,50 @@ export default function DisplayPage() {
     fetchData();
   }, []);
 
-  let sno=0;
-  const res = data1.map((key:any, index:number)=>{
-    return(
-      <>
-      <tr key={key.id || index}>
-        <td>{++sno}</td>
-        <td>{key.proname}</td>
-        <td>{key.protitle}</td>
-        <td>{key.proprice}</td>
-        {/* <td>{key.prodesc}</td> */}
-        <td>{key.proCategory}</td>
-        {/* <td>{key.proinfo}</td> */}
-        <td>
-        {key.proimgurl ? (
-        <Image src={key.proimgurl} alt='img' height={80} width={80} />
-      ) : (
-        "No Image"
-      )}
-        </td>
-        <td>
-          {key.approve}
-        </td>
-        <td>
-          <Button variant='danger' size='sm'>Delete</Button>
-        </td>
-      </tr>
-      </>
-    )
-  })
-
   return (
     <div>
-     <div id="tabledata">
-     <Table striped hover responsive>
-        <thead>
-          <tr className='border-1'>
-            <th>SNo</th>
-            <th>Product Name</th>
-            <th>Product Title</th>
-            <th>Price</th>
-            {/* <th>Description</th> */}
-            <th>Category</th>
-            {/* <th>Product Information</th> */}
-            <th>Product Image</th>
-            <th>Approve Status</th>
-            <th>Update</th>
-          </tr>
-        </thead>
-        <tbody>
-         {res}
-        </tbody>
-      </Table>
-     </div>
+      <div id="tabledata">
+        <Table striped hover responsive>
+          <thead>
+            <tr className='border-1'>
+              <th>Product Name</th>
+              <th>Product Title</th>
+              <th>Price</th>
+              {/* <th>Description</th> */}
+              <th>Category</th>
+              {/* <th>Product Information</th> */}
+              <th>Product Image</th>
+              <th>Approve Status</th>
+              <th>Update</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.map((item: any, index: number) => (
+              <tr key={index}>
+                <td>{item.proname}</td>
+                <td>{item.protitle}</td>
+                <td>{item.proprice}</td>
+                {/* <td>{item.prodesc}</td> */}
+                <td>{item.proCategory}</td>
+                {/* <td>{item.proinfo}</td> */}
+                <td>
+                  {item.proimgurl ? (
+                    <Image src={item.proimgurl} alt='img' height={80} width={80} />
+                  ) : (
+                    "No Image"
+                  )}
+                </td>
+                <td>
+                  {item.approve}
+                </td>
+                <td>
+                  <Button variant='danger' size='sm'>Delete</Button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </div>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Modal heading</Modal.Title>

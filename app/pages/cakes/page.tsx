@@ -62,60 +62,54 @@ const ProductCard: React.FC = () => {
 
 
 
-  const res = mydata.map((key: any,index:number) => {
-    return (
-      <>
-        <Card style={{width:'300px'}}>
-          <Image src={key.proimgurl} alt='proimage' height={200} width={300}/>
-          <Card.Body>
-            <Card.Title>{key.proname}</Card.Title>
-            <p>{key.protitle}</p>
-            <p className='text-red-500 font-bold'>Price {key.proprice} {" ₹"}</p>
-            <Card.Text>
-            </Card.Text>
-            <div style={{display:'flex',alignItems:'center',justifyContent:'space-between'}}>
-            <Button size='sm' variant="primary"
-             onClick={() => {
-              addDataToCart(
-                key.id,
-                key.proname,
-                key.protitle,
-                key.proprice,
-                key.prodesc,
-                key.proCategory,
-                key.proinfo,
-                key.proimgurl
-              )
-          }}
-            >Add To Cart</Button>
-            <FaRegHeart id='like' className='text-2xl' 
-            onClick={() => {
-              addDataToLike(
-                key.id,
-                key.proname,
-                key.protitle,
-                key.proprice,
-                key.prodesc,
-                key.proCategory,
-                key.proinfo,
-                key.proimgurl
-              )
-          }}/>
-            <FaHeart id='dislike' className='text-2xl ' style={{display:'none'}}/>
-            </div>
-          </Card.Body>
-        </Card>
-      </>
-    )
-  })
-
 
   return (
     <div>
       <Category/>
       <p className='text-center text-2xl font-bold p-2'>Cakes</p>
       <div id='products' className='flex items-center flex-wrap justify-center gap-3'>
-      {res}
+      {mydata?.map((item:any,index:number)=>(
+        <Card style={{width:'300px'}} key={index}>
+          <Image src={item.proimgurl} alt='proimage' height={200} width={300}/>
+          <Card.Body>
+            <Card.Title>{item.proname}</Card.Title>
+            <p>{item.protitle}</p>
+            <p className='text-red-500 font-bold'>Price {item.proprice} {" ₹"}</p>
+            <Card.Text>
+            </Card.Text>
+            <div style={{display:'flex',alignItems:'center',justifyContent:'space-between'}}>
+            <Button size='sm' variant="primary"
+             onClick={() => {
+              addDataToCart(
+                item.id,
+                item.proname,
+                item.protitle,
+                item.proprice,
+                item.prodesc,
+                item.proCategory,
+                item.proinfo,
+                item.proimgurl
+              )
+          }}
+            >Add To Cart</Button>
+            <FaRegHeart id='like' className='text-2xl' 
+            onClick={() => {
+              addDataToLike(
+                item.id,
+                item.proname,
+                item.protitle,
+                item.proprice,
+                item.prodesc,
+                item.proCategory,
+                item.proinfo,
+                item.proimgurl
+              )
+          }}/>
+            <FaHeart id='dislike' className='text-2xl ' style={{display:'none'}}/>
+            </div>
+          </Card.Body>
+        </Card>
+      ))}
       </div>
       <br />
       <br />

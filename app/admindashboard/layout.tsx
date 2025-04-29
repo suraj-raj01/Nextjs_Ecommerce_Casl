@@ -122,10 +122,10 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
             <FaUserGroup />
             Manage Vendors
           </Link>
-          <Link href="/admindashboard/products" className="flex items-center gap-3 text-2xs">
+          {/* <Link href="/admindashboard/products" className="flex items-center gap-3 text-2xs">
             <AiFillProduct />
             Manage Products
-          </Link>
+          </Link> */}
           <Link href="/admindashboard/requestvendor" className="flex items-center gap-3 text-2xs">
           <IoMdGitPullRequest />
             Vendors Request

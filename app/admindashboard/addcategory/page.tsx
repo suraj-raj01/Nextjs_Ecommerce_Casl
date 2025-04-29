@@ -50,7 +50,7 @@ const page = () => {
                         <div>
                           <span onClick={handleRemoveImage} className='text-red-500 cursor-pointer'>X</span>
                           {/* Image component from Next.js requires the src to be a static path or properly handled with next.config.js */}
-                          <Image src={image}  alt="Selected Image" width={200} height={300} />
+                          <Image src={image}  alt="Selected Image" width={100} height={100} />
                         </div>
                       )}
                 <input type="file" name='cateurl' required placeholder='category image' onChange={handleFileChange}/>

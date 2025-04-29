@@ -20,6 +20,8 @@ CREATE TABLE "Product" (
     "samedaydelivery" TEXT DEFAULT 'no',
     "approve" TEXT DEFAULT 'no',
     "proimgurl" TEXT NOT NULL,
+    "type" TEXT NOT NULL,
+    "vendorId" INTEGER NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Product_pkey" PRIMARY KEY ("id")
@@ -27,7 +29,7 @@ CREATE TABLE "Product" (
 
 -- CreateTable
 CREATE TABLE "Vendor" (
-    "id" BIGSERIAL NOT NULL,
+    "id" SERIAL NOT NULL,
     "role" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
@@ -54,12 +56,24 @@ CREATE TABLE "Admin" (
 );
 
 -- CreateTable
-CREATE TABLE "Customer" (
-    "id" BIGSERIAL NOT NULL,
-    "name" TEXT NOT NULL,
-    "email" TEXT NOT NULL,
-    "contact" TEXT NOT NULL,
-    "created_at" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+CREATE TABLE "Order" (
+    "id" SERIAL NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "userName" TEXT NOT NULL,
+    "userEmail" TEXT NOT NULL,
+    "phoneNumber" TEXT NOT NULL,
+    "address" TEXT NOT NULL,
+    "pincode" TEXT NOT NULL,
+    "products" JSONB NOT NULL,
+    "amount" INTEGER NOT NULL,
+    "razorpayOrderId" TEXT NOT NULL,
+    "razorpayPaymentId" TEXT NOT NULL,
+    "razorpaySignature" TEXT NOT NULL,
+    "paymentStatus" TEXT NOT NULL DEFAULT 'pending',
 
-    CONSTRAINT "Customer_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Order_pkey" PRIMARY KEY ("id")
 );
+
+-- AddForeignKey
+ALTER TABLE "Product" ADD CONSTRAINT "Product_vendorId_fkey" FOREIGN KEY ("vendorId") REFERENCES "Vendor"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

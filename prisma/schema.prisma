@@ -25,18 +25,22 @@ model Product {
   samedaydelivery String?  @default("no")
   approve         String?  @default("no")
   proimgurl       String
+  type            String
+  vendorId        Int
+  vendor          Vendor   @relation("VendorToProduct", fields: [vendorId], references: [id])
   createdAt       DateTime @default(now())
 }
 
 model Vendor {
-  id         BigInt   @id @default(autoincrement())
+  id         Int       @id @default(autoincrement())
   role       String
   name       String
   email      String
   contact    String
-  status     String?  @default("pending")
+  status     String?   @default("pending")
   password   String
-  created_at DateTime @default(now()) @db.Timestamptz(6)
+  products   Product[] @relation("VendorToProduct")
+  created_at DateTime  @default(now()) @db.Timestamptz(6)
 }
 
 model Admin {
@@ -50,10 +54,19 @@ model Admin {
   created_at DateTime @default(now()) @db.Timestamptz(6)
 }
 
-model Customer {
-  id         BigInt   @id @default(autoincrement())
-  name       String
-  email      String
-  contact    String
-  created_at DateTime @default(now()) @db.Timestamptz(6)
+model Order {
+  id                Int      @id @default(autoincrement())
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  userName          String
+  userEmail         String
+  phoneNumber       String
+  address           String
+  pincode           String
+  products          Json
+  amount            Int
+  razorpayOrderId   String
+  razorpayPaymentId String
+  razorpaySignature String
+  paymentStatus     String   @default("pending")
 }

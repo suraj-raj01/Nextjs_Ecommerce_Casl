@@ -18,20 +18,27 @@ interface VendorLayoutProps {
 
 export default function VendorLayout({ children }: VendorLayoutProps) {
   const [email, setEmail] = useState<string | null>(null);
+  const [name, setName] = useState<string | null>(null)
+  const [id, setId] = useState<string | null>(null);
   const router = useRouter();
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const storedEmail = localStorage.getItem("email");
+      const storedId = localStorage.getItem("id");
+      const storedName = localStorage.getItem("name");
 
-      if (!storedEmail) {
+      if (!storedEmail && !storedId && !storedName) {
         alert("Please Login First");
         router.push("/Auth/login");
       } else {
         setEmail(storedEmail);
+        setId(storedId);
+        setName(storedName);
       }
     }
-  }, [router]);
+  }, []);
+
 
   const sidebar = (): void => {
     const dashboard = document.getElementById('vendordashboard');

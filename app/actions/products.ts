@@ -12,8 +12,11 @@ export async function productData(prevState: any, formData: FormData) {
   const details = formData.get("details") as string;
   const category = formData.get("category") as string;
   const proinfo = formData.get("proinfo") as string;
-  const myimg = formData.get("imgurl") as string;
+  const myimg = formData.get("imgurl") as File | null;
   const samedaydelivery = formData.get("sameday") as string;
+  const type = formData.get("type") as string;
+  const id = formData.get('id') as string;
+  const vendorId = parseInt(id, 10);
 
   if (!title || !products || !price || !details || !category || !proinfo || !myimg) {
     return { error: 'All fields are required' };
@@ -39,18 +42,31 @@ export async function productData(prevState: any, formData: FormData) {
   try {
     const data = await prisma.product.create({
       data: {
-        proname:products,
-        protitle:title,
-        proprice:price,
-        prodesc:details,
-        proCategory:category,
-        samedaydelivery:samedaydelivery,
-        proinfo:proinfo,
-        proimgurl:imgurl
+        proname: products,
+        protitle: title,
+        proprice: price,
+        prodesc: details,
+        proCategory: category,
+        samedaydelivery: samedaydelivery,
+        proinfo: proinfo,
+        proimgurl: imgurl,
+        type:type,
+        vendorId:vendorId
       }
     })
-    console.log(data);
-    return { success: true,data:"data added successfull!!" };
+
+    await prisma.vendor.update({
+      where: { id: vendorId },
+      data: {
+          products: {
+              connect: { id: data.id }
+          }
+      }
+  });
+
+  console.log(data);
+  return { success: true, productId: data };
+  
   } catch (error) {
     console.error('Error registering user:', error);
     return { error: 'Failed to register user' };

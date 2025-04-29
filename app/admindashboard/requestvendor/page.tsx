@@ -21,126 +21,88 @@ const initialstate = {
 };
 
 export default function VendorsPage() {
-  const[mydata,setData] = useState<any>([]);
-  const[searchData,setSearchData] = useState<any>([])
-  const[state,formAction] = React.useActionState(searchVendor,initialstate)
-  const[status,setStatus] = useState<boolean>(true);
+  const [mydata, setData] = useState<any>([]);
+  const [searchData, setSearchData] = useState<any>([])
+  const [state, formAction] = React.useActionState(searchVendor, initialstate)
+  const [status, setStatus] = useState<boolean>(true);
 
 
-  const fetchData=async()=>{
+  const fetchData = async () => {
     const data = await vendorRequest();
     setData(data);
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     fetchData();
     setStatus(false);
-  },[])
+  }, [])
 
-  const delVendor=(id:any)=>{
+  const delVendor = (id: any) => {
     deleteVendor(id);
     alert("Vendor deleted!!!")
     fetchData();
   }
 
-  const activeVendor=(id:any)=>{
+  const activeVendor = (id: any) => {
     activateVendor(id)
     alert("Vendor conformed!!")
     fetchData();
   }
 
-  const dectiveVendor=(id:any)=>{
+  const dectiveVendor = (id: any) => {
     deActivateVendor(id)
     alert("Vendor De-Activated!!")
     fetchData();
   }
-  let count=0;
-  const res = mydata.map((key: any) => (
-    
-    <tr>
-      <td>{++count}</td>
-      <td>{key.name}</td>
-      <td>{key.email}</td>
-      <td>{key.contact}</td>
-      <td>
-        {key.status === "pending" ? (
-          <Button size="sm" variant="success" onClick={() => activeVendor(key.id)}>
-            Conform
-          </Button>
-        ) : (
-          <Button size="sm" variant="warning" onClick={() => dectiveVendor(key.id)}>
-            Deactivate
-          </Button>
-        )}
-      </td>
-      <td>
-        <Button size="sm" variant="danger" onClick={() => delVendor(key.id)}>
-          <span className="flex items-center content-center gap-2">
-            <AiFillDelete /> Delete
-          </span>
-        </Button>
-      </td>
-    </tr>
-  ));
-  
 
-  const search=()=>{
+  const search = () => {
     setSearchData(state?.data);
     console.log(state.data);
     console.log(state.message);
     setStatus(true);
   }
-  
-  let counter=0;
-  const res1 = searchData.map((key:any)=>{
 
-    return(
-      <>
-        <tr>
-          <td>{++counter}</td>
-          <td>{key.name}</td>
-          <td>{key.email}</td>
-          <td>{key.contact}</td>
-          <td>{key.status==="pending"?(
-              <Button size='sm' variant='success' onClick={()=>{activeVendor(key.id)}}>Activate</Button>
-          ):(
-              <Button size='sm' variant='warning' onClick={()=>{dectiveVendor(key.id)}}>Deactivate</Button>
-          )}</td>
-          <td>
-        <Button size='sm' variant='danger' onClick={()=>{delVendor(key.id)}}><span className='flex items-center content-center gap-2'><AiFillDelete />Delete</span></Button>
-          </td>
-        </tr>
-      </>
-    )
-  })
+
 
   return (
     <div>
 
       <div id='search'>
         <p className="text-2xl font-bold">Vendor Request List</p>
-      <form action={formAction} id="search-form" >
-      <input type="text" name="search" placeholder="Search vendors"/>
-      <button type="submit" onClick={search}>Search</button>
-      </form>
+        <form action={formAction} id="search-form" >
+          <input type="text" name="search" placeholder="Search vendors" />
+          <button type="submit" onClick={search}>Search</button>
+        </form>
       </div>
       <Table striped hover responsive>
         <thead>
           <tr>
-            <th>SNo</th>
             <th>Vendor Name</th>
             <th>Email</th>
             <th>Contact</th>
-            <th>Status</th>
+            <th>Request</th>
             <th>Update</th>
           </tr>
         </thead>
         <tbody>
-          {status?(
-            res1
-          ):(
-            res
-          )}
+          {
+            mydata.map((item: any, index: number) => (
+              <tr key={index}>
+                <td>{item.name}</td>
+                <td>{item.email}</td>
+                <td>{item.contact}</td>
+                <td>{item.status === "pending" ? (
+                  <Button size='sm' variant='success' onClick={() => { activeVendor(item.id) }}>Confirm</Button>
+                ) : (
+                  <Button size='sm' variant='warning' onClick={() => { dectiveVendor(item.id) }}>Deactivate</Button>
+                )}</td>
+                <td>
+                  <Button size='sm' variant='danger' onClick={() => { delVendor(item.id) }}><span className='flex items-center content-center gap-2'><AiFillDelete />Delete</span></Button>
+                </td>
+              </tr>
+            ))
+          
+            }
         </tbody>
       </Table>
     </div>

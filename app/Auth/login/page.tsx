@@ -25,6 +25,7 @@ export default function Form(){
       if(!(state.data.status==="pending")){
       localStorage.setItem("name",state.data.name)
       localStorage.setItem("email",state.data.email)
+      localStorage.setItem("id",state.data.id.toString())
       router.push("/vendordashboard")
       }else{
         alert("You dont have access controll!!!")
@@ -33,6 +34,7 @@ export default function Form(){
     else if(state.data.role==="Admin"){
       localStorage.setItem("name",state.data.name)
       localStorage.setItem("email",state.data.email)
+      localStorage.setItem("id",state.data.id.toString())
       router.push("/admindashboard")
     }
     else{

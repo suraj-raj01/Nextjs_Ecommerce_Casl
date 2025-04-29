@@ -32,24 +32,6 @@ const page: React.FC = () =>{
     alert(id)
   }
 
-  const res = category.map((key:any)=>{
-    return(
-      <>
-      <tr>
-        <td>{key.catename}</td>
-        <td>
-          <Image src={key.cateurl} alt='cateimage' height={50} width={50}/>
-        </td>
-        <td >
-          <button onClick={()=>{deleteItem(key.id)}} className='text-center p-2 bg-green-900 text-white'><AiFillDelete /></button>
-        </td>
-        <td >
-         <button onClick={()=>{editItem(key.id)}}><FaEdit /></button>
-        </td>
-      </tr>
-      </>
-    )
-  })
   return (
     <div>
       <div id='cate-header'>
@@ -68,7 +50,20 @@ const page: React.FC = () =>{
           </tr>
         </thead>
         <tbody>
-          {res}
+          {category.map((item:any,index:number)=>(
+            <tr key={index}>
+            <td>{item.catename}</td>
+            <td>
+              <Image src={item.cateurl} alt='cateimage' height={50} width={50}/>
+            </td>
+            <td >
+              <button onClick={()=>{deleteItem(item.id)}} className='text-center p-2 bg-red-700 text-white'><AiFillDelete /></button>
+            </td>
+            <td >
+             <button onClick={()=>{editItem(item.id)}} className='text-center p-2 bg-orange-500 text-white'><FaEdit /></button>
+            </td>
+          </tr>
+          ))}
         </tbody>
       </Table>
     </div>

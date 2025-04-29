@@ -1,5 +1,5 @@
 'use client'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import Image from 'next/image';
@@ -13,7 +13,10 @@ import Button from 'react-bootstrap/Button';
 import { useRouter } from 'next/navigation';
 import { FaPlusCircle } from "react-icons/fa";
 import { FaMinusCircle } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
 const CartItems: React.FC = () => {
+
+    const[total,setTotal] = useState<any>();
 
     const cartItems = useSelector((state: RootState) => state.cart.cartItems);
     console.log(cartItems);
@@ -28,31 +31,16 @@ const CartItems: React.FC = () => {
     const clearCartItem = () => {
         dispatch(clearCart())
     }
-    let price = 0;
-    const res = cartItems.map((key: any) => {
-        price += Number(key.proprice*key.quantity);
-        return (
-            <>
-                <tr>
-                    <td>{key.proname}</td>
-                    <td>{key.protitle}</td>
-                    <td>{key.proprice*key.quantity}</td>
-                    <td>
-                        <Image src={key.proimgurl} alt='proimage' height={50} width={50} />
-                    </td>
-                    <td>
-                        <span className='flex items-center content-center gap-3'> 
-                            <FaMinusCircle onClick={() => dispatch(decrementQuantity(key.id))}/>
-                                {key.quantity}
-                            <FaPlusCircle onClick={() => dispatch(incrementQuantity(key.id))}/>
-                        </span>
-                    </td>
-                    <td><Button size='sm' variant='danger' onClick={() => { removeItm(key.id) }}>remove</Button></td>
-                </tr>
-            </>
-        )
-    })
 
+    let price = 0;
+
+    useEffect(()=>{
+        let total = 0;
+        cartItems.forEach((value)=>{
+            total+=value.quantity*value.proprice;
+        })
+        setTotal(total);
+    },[cartItems]);
 
     return (
         <>
@@ -70,14 +58,29 @@ const CartItems: React.FC = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {res}
+                        {cartItems.map((item: any, index: number) => (
+                            <tr key={index}>
+                                <td>{item.proname}</td>
+                                <td>{item.protitle}</td>
+                                <td>{item.proprice * item.quantity}</td>
+                                <td><Image src={item.proimgurl} alt='proimage' height={50} width={50} /></td>
+                                <td>
+                                    <span className='flex items-center gap-3 content-center text-center ml-4'>
+                                        <FaMinusCircle onClick={() => dispatch(decrementQuantity(item.id))} />
+                                        {item.quantity}
+                                        <FaPlusCircle onClick={() => dispatch(incrementQuantity(item.id))} />
+                                    </span>
+                                </td>
+                                <td><Button size='sm' variant='danger' onClick={() => removeItm(item.id)}><MdDelete /></Button></td>
+                            </tr>
+                        ))}
                     </tbody>
                 </Table>
                 <div id='clrbtn'>
 
                     <Button size='sm' variant='success' onClick={() => { router.push("/pages/checkout") }}>CheckOut</Button>
                     <Button size='sm' variant='danger' onClick={clearCartItem} >Clear Cart</Button>
-                    <Button size='sm' variant='' ><span className='font-bold text-2xl'>Total Price : {price}</span></Button>
+                    <Button size='sm' variant='' ><span className='font-bold text-2xl'>Total Price : {total}</span></Button>
                 </div>
             </div>
         </>
