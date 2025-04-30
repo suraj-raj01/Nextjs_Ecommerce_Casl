@@ -7,7 +7,10 @@ import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import getProduct from "../../actions/getProduct"
 import Table from "react-bootstrap/Table"
+import { FaEdit } from "react-icons/fa";
+import { AiFillDelete } from "react-icons/ai";
 import "../insert/style.css"
+import { useRouter } from 'next/navigation';
 
 export default function DisplayPage() {
   const [show, setShow] = useState<any>(false);
@@ -25,6 +28,11 @@ export default function DisplayPage() {
   useEffect(() => {
     fetchData();
   }, []);
+
+   const router=useRouter();
+    const editpage=(id:number)=>{
+      router.push(`/vendordashboard/editdata/${id}`)
+    }
 
   return (
     <div>
@@ -60,10 +68,16 @@ export default function DisplayPage() {
                   )}
                 </td>
                 <td>
-                  {item.approve}
+                  {item.approve==="yes"?(
+                    <p className='font-bold ml-2'>Active</p>
+                  ):(
+                    <p className='font-bold ml-2'>Pending</p>
+                  )}
                 </td>
                 <td>
-                  <Button variant='danger' size='sm'>Delete</Button>
+                  <Button className='ml-2' variant='danger' size='sm'><AiFillDelete /></Button>
+                  <br />
+                  <Button className='ml-2' variant='success' size='sm' onClick={()=>{editpage(item.id)}}><FaEdit /></Button>
                 </td>
               </tr>
             ))}

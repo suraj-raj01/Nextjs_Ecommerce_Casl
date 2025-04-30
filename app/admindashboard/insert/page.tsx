@@ -1,9 +1,5 @@
-
-
-
 "use client"
 import "../../admindashboard/insert/style.css"
-import { useFormState } from 'react-dom'
 import { productData } from '../../actions/products'
 import { useState, useRef, ChangeEvent } from 'react';
 import React from "react";

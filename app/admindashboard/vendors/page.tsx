@@ -41,19 +41,19 @@ export default function VendorsPage() {
     fetchData();
   }, [])
 
-  const delVendor = (id: any) => {
+  const delVendor = (id: number) => {
     deleteVendor(id);
     alert("Vendor deleted!!!")
     fetchData();
   }
 
-  const activeVendor = (id: any) => {
+  const activeVendor = (id: number) => {
     activateVendor(id)
     alert("Vendor Activated!!")
     fetchData();
   }
 
-  const dectiveVendor = (id: any) => {
+  const dectiveVendor = (id: number) => {
     deActivateVendor(id)
     alert("Vendor De-Activated!!")
     fetchData();
@@ -78,10 +78,10 @@ export default function VendorsPage() {
     setShow(true)
   }
 
-  const approve=(id:any)=>{
+  const approve=(id:number)=>{
     approveProduct(id);
   }
-  const cancelApprove=(id:any)=>{
+  const cancelApprove=(id:number)=>{
     cancelApproveProduct(id);
   }
 

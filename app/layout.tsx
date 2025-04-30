@@ -1,9 +1,9 @@
-import type { Metadata } from 'next'
-import { ClerkProvider } from '@clerk/nextjs'
+import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from "next/font/google";
 import ReduxProvider from './store/ReduxProvider';
-
+import ClerkWrapper from './ClerkWrapper';
 import "./globals.css";
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const geistSans = Geist({
@@ -27,14 +27,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
-      <html lang="en">
-        <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+    <html lang="en">
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <ClerkWrapper>
           <ReduxProvider>
             {children}
           </ReduxProvider>
-        </body>
-      </html>
-    </ClerkProvider>
+        </ClerkWrapper>
+      </body>
+    </html>
   );
 }

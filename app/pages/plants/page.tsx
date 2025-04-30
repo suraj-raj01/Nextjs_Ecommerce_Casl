@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store/store';
 import { addToCart, addToLike } from '../../store/cartSlice';
 import Category from '@/app/_components/Category';
+import { useRouter } from 'next/navigation';
 
 
 const Plants: React.FC = () => {
@@ -59,7 +60,11 @@ const Plants: React.FC = () => {
       })
     )
   }
-
+  
+  const router=useRouter();
+  const details=(id:number)=>{
+    router.push(`/pages/details/${id}`)
+  }
 
 
   return (
@@ -69,7 +74,7 @@ const Plants: React.FC = () => {
       <div id='products' className='flex items-center flex-wrap justify-center gap-3'>
       {mydata?.map((item:any,index:number)=>(
         <Card style={{width:'300px'}} key={index}>
-          <Image src={item.proimgurl} alt='proimage' height={200} width={300}/>
+          <Image src={item.proimgurl} alt='proimage' height={200} width={300} onClick={()=>{details(item.id)}}/>
           <Card.Body>
             <Card.Title>{item.proname}</Card.Title>
             <p>{item.protitle}</p>

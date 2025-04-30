@@ -1,12 +1,12 @@
 'use server';
-// import { PrismaClient } from "@prisma/client";
 import axios from "axios"
-// const prisma = new PrismaClient();
-import { prisma } from "@/lib/prisma";
+import { PrismaClient } from "@prisma/client";
+const prisma = new PrismaClient();
+// import { prisma } from "@/lib/prisma";
 
 export async function createCategory(prevState: any, formData: FormData) {
   const category = formData.get("category") as string;
-  const myimg = formData.get("cateurl") as string;
+  const myimg = formData.get("cateurl") as File || null;
 
   if (!category || !myimg) {
     return { error: 'All fields are required' };
@@ -14,11 +14,11 @@ export async function createCategory(prevState: any, formData: FormData) {
   let imgurl="";
 
   if(myimg){
-    let formData1 = new FormData();
+    const formData1 = new FormData();
     formData1.append("file", myimg);
     formData1.append("upload_preset", "myphotos");
     formData1.append("cloud_name", "dtrpmtbie");
-    let cloudinary_api = "https://api.cloudinary.com/v1_1/dtrpmtbie/auto/upload";
+    const cloudinary_api = "https://api.cloudinary.com/v1_1/dtrpmtbie/auto/upload";
     try {
       const response = await axios.post(cloudinary_api,formData1);
       console.log(response.data.url);

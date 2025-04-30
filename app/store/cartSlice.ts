@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { CartState, Product } from './types';
+import {toast} from "react-hot-toast"
 
 const initialState: CartState = {
     cartItems: [],
@@ -15,16 +16,16 @@ const cartSlice = createSlice({
             console.log(state);
             const existing = state.cartItems.find(i => i.id === item.id);
             if (!existing) {
-                alert("item added successfully")
+                toast.success("item added successfully")
                 state.cartItems.push({ ...item, quantity: 1 });
             } else {
-                alert("item already added")
+                toast.error("item already added")
                 // existing.quantity += 1;
             }
         },
         removeFromCart(state, action: PayloadAction<number>) {
             state.cartItems = state.cartItems.filter(i => i.id !== action.payload);
-            alert("item remove successfull")
+            toast("item remove successfull")
         },
         clearCart(state) {
             state.cartItems = [];

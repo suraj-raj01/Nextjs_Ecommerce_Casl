@@ -5,7 +5,6 @@ import Image from 'next/image';
 import React from 'react'
 import "../categories/style.css"
 import { createCategory } from '@/app/actions/categories/createCategory'
-import { useFormState } from 'react-dom'
 
 const initialstate={
     success: undefined,

@@ -8,14 +8,19 @@ import { AiFillDelete } from "react-icons/ai";
 import { FaEdit } from "react-icons/fa";
 import Table from "react-bootstrap/Table"
 import Image from 'next/image'
-const page: React.FC = () =>{
+const page= ()=>{
+  
   const [category, setCategory] = useState<any>([])
 
   const router = useRouter();
 
   const fetchData = async () => {
-    const data = await getCategory();
-    setCategory(data);
+    const response = await getCategory();
+    if (Array.isArray(response)) {
+      setCategory([]);
+    } else {
+      setCategory(response.data || []);
+    }
   };
 
   useEffect(() => {

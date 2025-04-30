@@ -6,9 +6,8 @@ import Image from 'next/image';
 import Table from "react-bootstrap/Table";
 import Button from 'react-bootstrap/Button';
 import { useRouter } from 'next/navigation';
-import { FaPlusCircle, FaMinusCircle } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
-import { removeFromCart, clearCart, incrementQuantity, decrementQuantity } from '../../store/cartSlice';
+import { removeFromCart, clearCart} from '../../store/cartSlice';
 import { createOrder } from '@/app/actions/createOrders';
 import { useUser } from '@clerk/nextjs';
 import "../checkout/style.css";
@@ -38,6 +37,7 @@ const CheckOut: React.FC = () => {
             total += value.quantity * value.proprice;
         })
         setTotal(total);
+        console.log(cartItems)
     }, [cartItems]);
 
 
@@ -57,7 +57,11 @@ const CheckOut: React.FC = () => {
         e.preventDefault();
         setLoading(true);
         const formData = new FormData(e.currentTarget);
-        const order = await createOrder(null, formData);
+        formData.append("total",total);
+        formData.append("product", JSON.stringify(cartItems));
+        formData.append("username", username || "")
+        formData.append("useremail",useremail || "")
+        const order = await createOrder('', formData);
 
         const options = {
             key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
@@ -67,7 +71,9 @@ const CheckOut: React.FC = () => {
             order_id: order.id,
             handler: function (response: any) {
                 alert(`Payment successful! Payment ID: ${response.razorpay_payment_id}`);
-
+                formData.append("razorpayPaymentId",response.razorpay_payment_id)
+                formData.append("razorpayOrderId",response.razorpay_order_id)
+                formData.append("razorpaySignature",response.razorpay_signature)
                 // dispatch(clearCart());
                 router.push("/pages/userprofile");
             },
@@ -138,11 +144,11 @@ const CheckOut: React.FC = () => {
                         <h3>Delivery Address</h3>
                         <hr />
                         <form onSubmit={handlePayment} className='flex flex-col gap-3'>
-                            <input required className='p-2 border-1' type="number" name="contact" placeholder="Contact Number" minLength={10} />
+                            <input required className='p-2 border-1' type="number" name="contact" placeholder="Contact Number" />
                             <textarea rows={5} required className='p-2 border-1' name="address" placeholder="Enter delivery address" />
-                            <input required className='p-2 border-1' type="text" name="pincode" placeholder="PIN Code" />
+                            <input required className='p-2 border-1' type="number" name="pincode" placeholder="PIN Code" />
 
-                            <input type="number" id="amount" name="amount" defaultValue={price} readOnly title="Total amount to pay" />
+                            {/* <input type="number" id="amount" name="amount" defaultValue={price} readOnly title="Total amount to pay" /> */}
                             <span>{username}</span>
                             <span>{useremail}</span>
                             <button className='border-1 p-2 bg-green-800 text-white' disabled={loading}>

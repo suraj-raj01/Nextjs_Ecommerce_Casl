@@ -14,6 +14,7 @@ import { useRouter } from 'next/navigation';
 import { FaPlusCircle } from "react-icons/fa";
 import { FaMinusCircle } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
+import { useUser } from '@clerk/nextjs';
 const CartItems: React.FC = () => {
 
     const[total,setTotal] = useState<any>();
@@ -27,6 +28,13 @@ const CartItems: React.FC = () => {
         )
     }
     const router = useRouter();
+    const user = useUser();
+
+    useEffect(()=>{
+        if(!user?.isSignedIn){
+            router.push("/");
+        }
+    },[])
 
     const clearCartItem = () => {
         dispatch(clearCart())

@@ -27,7 +27,7 @@ const Occasion = () => {
             </div>
             <div id='box' style={{border:'none ',height:'auto',flexDirection:'column'}}>
             <Image src={img4} alt='delivery image' height={120}/>
-            <p>Mother's Day</p>
+            <p>Mothers Day</p>
             </div>
             <div id='box' style={{border:'none ',height:'auto',flexDirection:'column'}}>
             <Image src={img5} alt='delivery image' height={120}/>

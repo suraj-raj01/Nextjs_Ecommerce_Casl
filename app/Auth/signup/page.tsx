@@ -1,7 +1,6 @@
 
 "use client"
 import "../login/style.css"
-import { useFormState } from 'react-dom'
 import { useRouter } from "next/navigation";
 import {registerUser} from "../../actions/login/registration"
 import LoginNav from "@/app/_components/LoginNav";

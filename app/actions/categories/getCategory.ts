@@ -1,12 +1,13 @@
 'use server';
-// import { PrismaClient } from "@prisma/client";
-// const prisma = new PrismaClient();
-import { prisma } from "../../../lib/prisma";
+import { PrismaClient } from "@prisma/client";
+const prisma = new PrismaClient();
+// import { prisma } from "../../../lib/prisma"
 
 export default async function getCategory() {
   try {
     const data = await prisma.addCategory.findMany();
-    return data;
+    console.log(data);
+    return {success:true, data};
   } catch (error) {
     console.error('Error fetching users:', error);
     return [];

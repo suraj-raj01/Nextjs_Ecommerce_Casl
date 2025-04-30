@@ -4,14 +4,12 @@ import React, { useEffect, useState } from 'react'
 import vendorRequest from "@/app/actions/admin/vendorsRequest"
 import Table from "react-bootstrap/Table"
 import { AiFillDelete } from "react-icons/ai";
-import { FaEdit } from "react-icons/fa";
 import deleteVendor from '@/app/actions/admin/deleteVendor';
 import activateVendor from '@/app/actions/admin/activateVendor';
 import deActivateVendor from '@/app/actions/admin/deActivateVendor';
 import Button from "react-bootstrap/Button"
 
 import searchVendor from "@/app/actions/admin/searchVendor"
-import { count } from "console"
 
 
 const initialstate = {

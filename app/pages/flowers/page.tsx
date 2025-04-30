@@ -8,10 +8,11 @@ import { FaRegHeart } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa";
 import "../cakes/style.css"
 
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '../../store/store';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../store/store';
 import { addToCart, addToLike } from '../../store/cartSlice';
 import Category from '@/app/_components/Category';
+import { useRouter } from 'next/navigation';
 
 
 const Flowers: React.FC = () => {
@@ -28,6 +29,7 @@ const Flowers: React.FC = () => {
     fetchData();
   }, [])
 
+  
 
   const addDataToCart = (id: any,proname: any,protitle: any,proprice: any,prodesc: any,proCategory: any,proinfo: any,proimgurl: any) =>{
     dispatch(
@@ -60,13 +62,18 @@ const Flowers: React.FC = () => {
     )
   }
 
+  const router=useRouter();
+  const details=(id:number)=>{
+    router.push(`/pages/details/${id}`)
+  }
+
   return (
     <div>
       <Category/>
       <p className='text-center text-2xl font-bold p-2'>Flowers</p>
       <div id='products' className='flex items-center flex-wrap justify-center gap-3'>
       {mydata?.map((item:any,index:number)=>(
-        <Card style={{width:'300px'}} key={index}>
+        <Card style={{width:'300px'}} key={index} onClick={()=>{details(item.id)}}>
           <Image src={item.proimgurl} alt='proimage' height={200} width={300}/>
           <Card.Body>
             <Card.Title>{item.proname}</Card.Title>

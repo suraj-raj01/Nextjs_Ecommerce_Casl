@@ -4,9 +4,8 @@ import React, { ReactNode, useEffect } from 'react';
 import Link from 'next/link';
 import { FaBars } from 'react-icons/fa';
 import { ImCancelCircle } from 'react-icons/im';
-import { FaRegCircleUser, FaUserGroup } from 'react-icons/fa6';
+import { FaUserGroup } from 'react-icons/fa6';
 import { AiFillDashboard } from 'react-icons/ai';
-import { RiInsertColumnRight } from 'react-icons/ri';
 import { AiFillProduct } from "react-icons/ai";
 import { IoSettingsSharp } from "react-icons/io5";
 import DashbaordFooter from '../_components/DashbaordFooter';
@@ -14,24 +13,22 @@ import { CiLight } from "react-icons/ci";
 import { MdDarkMode } from "react-icons/md";
 import { MdLaptopChromebook } from "react-icons/md";
 import { IoMdGitPullRequest } from "react-icons/io";
-import { IoMdLogOut } from "react-icons/io";
 
 import { useState } from 'react';
-import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
-import { ClerkProvider, SignInButton } from '@clerk/nextjs'
+// import { ClerkProvider, SignInButton } from '@clerk/nextjs'
 import { Geist, Geist_Mono } from "next/font/google";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+// const geistSans = Geist({
+//   variable: "--font-geist-sans",
+//   subsets: ["latin"],
+// });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+// const geistMono = Geist_Mono({
+//   variable: "--font-geist-mono",
+//   subsets: ["latin"],
+// });
 
 import { useRouter } from 'next/navigation';
 

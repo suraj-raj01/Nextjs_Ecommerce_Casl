@@ -5,21 +5,18 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { IoMdLogIn, IoMdCart } from 'react-icons/io';
 import { FaRegHeart, FaBars } from 'react-icons/fa6';
 import { HiCurrencyRupee } from 'react-icons/hi';
 import { AiOutlineClose } from 'react-icons/ai';
+import { IoMdCart } from "react-icons/io";
 
 import logo from '../../public/logo/logo.png';
 import bag from '../../public/bag.svg';
 
 import {
-  ClerkProvider,
   SignInButton,
-  SignUpButton,
   SignedIn,
   SignedOut,
   UserButton,
@@ -29,9 +26,13 @@ import { RootState } from '../store/store';
 
 export default function TopNav(){
   const router = useRouter();
+  const[count,setCount] = React.useState<any>(0);
 
   const cartItems = useSelector((state: RootState) => state.cart.cartItems);
-  let size=cartItems.length;
+  
+  React.useEffect(()=>{
+    setCount(cartItems.length)
+  })
 
   const sidebar = (): void => {
     const icon = document.getElementById('icon');
@@ -110,7 +111,7 @@ export default function TopNav(){
                 <FaRegHeart className="text-2xl" />
               </Nav.Link>
               <Nav.Link href="/pages/cartitems">
-                <span className='flex'><IoMdCart className="text-2xl"/>{size.toString()}
+                <span className='flex gap-2 pl-2 pr-3 bg-gray-50 p-1.5 border rounded-3xl'><IoMdCart className="text-2xl"/>{count}
                 </span>
               </Nav.Link>
               <Nav.Link>
@@ -183,15 +184,15 @@ export default function TopNav(){
 
             <Form.Select aria-label="Default select example">
               <option>Special Days</option>
-              <option value="1">Mother's Day</option>
-              <option value="2">Father's Day</option>
-              <option value="3">Friendship's Day</option>
+              <option value="1">Mothers Day</option>
+              <option value="2">Fathers Day</option>
+              <option value="3">Friendship Day</option>
               <option value="4">Independence Day</option>
-              <option value="5">Teacher's Day</option>
+              <option value="5">Teachers Day</option>
               <option value="6">Boss Day</option>
-              <option value="7">Children's Day</option>
-              <option value="8">Valentine's Day</option>
-              <option value="9">Women's Day</option>
+              <option value="7">Childrens Day</option>
+              <option value="8">Valentines Day</option>
+              <option value="9">Womens Day</option>
             </Form.Select>
 
             <Form.Select aria-label="Default select example">
