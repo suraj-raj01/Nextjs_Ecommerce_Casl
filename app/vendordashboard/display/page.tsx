@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-import getProduct from "../../actions/getProduct"
+import getVendorsProduct from '@/app/actions/admin/getVendorProduct';
 import Table from "react-bootstrap/Table"
 import { FaEdit } from "react-icons/fa";
 import { AiFillDelete } from "react-icons/ai";
@@ -15,19 +15,25 @@ import { useRouter } from 'next/navigation';
 export default function DisplayPage() {
   const [show, setShow] = useState<any>(false);
   const [data, setData] = useState<any>([]);
+  const [id,setId]  = useState<any>([]);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   const fetchData = async () => {
-    const data = await getProduct();
-    setData(data || []);
-    console.log(data);
+    const vendorData = await getVendorsProduct(id);
+    if ('data' in vendorData && Array.isArray(vendorData.data)) {
+      setData(vendorData.data);
+    } else {
+      setData([]);
+    }
+    console.log(vendorData);
   };
 
   useEffect(() => {
     fetchData();
-  }, []);
+    setId(localStorage.getItem("id"));
+  }, [id]);
 
    const router=useRouter();
     const editpage=(id:number)=>{
@@ -62,7 +68,7 @@ export default function DisplayPage() {
                 {/* <td>{item.proinfo}</td> */}
                 <td>
                   {item.proimgurl ? (
-                    <Image src={item.proimgurl} alt='img' height={80} width={80} />
+                    <Image src={item.proimgurl} alt='img' height={50} width={50} />
                   ) : (
                     "No Image"
                   )}

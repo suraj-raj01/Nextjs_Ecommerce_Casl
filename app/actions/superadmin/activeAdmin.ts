@@ -2,10 +2,12 @@
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
+// import { PrismaClient } from "@prisma/client";
+// const prisma = new PrismaClient();
 
-export default async function activateVendor(id: number) {
+export default async function activateAdmin(id: number) {
   try {
-    const updatedVendor = await prisma.vendor.update({
+    const updatedVendor = await prisma.admin.update({
       where: {
         id,
       },
@@ -20,8 +22,5 @@ export default async function activateVendor(id: number) {
   } catch (error) {
     console.error("Error updating vendor:", error);
     return { success: false, error: (error as Error).message };
-  } finally {
-    // Don't disconnect Prisma in serverless environments like Vercel/Next.js
-    // await prisma.$disconnect(); ❌
   }
 }

@@ -63,6 +63,10 @@ export default function SuperAdminLayout({ children }: AdminLayoutProps){
             <FaUserGroup />
             Manage Admins
           </Link>
+          <Link href="/superadmindashboard/requestadmin" className="flex items-center gap-3 text-2xs">
+            <FaUserGroup />
+            Request Admins
+          </Link>
           <Link href="#" className="flex items-center gap-3 text-2xs">
             <FaEdit />
             Update

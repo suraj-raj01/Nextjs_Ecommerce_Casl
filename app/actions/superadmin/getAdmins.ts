@@ -1,19 +1,17 @@
 'use server';
 // import { PrismaClient } from "@prisma/client";
 // const prisma = new PrismaClient();
+
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
-
-export default async function getVendorsProduct(id:number) {
+export default async function getAdmin() {
   try {
-    const data = await prisma.product.findMany({
-      where :{
-        vendorId:Number(id)
-      }
+    const users = await prisma.admin.findMany({
+      where :{status:"active"}
     });
-    console.log(data)
-    return {success:true,data};
+    console.log(users)
+    return users;
   } catch (error) {
     console.error('Error fetching users:', error);
     return [];

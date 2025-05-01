@@ -1,20 +1,12 @@
 'use server';
-import { prisma } from "@/lib/prisma";
+import { PrismaClient } from "@prisma/client";
+const prisma = new PrismaClient();
 
-export default async function searchVendor(prevState: any, formData: FormData) {
-  const query = formData.get('search')?.toString().toLowerCase();
-
-  if (!query) {
-    return { success: false, message: 'Please enter a search term.', data: [] };
-  }
-
+export default async function searchVendor(query:string) {
   try {
     const vendors = await prisma.vendor.findMany({
       where: {
-        name: {
-          contains: query,
-          mode: 'insensitive',
-        },
+        name: query.toString(),
       },
     });
     console.log(vendors);

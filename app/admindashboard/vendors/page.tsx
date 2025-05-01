@@ -13,23 +13,15 @@ import searchVendor from "@/app/actions/admin/searchVendor"
 import Modal from 'react-bootstrap/Modal';
 import approveProduct from '@/app/actions/admin/approveProduct';
 import cancelApproveProduct from '@/app/actions/admin/cancelApproveProduct';
-
-
-const initialstate = {
-  success: false,
-  message: "",
-  data: []
-};
+import Image from "next/image"
 
 export default function VendorsPage() {
   const [mydata, setData] = useState<any>([]);
   const [searchData, setSearchData] = useState<any>([])
-  const [state, formAction] = React.useActionState(searchVendor, initialstate)
   const [status, setStatus] = useState<boolean>(false);
   const [data, setVendorProduct] = useState<any>([]);
+  const [searchInput,setSearch] = useState<any>("");
 
-
-  const [fullscreen, setFullscreen] = useState<string | true | undefined>(true);
   const [show, setShow] = useState(false);
 
   const fetchData = async () => {
@@ -59,10 +51,12 @@ export default function VendorsPage() {
     fetchData();
   }
 
-  const search = () => {
-    setSearchData(state?.data);
-    console.log(state.data);
-    console.log(state.message);
+  const search = async(e:any) => {
+    let stdsearch = e.target.value
+    setSearch(stdsearch);
+    const data = await searchVendor(searchData);
+    setSearchData(data?.data || []);
+    console.log(data?.data);
     setStatus(true);
   }
 
@@ -91,9 +85,9 @@ export default function VendorsPage() {
 
       <div id='search'>
         <p className="text-2xl font-bold">Vendor List</p>
-        <form action={formAction} id="search-form" >
-          <input type="text" name="search" placeholder="Search vendors" />
-          <button type="submit" onClick={search}>Search</button>
+        <form id="search-form" >
+          <input type="text" name="search" placeholder="Search vendors" value={searchInput} onChange={search}/>
+          <button type="submit" >Search</button>
         </form>
       </div>
       <Table striped hover responsive>
@@ -139,7 +133,6 @@ export default function VendorsPage() {
             ))
           }
         </tbody>
-
       </Table>
 
       <Modal show={show} onHide={() => setShow(false)}
@@ -156,6 +149,7 @@ export default function VendorsPage() {
               <tr>
                 <th>Product Name</th>
                 <th>Price</th>
+                <th>Image</th>
                 <th>Approve</th>
               </tr>
             </thead>
@@ -164,6 +158,9 @@ export default function VendorsPage() {
                 <tr key={index}>
                   <td>{item?.proname}</td>
                   <td>{item?.proprice}{" ₹"}</td>
+                  <td>
+                    <Image src={item?.proimgurl} alt="pro image" height={40} width={40}/>
+                  </td>
                   <td>{item?.approve === "no" ? (
                     <Button size='sm' variant='warning' onClick={() => { approve(item.id) }}>Approve</Button>
                   ) : (

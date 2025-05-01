@@ -49,17 +49,21 @@ export default function Form() {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const form = event.currentTarget;
+  
     startTransition(() => {
-      const formData = new FormData(event.currentTarget);
+      const formData = new FormData(form);
       formData.append('id', id as string);
       formAction(formData);
-      setFormData(null);
+      form.reset();
+      setImage(null); 
     });
   };
+  
 
   useEffect(() => {
     if (state.success) {
-      setFormData(null);
+      setFormData("");
       alert('Data inserted successfully!');
     }
   }, [state.success]);

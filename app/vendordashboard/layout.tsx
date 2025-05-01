@@ -24,9 +24,9 @@ export default function VendorLayout({ children }: VendorLayoutProps) {
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const storedEmail = localStorage.getItem("email");
+      const storedEmail = localStorage.getItem("vendoremail");
       const storedId = localStorage.getItem("id");
-      const storedName = localStorage.getItem("name");
+      const storedName = localStorage.getItem("vendorname");
 
       if (!storedEmail && !storedId && !storedName) {
         alert("Please Login First");

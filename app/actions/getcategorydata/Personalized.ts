@@ -1,12 +1,18 @@
 'use server';
 // import { PrismaClient } from "@prisma/client";
 // const prisma = new PrismaClient();
-import { prisma } from "@/lib/prisma";
+import { PrismaClient } from "@prisma/client";
+const prisma = new PrismaClient();
 
 export default async function getPersonalized() {
   try {
     const users = await prisma.product.findMany({
-        where : {proCategory:"Personalized"}
+      where: {
+        proCategory: {
+          equals: "Personalized",
+          mode: "insensitive"
+        }
+      }
     });
     console.log(users);
     return users;

@@ -16,16 +16,16 @@ const cartSlice = createSlice({
             console.log(state);
             const existing = state.cartItems.find(i => i.id === item.id);
             if (!existing) {
-                toast.success("item added successfully")
+                alert("item added successfully")
                 state.cartItems.push({ ...item, quantity: 1 });
             } else {
-                toast.error("item already added")
+                alert("item already added")
                 // existing.quantity += 1;
             }
         },
         removeFromCart(state, action: PayloadAction<number>) {
             state.cartItems = state.cartItems.filter(i => i.id !== action.payload);
-            toast("item remove successfull")
+            alert("item remove successfull")
         },
         clearCart(state) {
             state.cartItems = [];

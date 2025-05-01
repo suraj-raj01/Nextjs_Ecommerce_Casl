@@ -14,33 +14,35 @@ const initialstate={
 
 export default function Form(){
   const[state,formAction] = React.useActionState(loginUser, initialstate);
+  const router = useRouter();
 
-  const router = useRouter()
- if(state?.error){
-  console.log(state.error)
- }
- else if(state?.data){
-     if(state.data.role==="Vendor"){
-      if(!(state.data.status==="pending")){
-      localStorage.setItem("name",state.data.name)
-      localStorage.setItem("email",state.data.email)
-      localStorage.setItem("id",state.data.id.toString())
-      router.push("/vendordashboard")
-      }else{
-        alert("You dont have access controll!!!")
+  React.useEffect(() => {
+    if (state?.error) {
+      console.log(state.error);
+    } else if (state?.data) {
+      const { role, status, name, email, id } = state.data;
+  
+      if (status === "pending") {
+        alert("You don't have access control!!!");
+        return;
       }
+  
+      if (role === "Vendor") {
+        localStorage.setItem("vendorname", name);
+        localStorage.setItem("vendoremail", email);
+        localStorage.setItem("id", id.toString());
+        router.push("/vendordashboard");
+      } else if (role === "Admin") {
+        localStorage.setItem("name", name);
+        localStorage.setItem("email", email);
+        localStorage.setItem("id", id.toString());
+        router.push("/admindashboard");
+      } else {
+        alert("Role not defined!!");
       }
-    else if(state.data.role==="Admin"){
-      localStorage.setItem("name",state.data.name)
-      localStorage.setItem("email",state.data.email)
-      localStorage.setItem("id",state.data.id.toString())
-      router.push("/admindashboard")
     }
-    else{
-      alert("role not defined!!")
-    }
- }
-
+  }, [state, router]);
+  
 
 
   return (
@@ -56,7 +58,9 @@ export default function Form(){
       </select>
       <input type="email" required name="email"  placeholder='email' className='p-2 border-1 mt-2 w-70'/>
       <input type="password" required name="password"  placeholder='password'  className='p-2 border-1 mt-2 w-70'/>
-      <button type="submit" className='p-2 border-1 mt-2 w-70'>Submit</button>
+      <button type="submit" className='p-2 border-1 mt-2 w-70' disabled={state?.success}>
+        {state?.success?("Signing"):("Login")}
+      </button>
       <p className="text-center p-2 cursor-pointer" onClick={()=>{router.push("/Auth/signup")}}>dont have an account</p>
     
       {state?.success?(

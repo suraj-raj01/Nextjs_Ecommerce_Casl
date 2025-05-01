@@ -1,13 +1,15 @@
 'use server';
+
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
-export default async function getProductDetails(id:number) {
+export default async function adminRequest() {
   try {
-    const users = await prisma.product.findFirst({
-        where:{id:Number(id)}
+    const users = await prisma.admin.findMany({
+        where: { status:"pending" },
     });
-    return {success:true,users};
+    console.log(users)
+    return users;
   } catch (error) {
     console.error('Error fetching users:', error);
     return [];

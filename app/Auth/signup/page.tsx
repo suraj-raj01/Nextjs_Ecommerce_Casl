@@ -14,9 +14,16 @@ const initialstate={
 export default function Form(){
   const[state,formAction] = React.useActionState(registerUser, initialstate);
   const router = useRouter()
-  if(state?.success===true){
-    router.push("/Auth/login")
+  if (state?.success === true) {
+    router.push("/Auth/login");
   }
+
+  React.useEffect(() => {
+    if (state?.success === true) {
+      router.push("/Auth/login");
+    }
+  }, [state, router]);
+
   return (
     <>
     <LoginNav/>

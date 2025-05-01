@@ -3,7 +3,6 @@
 import React, { ReactNode, useEffect } from 'react';
 import Link from 'next/link';
 import { FaBars } from 'react-icons/fa';
-import { ImCancelCircle } from 'react-icons/im';
 import { FaUserGroup } from 'react-icons/fa6';
 import { AiFillDashboard } from 'react-icons/ai';
 import { AiFillProduct } from "react-icons/ai";
@@ -13,22 +12,10 @@ import { CiLight } from "react-icons/ci";
 import { MdDarkMode } from "react-icons/md";
 import { MdLaptopChromebook } from "react-icons/md";
 import { IoMdGitPullRequest } from "react-icons/io";
-
+import { GoSidebarExpand } from "react-icons/go";
+import { IoMdLogOut } from "react-icons/io";
 import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
-
-// import { ClerkProvider, SignInButton } from '@clerk/nextjs'
-import { Geist, Geist_Mono } from "next/font/google";
-
-// const geistSans = Geist({
-//   variable: "--font-geist-sans",
-//   subsets: ["latin"],
-// });
-
-// const geistMono = Geist_Mono({
-//   variable: "--font-geist-mono",
-//   subsets: ["latin"],
-// });
 
 import { useRouter } from 'next/navigation';
 
@@ -38,12 +25,18 @@ interface AdminLayoutProps {
 
 export default function AdminLayout({ children }: AdminLayoutProps) {
 
-  // useEffect(() => {
-  //   if (!localStorage.getItem("email")) {
-  //     alert("Please Login First")
-  //     router.push("/Auth/login")
-  //   }
-  // }, [])
+  const [userEmail, setUserEmail] = useState<string | null>(null);
+
+  useEffect(() => {
+    const email = localStorage.getItem("email");
+
+    if (!email) {
+      alert("Please Login First");
+      router.push("/Auth/login");
+    } else {
+      setUserEmail(email);
+    }
+  }, []);
 
 
   const sidebar = (): void => {
@@ -73,7 +66,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
 
   const router = useRouter();
   const logOut = () => {
-    // localStorage.clear();
+    localStorage.clear();
     router.push("/Auth/login")
   }
 
@@ -85,20 +78,19 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       <header id="vendor-nav">
         <div className="flex items-center content-center gap-3">
           <FaBars onClick={sidebar} id="menu" style={{ display: 'none' }} />
-          <ImCancelCircle id="cancelbtn" onClick={cancelbtn} style={{ display: 'block' }} />
+          <GoSidebarExpand id="cancelbtn" onClick={cancelbtn} style={{ display: 'block' }} />
           ADMIN DASHBOARD
         </div>
 
-        <div style={{display:'flex',alignItems:'center',justifyContent:'center',gap:'10px',fontSize:'18px'}}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', fontSize: '18px' }}>
 
-          {/* {localStorage.getItem("email")}
-          
-          {localStorage.getItem("email")||"undefined"?(
-            <IoMdLogOut className='text-red-600' onClick={logOut}/>
-          ):(
+          {userEmail}
+          {userEmail ? (
+            <IoMdLogOut className='text-red-600' onClick={logOut} />
+          ) : (
             "login"
-          )} */}
-         
+          )}
+
         </div>
 
 
@@ -124,7 +116,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
             Manage Products
           </Link> */}
           <Link href="/admindashboard/requestvendor" className="flex items-center gap-3 text-2xs">
-          <IoMdGitPullRequest />
+            <IoMdGitPullRequest />
             Vendors Request
           </Link>
           <Link href="/admindashboard/categories" className="flex items-center gap-3 text-2xs">

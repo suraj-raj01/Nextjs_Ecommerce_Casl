@@ -1,12 +1,10 @@
 'use server';
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
-
-
-export default async function deActivateVendor(id: number) {
+export default async function deActivateAdmin(id: number) {
 
     try {
-        const updatedVendor = await prisma.vendor.update({
+        const updatedVendor = await prisma.admin.update({
             where: {
                 id: Number(id),
             },
@@ -15,11 +13,8 @@ export default async function deActivateVendor(id: number) {
             },
         });
         console.log('Vendor updated:', updatedVendor);
+        return {success:true,updatedVendor}
     } catch (error) {
         console.error('Error updating vendor:', error);
-    } finally {
-        await prisma.$disconnect();
     }
-
-    return { success: true }
 }

@@ -1,6 +1,6 @@
 'use server';
-
-import {prisma} from '../../lib/prisma'; // or your DB client
+import { PrismaClient } from "@prisma/client";
+const prisma = new PrismaClient();
 
 export default async function editProduct(id: number) {
    try {

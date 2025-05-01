@@ -1,9 +1,7 @@
 'use server';
-
 import bcrypt from 'bcryptjs';
-// import { PrismaClient } from '@prisma/client';
-// const prisma = new PrismaClient();
-import { prisma } from '@/lib/prisma';
+import { PrismaClient } from '@prisma/client';
+const prisma = new PrismaClient();
 
 export default async function loginUser(prevState: any, formData: FormData) {
   try {
@@ -41,7 +39,7 @@ export default async function loginUser(prevState: any, formData: FormData) {
     }
 
     console.log("Login successful:", user);
-    return { success: true, data: user };
+    return { success: true, data: user};
   } catch (error) {
     console.error("Error logging in user:", error);
     return { error: "Failed to log in user" };

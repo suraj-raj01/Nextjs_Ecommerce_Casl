@@ -1,12 +1,17 @@
 'use server';
-// import { PrismaClient } from "@prisma/client";
-// const prisma = new PrismaClient();
-import { prisma } from "../../../lib/prisma";
+import { PrismaClient } from "@prisma/client";
+const prisma = new PrismaClient();
+// import { prisma } from "../../../lib/prisma";
 
 export default async function getFlower() {
   try {
     const users = await prisma.product.findMany({
-        where : {proCategory:"Flowers"}
+      where: {
+        proCategory: {
+          equals: "flowers",
+          mode: "insensitive"
+        }
+      }
     });
     console.log(users);
     return users;
