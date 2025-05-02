@@ -75,7 +75,7 @@ export default function Form() {
   return (
     <>
       <form onSubmit={handleSubmit} id="formdata">
-        <div id="main">
+        <div id="form-main">
           <div id="insertform">
             <div id="box">
               <input type="text" required name="products" placeholder='Product Name' className='p-2 border-1 mt-2 w-70' />

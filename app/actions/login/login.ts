@@ -42,6 +42,6 @@ export default async function loginUser(prevState: any, formData: FormData) {
     return { success: true, data: user};
   } catch (error) {
     console.error("Error logging in user:", error);
-    return { error: "Failed to log in user" };
+    return { error: "You don't have access control Please Contact to Admin or SuperAdmin" };
   }
 }

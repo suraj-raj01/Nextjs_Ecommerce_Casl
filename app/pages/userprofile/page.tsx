@@ -3,15 +3,6 @@ import React from 'react'
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import Table from "react-bootstrap/Table"
-import { useDispatch } from 'react-redux';
-import { removeFromCart } from '../../store/cartSlice';
-import { clearCart } from '../../store/cartSlice';
-import { incrementQuantity, decrementQuantity } from '../../store/cartSlice';
-import "../userprofile/style.css"
-import Button from 'react-bootstrap/Button';
-import { useRouter } from 'next/navigation';
-import { FaPlusCircle } from "react-icons/fa";
-import { FaMinusCircle } from "react-icons/fa";
 import Image from 'next/image'
 import { useUser } from '@clerk/nextjs'
 
@@ -21,17 +12,6 @@ const UserProfile: React.FC = () => {
 
   const cartItems = useSelector((state: RootState) => state.cart.cartItems);
   console.log(cartItems);
-  const dispatch = useDispatch();
-  const removeItm = (id: any) => {
-    dispatch(
-      removeFromCart(id)
-    )
-  }
-  const router = useRouter();
-
-  const clearCartItem = () => {
-    dispatch(clearCart())
-  }
 
   return (
     <div>
@@ -56,30 +36,18 @@ const UserProfile: React.FC = () => {
               </tr>
             </thead>
             <tbody>
-              {cartItems.map((item:any,index:number)=>(
+              {cartItems.map((item: any, index: number) => (
                 <tr key={index}>
-                <td>{item.proname}</td>
-                <td>{item.protitle}</td>
-                <td>{item.proprice * item.quantity} {"₹"}</td>
-                <td>
-                  <Image src={item.proimgurl} alt='proimage' height={50} width={50} />
-                </td>
-                {/* <td>
-                  <span className='flex items-center content-center gap-3'>
-                    <FaMinusCircle onClick={() => dispatch(decrementQuantity(key.id))} />
-                    {key.quantity}
-                    <FaPlusCircle onClick={() => dispatch(incrementQuantity(key.id))} />
-                  </span>
-                </td>
-                <td><Button size='sm' variant='danger' onClick={() => { removeItm(key.id) }}>remove</Button></td> */}
-              </tr>
+                  <td>{item.proname}</td>
+                  <td>{item.protitle}</td>
+                  <td>{item.proprice * item.quantity} {"₹"}</td>
+                  <td>
+                    <Image src={item.proimgurl} alt='proimage' height={50} width={50} />
+                  </td>
+                </tr>
               ))}
             </tbody>
           </Table>
-      <div id='clrbtn'>
-        {/* <Button size='sm' variant='success' onClick={() => { router.push("/pages/checkout") }}>CheckOut</Button> */}
-        {/* <Button size='sm' variant='danger' onClick={clearCartItem} >Clear Cart</Button> */}
-      </div>
         </div>
       </div>
     </div>

@@ -18,7 +18,7 @@ import Image from "next/image"
 export default function VendorsPage() {
   const [mydata, setData] = useState<any>([]);
   const [searchData, setSearchData] = useState<any>([])
-  const [status, setStatus] = useState<boolean>(false);
+  const [status, setStatus] = useState<boolean>(true);
   const [data, setVendorProduct] = useState<any>([]);
   const [searchInput,setSearch] = useState<any>("");
 
@@ -51,14 +51,20 @@ export default function VendorsPage() {
     fetchData();
   }
 
-  const search = async(e:any) => {
-    let stdsearch = e.target.value
-    setSearch(stdsearch);
-    const data = await searchVendor(searchData);
+  const search = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setSearch(value);
+  
+    if (value.trim() === "") {
+      setStatus(true); 
+      return;
+    }
+  
+    const data = await searchVendor(value);
     setSearchData(data?.data || []);
-    console.log(data?.data);
-    setStatus(true);
-  }
+    setStatus(false);
+  };
+  
 
 
   const vendorProduct = async (id: number) => {
@@ -87,7 +93,7 @@ export default function VendorsPage() {
         <p className="text-2xl font-bold">Vendor List</p>
         <form id="search-form" >
           <input type="text" name="search" placeholder="Search vendors" value={searchInput} onChange={search}/>
-          <button type="submit" >Search</button>
+          <button type="submit" onSubmit={(e) => e.preventDefault()}>Search</button>
         </form>
       </div>
       <Table striped hover responsive>
@@ -103,6 +109,7 @@ export default function VendorsPage() {
         </thead>
         <tbody>
           {
+           status?(
             mydata.map((item: any, index: number) => (
               <tr key={index}>
                 <td>{item.name}</td>
@@ -131,6 +138,36 @@ export default function VendorsPage() {
                 </td>
               </tr>
             ))
+           ):(
+            searchData.map((item: any, index: number) => (
+              <tr key={index}>
+                <td>{item.name}</td>
+                <td>{item.email}</td>
+                <td>{item.contact}</td>
+                <td>
+                  {item.status === "pending" ? (
+                    <Button size="sm" variant="success" onClick={() => activeVendor(item.id)}>
+                      Activate
+                    </Button>
+                  ) : (
+                    <Button size="sm" variant="warning" onClick={() => dectiveVendor(item.id)}>
+                      Deactivate
+                    </Button>
+                  )}
+                </td>
+                <td>
+                  <Button size="sm" variant="danger" onClick={() => delVendor(item.id)}>
+                    <span className="flex items-center content-center gap-2">
+                      <AiFillDelete /> Delete
+                    </span>
+                  </Button>
+                </td>
+                <td>
+                  <Button size="sm" variant="success" onClick={() => { vendorProduct(item.id) }}>See Products</Button>
+                </td>
+              </tr>
+            ))
+           )
           }
         </tbody>
       </Table>

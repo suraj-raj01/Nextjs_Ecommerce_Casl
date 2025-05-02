@@ -8,7 +8,6 @@ import { useDispatch } from 'react-redux';
 import { removeFromCart } from '../../store/cartSlice';
 import { clearCart } from '../../store/cartSlice';
 import { incrementQuantity, decrementQuantity } from '../../store/cartSlice';
-import "../cartitems/style.css"
 import Button from 'react-bootstrap/Button';
 import { useRouter } from 'next/navigation';
 import { FaPlusCircle } from "react-icons/fa";
@@ -45,7 +44,7 @@ const WishList: React.FC = () => {
 
     return (
         <>
-            <p className='text-2xl font-bold text-center p-3 '>Cart Items 🛒</p>
+            <p className='text-2xl font-bold text-center p-3 '>Likes Items</p>
             <div id="products">
                 <Table>
                     <thead>
@@ -79,7 +78,7 @@ const WishList: React.FC = () => {
                 </Table>
                 <div id='clrbtn'>
 
-                    <Button size='sm' variant='success' onClick={() => { router.push("/pages/checkout") }}>WishList</Button>
+                    {/* <Button size='sm' variant='success' onClick={() => { router.push("/pages/checkout") }}>WishList</Button> */}
                     <Button size='sm' variant='danger' onClick={clearCartItem} >Clear Cart</Button>
                     <Button size='sm' variant='' ><span className='font-bold text-2xl'>Total Price : {total}</span></Button>
                 </div>

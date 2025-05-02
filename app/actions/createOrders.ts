@@ -1,5 +1,6 @@
 'use server'
-import { prisma } from '@/lib/prisma'
+import { PrismaClient } from "@prisma/client";
+const prisma = new PrismaClient();
 import Razorpay from 'razorpay'
 
 export async function createOrder(prevState: string,formData: FormData) {

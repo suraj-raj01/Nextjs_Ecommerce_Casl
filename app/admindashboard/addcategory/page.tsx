@@ -40,7 +40,7 @@ const page = () => {
     <div>
         <div id='cate-header'>
             <p className='text-2xl font-bold'>Add New Category</p>
-            <button className='p-2 bg-green-800 text-white' onClick={()=>{router.push("/admindashboard/categories")}}>Go to Categories</button>
+            <button className='p-2 bg-black text-white' onClick={()=>{router.push("/admindashboard/categories")}}>Go to Categories</button>
         </div>
         <div>
             <form action={formAction} id="cate-form">
@@ -53,7 +53,7 @@ const page = () => {
                         </div>
                       )}
                 <input type="file" name='cateurl' required placeholder='category image' onChange={handleFileChange}/>
-                <button>Add Category</button>
+                <button className='p-2 bg-black text-white'>Add Category</button>
             </form>
         </div>
     </div>

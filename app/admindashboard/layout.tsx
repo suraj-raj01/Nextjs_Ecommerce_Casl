@@ -16,7 +16,7 @@ import { GoSidebarExpand } from "react-icons/go";
 import { IoMdLogOut } from "react-icons/io";
 import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
-
+import Swal from 'sweetalert2';
 import { useRouter } from 'next/navigation';
 
 interface AdminLayoutProps {
@@ -31,7 +31,10 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
     const email = localStorage.getItem("email");
 
     if (!email) {
-      alert("Please Login First");
+      Swal.fire({
+        title: "Please Login!!",
+        icon: "warning"
+      });
       router.push("/Auth/login");
     } else {
       setUserEmail(email);

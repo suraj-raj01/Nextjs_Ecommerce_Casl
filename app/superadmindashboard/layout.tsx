@@ -6,7 +6,6 @@ import { FaBars } from 'react-icons/fa';
 import { ImCancelCircle } from 'react-icons/im';
 import { FaRegCircleUser, FaUserGroup } from 'react-icons/fa6';
 import { AiFillDashboard } from 'react-icons/ai';
-import { RiInsertColumnRight } from 'react-icons/ri';
 import { FaEdit } from 'react-icons/fa';
 import DashbaordFooter from '../_components/DashbaordFooter';
 
@@ -67,10 +66,10 @@ export default function SuperAdminLayout({ children }: AdminLayoutProps){
             <FaUserGroup />
             Request Admins
           </Link>
-          <Link href="#" className="flex items-center gap-3 text-2xs">
+          {/* <Link href="#" className="flex items-center gap-3 text-2xs">
             <FaEdit />
             Update
-          </Link>
+          </Link> */}
         </div>
         <div className="flex-1">{children}</div>
       </div>

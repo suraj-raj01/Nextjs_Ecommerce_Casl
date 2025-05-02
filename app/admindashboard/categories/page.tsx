@@ -42,7 +42,7 @@ const page= ()=>{
       <div id='cate-header'>
         <p className='text-2xl font-bold'>Categories</p>
         <button onClick={() => { router.push("/admindashboard/addcategory") }} 
-          className='bg-green-800 p-2 text-white'
+          className='bg-black p-2 text-white'
           >Add Category</button>
       </div>
       <Table striped hover responsive>
@@ -62,10 +62,10 @@ const page= ()=>{
               <Image src={item.cateurl} alt='cateimage' height={50} width={50}/>
             </td>
             <td >
-              <button onClick={()=>{deleteItem(item.id)}} className='text-center p-2 bg-red-700 text-white'><AiFillDelete /></button>
+              <button onClick={()=>{deleteItem(item.id)}} className='text-center p-2 bg-black text-white'><AiFillDelete /></button>
             </td>
             <td >
-             <button onClick={()=>{editItem(item.id)}} className='text-center p-2 bg-orange-500 text-white'><FaEdit /></button>
+             <button onClick={()=>{editItem(item.id)}} className='text-center p-2 bg-black text-white'><FaEdit /></button>
             </td>
           </tr>
           ))}

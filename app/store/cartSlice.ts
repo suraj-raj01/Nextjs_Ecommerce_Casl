@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { CartState, Product } from './types';
-import {toast} from "react-hot-toast"
+import Swal from 'sweetalert2'
 
 const initialState: CartState = {
     cartItems: [],
@@ -16,16 +16,24 @@ const cartSlice = createSlice({
             console.log(state);
             const existing = state.cartItems.find(i => i.id === item.id);
             if (!existing) {
-                alert("item added successfully")
+                Swal.fire({
+                    title: "Data added Successfull",
+                    icon: "success"
+                });
                 state.cartItems.push({ ...item, quantity: 1 });
             } else {
-                alert("item already added")
-                // existing.quantity += 1;
+                Swal.fire({
+                    title: "Already Added!!",
+                    icon: "warning"
+                });
             }
         },
         removeFromCart(state, action: PayloadAction<number>) {
             state.cartItems = state.cartItems.filter(i => i.id !== action.payload);
-            alert("item remove successfull")
+            Swal.fire({
+                title: "item remove successfull",
+                icon: "success"
+              });
         },
         clearCart(state) {
             state.cartItems = [];
@@ -42,7 +50,10 @@ const cartSlice = createSlice({
             if (item && item.quantity > 1) {
                 item.quantity -= 1;
             } else {
-                alert("Item cant be less than one")
+                Swal.fire({
+                    title: "Cant be less than 1",
+                    icon: "warning"
+                });
             }
         },
         addToLike(state, action: PayloadAction<Product>) {
@@ -50,9 +61,15 @@ const cartSlice = createSlice({
             const exists = state.likeItems.find(i => i.id === item.id);
             if (!exists) {
                 state.likeItems.push(item);
-                alert("Item liked!");
+                Swal.fire({
+                    title: "Item Liked",
+                    icon: "success"
+                  });
             } else {
-                alert("Already liked!");
+                Swal.fire({
+                    title: "Item dislike",
+                    icon: "warning"
+                  });
             }
         },
 
@@ -68,5 +85,5 @@ const cartSlice = createSlice({
     },
 });
 
-export const { addToCart, removeFromCart, clearCart, incrementQuantity, decrementQuantity,addToLike,removeFromLike,clearLikes } = cartSlice.actions;
+export const { addToCart, removeFromCart, clearCart, incrementQuantity, decrementQuantity, addToLike, removeFromLike, clearLikes } = cartSlice.actions;
 export default cartSlice.reducer;

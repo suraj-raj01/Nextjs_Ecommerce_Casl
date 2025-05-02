@@ -10,7 +10,6 @@ import { MdDelete } from "react-icons/md";
 import { removeFromCart, clearCart} from '../../store/cartSlice';
 import { createOrder } from '@/app/actions/createOrders';
 import { useUser } from '@clerk/nextjs';
-import "../checkout/style.css";
 
 declare global {
     interface Window {
@@ -102,7 +101,6 @@ const CheckOut: React.FC = () => {
             {cartItems.length > 0 ? (
                 <div id="main">
                     <div id="products">
-                        <h3>Product details</h3>
                         <hr />
                         <Table striped hover responsive>
                             <thead>

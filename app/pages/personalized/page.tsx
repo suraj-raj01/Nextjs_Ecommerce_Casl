@@ -6,7 +6,6 @@ import Card from 'react-bootstrap/Card';
 import Image from 'next/image';
 import { FaRegHeart } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa";
-import "../cakes/style.css"
 
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store/store';

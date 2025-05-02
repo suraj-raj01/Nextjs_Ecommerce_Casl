@@ -11,6 +11,7 @@ import DashbaordFooter from '../_components/DashbaordFooter';
 import { IoSettingsSharp } from "react-icons/io5";
 import { useRouter } from 'next/navigation';
 import { IoMdLogOut } from "react-icons/io";
+import Swal from 'sweetalert2';
 
 interface VendorLayoutProps {
   children: ReactNode;
@@ -29,7 +30,10 @@ export default function VendorLayout({ children }: VendorLayoutProps) {
       const storedName = localStorage.getItem("vendorname");
 
       if (!storedEmail && !storedId && !storedName) {
-        alert("Please Login First");
+        Swal.fire({
+          title: "Please Login!",
+          icon: "warning"
+        });
         router.push("/Auth/login");
       } else {
         setEmail(storedEmail);
