@@ -9,7 +9,7 @@ import { FaHeart } from "react-icons/fa";
 
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store/store';
-import { addToCart, addToLike } from '../../store/cartSlice';
+import { addToCart, addToLike, removeFromLike } from '../../store/cartSlice';
 import Category from '@/app/_components/Category';
 import { useRouter } from 'next/navigation';
 
@@ -18,6 +18,13 @@ const SameDayDelivery: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const [mydata, setData] = useState<any>([]);
 
+  const likeItems = useSelector((state: RootState) => state.cart.likeItems);
+
+  const removeItm = (id: any) => {
+    dispatch(
+      removeFromLike(id)
+    )
+  }
 
   const fetchData = async () => {
     const data = await samedayDelivery();
@@ -60,8 +67,8 @@ const SameDayDelivery: React.FC = () => {
     )
   }
 
-  const router=useRouter();
-  const details=(id:number)=>{
+  const router = useRouter();
+  const details = (id: number) => {
     router.push(`/pages/details/${id}`)
   }
 
@@ -73,9 +80,9 @@ const SameDayDelivery: React.FC = () => {
       <div id='products' className='flex items-center flex-wrap justify-between gap-3'>
         {mydata?.map((item: any, index: number) => (
           <Card style={{ width: '300px' }} key={index}>
-            <Image src={item.proimgurl} alt='proimage' height={200} width={300} onClick={()=>{details(item.id)}}/>
+            <Image src={item.proimgurl} alt='proimage' height={200} width={300} onClick={() => { details(item.id) }} />
             <Card.Body>
-              <Card.Title>{item.proname}</Card.Title>
+              <Card.Title className='h-10'>{item.proname}</Card.Title>
               <p>{item.protitle}</p>
               <p className='text-red-500 font-bold'>Price {item.proprice} {" ₹"}</p>
               <Card.Text>
@@ -95,6 +102,7 @@ const SameDayDelivery: React.FC = () => {
                     )
                   }}
                 >Add To Cart</Button>
+
                 <FaRegHeart id='like' className='text-2xl'
                   onClick={() => {
                     addDataToLike(
@@ -108,7 +116,7 @@ const SameDayDelivery: React.FC = () => {
                       item.proimgurl
                     )
                   }} />
-                <FaHeart id='dislike' className='text-2xl ' style={{ display: 'none' }} />
+                {/* <FaHeart id='dislike' className='text-2xl ' onClick={()=>{removeItm(item.id)}} /> */}
               </div>
             </Card.Body>
           </Card>

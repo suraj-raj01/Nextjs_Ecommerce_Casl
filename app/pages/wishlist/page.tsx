@@ -5,31 +5,35 @@ import { RootState } from '../../store/store';
 import Image from 'next/image';
 import Table from "react-bootstrap/Table"
 import { useDispatch } from 'react-redux';
-import { removeFromCart } from '../../store/cartSlice';
-import { clearCart } from '../../store/cartSlice';
+import { removeFromLike } from '../../store/cartSlice';
+import { clearLikes } from '../../store/cartSlice';
 import { incrementQuantity, decrementQuantity } from '../../store/cartSlice';
 import Button from 'react-bootstrap/Button';
 import { useRouter } from 'next/navigation';
+import { useUser } from '@clerk/nextjs';
 import { FaPlusCircle } from "react-icons/fa";
 import { FaMinusCircle } from "react-icons/fa";
-import { MdDelete } from "react-icons/md";
+import { SlDislike } from "react-icons/sl";
+import Swal from 'sweetalert2';
 
 const WishList: React.FC = () => {
 
     const [total, setTotal] = useState<any>();
 
-    const cartItems = useSelector((state: RootState) => state.cart.cartItems);
-    console.log(cartItems);
+    const cartItems = useSelector((state: RootState) => state.cart.likeItems);
+
     const dispatch = useDispatch();
     const removeItm = (id: any) => {
         dispatch(
-            removeFromCart(id)
+            removeFromLike(id)
         )
     }
     const router = useRouter();
+    const { user } = useUser();
+   
 
     const clearCartItem = () => {
-        dispatch(clearCart())
+        dispatch(clearLikes())
     }
 
     let price = 0;
@@ -40,6 +44,13 @@ const WishList: React.FC = () => {
             total += value.quantity * value.proprice;
         })
         setTotal(total);
+        if (!user?.fullName) {
+            router.back();
+            Swal.fire({
+                title: "Please Login!!",
+                icon: "warning"
+            });
+        }
     }, [cartItems]);
 
     return (
@@ -53,8 +64,8 @@ const WishList: React.FC = () => {
                             <th>Title</th>
                             <th>Price</th>
                             <th>Image</th>
-                            <th>Quantity</th>
-                            <th>Remove</th>
+                            {/* <th>Quantity</th> */}
+                            <th>Dislike</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -64,14 +75,14 @@ const WishList: React.FC = () => {
                                 <td>{item.protitle}</td>
                                 <td>{item.proprice * item.quantity}</td>
                                 <td><Image src={item.proimgurl} alt='proimage' height={50} width={50} /></td>
-                                <td>
+                                {/* <td>
                                     <span className='flex items-center gap-3 content-center text-center ml-4'>
                                         <FaMinusCircle onClick={() => dispatch(decrementQuantity(item.id))} />
                                         {item.quantity}
                                         <FaPlusCircle onClick={() => dispatch(incrementQuantity(item.id))} />
                                     </span>
-                                </td>
-                                <td><Button size='sm' variant='danger' onClick={() => removeItm(item.id)}><MdDelete /></Button></td>
+                                </td> */}
+                                <td><Button size='sm' variant='danger' onClick={() => removeItm(item.id)}><SlDislike /></Button></td>
                             </tr>
                         ))}
                     </tbody>

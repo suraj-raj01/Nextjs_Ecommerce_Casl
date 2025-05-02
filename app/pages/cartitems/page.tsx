@@ -14,6 +14,8 @@ import { FaPlusCircle } from "react-icons/fa";
 import { FaMinusCircle } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { useUser } from '@clerk/nextjs';
+import Swal from 'sweetalert2';
+
 const CartItems: React.FC = () => {
 
     const [total, setTotal] = useState<any>();
@@ -30,6 +32,8 @@ const CartItems: React.FC = () => {
     const router = useRouter();
     const user = useUser();
 
+   
+
     const clearCartItem = () => {
         dispatch(clearCart())
     }
@@ -42,6 +46,13 @@ const CartItems: React.FC = () => {
             total += value.quantity * value.proprice;
         })
         setTotal(total);
+        if (!user?.user) {
+            router.back();
+            Swal.fire({
+                title: "Please Login!!",
+                icon: "warning"
+            });
+        }
     }, [cartItems]);
 
     return (
@@ -66,7 +77,7 @@ const CartItems: React.FC = () => {
                                     <td>{item.proname}</td>
                                     <td>{item.protitle}</td>
                                     <td>{item.proprice * item.quantity}</td>
-                                    <td><Image src={item.proimgurl} alt='proimage' height={50} width={50}/></td>
+                                    <td><Image src={item.proimgurl} alt='proimage' height={50} width={50} /></td>
                                     <td>
                                         <span className='flex items-center gap-3 content-center text-center ml-4'>
                                             <FaMinusCircle onClick={() => dispatch(decrementQuantity(item.id))} />
@@ -81,10 +92,10 @@ const CartItems: React.FC = () => {
                     </Table>
                 ) : (
                     <>
-                    <div className='flex items-center text-center '>
-                    <h2 className='text-center m-5 text-red-800'>Seems Like You're not LoggedIn!</h2>
-                    <Button onClick={()=>{router.push("https://joint-krill-9.accounts.dev/sign-in?redirect_url=http%3A%2F%2Flocalhost%3A3000%2Fpages%2Fcartitems")}}>Login</Button>
-                    </div>
+                        <div className='flex items-center text-center '>
+                            <h2 className='text-center m-5 text-red-800'>Seems Like You're not LoggedIn!</h2>
+                            <Button onClick={() => { router.push("https://joint-krill-9.accounts.dev/sign-in?redirect_url=http%3A%2F%2Flocalhost%3A3000%2Fpages%2Fcartitems") }}>Login</Button>
+                        </div>
                     </>
                 )}
 

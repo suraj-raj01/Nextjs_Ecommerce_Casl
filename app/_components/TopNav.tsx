@@ -8,10 +8,9 @@ import Form from 'react-bootstrap/Form';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { FaRegHeart, FaBars } from 'react-icons/fa6';
-import { HiCurrencyRupee } from 'react-icons/hi';
+import { FaHeart } from "react-icons/fa";
 import { AiOutlineClose } from 'react-icons/ai';
 import { IoMdCart } from "react-icons/io";
-
 import logo from '../../public/logo/logo.png';
 import bag from '../../public/bag.svg';
 
@@ -27,11 +26,14 @@ import { RootState } from '../store/store';
 export default function TopNav(){
   const router = useRouter();
   const[count,setCount] = React.useState<any>(0);
+  const[likes,setLikes] = React.useState<any>(0);
 
   const cartItems = useSelector((state: RootState) => state.cart.cartItems);
+  const likeItems = useSelector((state: RootState) => state.cart.likeItems);
   
   React.useEffect(()=>{
-    setCount(cartItems.length)
+    setCount(cartItems.length);
+    setLikes(likeItems.length);
   })
 
   const sidebar = (): void => {
@@ -104,20 +106,27 @@ export default function TopNav(){
             </Form> */}
 
             <Nav id="icons" className="flex items-center content-center">
-              <Nav.Link href="#deets">
+              {/* <Nav.Link href="#deets">
                 <HiCurrencyRupee className="text-2xl" />
-              </Nav.Link>
+              </Nav.Link> */}
               <Nav.Link href="/pages/wishlist">
-                <FaRegHeart className="text-2xl" />
+                {likes<1?(
+                  <span className='flex gap-2 p-1.5 font-bold'><FaRegHeart className="text-2xl"/><span id='badge' className='position-absolute top-2 pl-2 text-xs'>{likes}</span>
+                </span>
+                ):(
+                  <span className='flex gap-2 p-1.5 font-bold text-red-800'><FaHeart className="text-2xl"/><span id='badge' className='position-absolute top-2 pl-2 text-xs'>{likes}</span>
+                </span>
+                )}
               </Nav.Link>
               <Nav.Link href="/pages/cartitems">
-                <span className='flex gap-2 pl-2 pr-3 bg-gray-50 p-1.5 border rounded-3xl'><IoMdCart className="text-2xl"/>{count}
+                <span className='flex gap-2  p-1.5 font-bold'><IoMdCart className="text-2xl"/>Carts <span id='badge' className='position-absolute top-2 pl-2 text-xs'>{count}</span>
                 </span>
               </Nav.Link>
               <Nav.Link>
                 {/* Custom dropdown logic if needed */}
               </Nav.Link>
               <SignedOut>
+              {/* <FiUserPlus /> */}
               <SignInButton/>
               </SignedOut>
               <SignedIn>

@@ -7,9 +7,10 @@ import Table from "react-bootstrap/Table";
 import Button from 'react-bootstrap/Button';
 import { useRouter } from 'next/navigation';
 import { MdDelete } from "react-icons/md";
-import { removeFromCart, clearCart} from '../../store/cartSlice';
+import { removeFromCart, clearCart } from '../../store/cartSlice';
 import { createOrder } from '@/app/actions/createOrders';
 import { useUser } from '@clerk/nextjs';
+import Swal from 'sweetalert2';
 
 declare global {
     interface Window {
@@ -19,10 +20,19 @@ declare global {
 
 const CheckOut: React.FC = () => {
     const { user } = useUser();
-    const [loading, setLoading] = useState(false);
-    const[total,setTotal] = useState<any>();
-    const dispatch = useDispatch();
     const router = useRouter();
+
+    if (!user?.fullName) {
+        router.back();
+        Swal.fire({
+            title: "Please Login!!",
+            icon: "warning"
+        });
+    }
+
+    const [loading, setLoading] = useState(false);
+    const [total, setTotal] = useState<any>();
+    const dispatch = useDispatch();
     const cartItems = useSelector((state: RootState) => state.cart.cartItems);
 
     let price = 0;
@@ -56,10 +66,10 @@ const CheckOut: React.FC = () => {
         e.preventDefault();
         setLoading(true);
         const formData = new FormData(e.currentTarget);
-        formData.append("total",total);
+        formData.append("total", total);
         formData.append("product", JSON.stringify(cartItems));
         formData.append("username", username || "")
-        formData.append("useremail",useremail || "")
+        formData.append("useremail", useremail || "")
         const order = await createOrder('', formData);
 
         const options = {
@@ -70,9 +80,9 @@ const CheckOut: React.FC = () => {
             order_id: order.id,
             handler: function (response: any) {
                 alert(`Payment successful! Payment ID: ${response.razorpay_payment_id}`);
-                formData.append("razorpayPaymentId",response.razorpay_payment_id)
-                formData.append("razorpayOrderId",response.razorpay_order_id)
-                formData.append("razorpaySignature",response.razorpay_signature)
+                formData.append("razorpayPaymentId", response.razorpay_payment_id)
+                formData.append("razorpayOrderId", response.razorpay_order_id)
+                formData.append("razorpaySignature", response.razorpay_signature)
                 // dispatch(clearCart());
                 router.push("/pages/userprofile");
             },
@@ -87,11 +97,16 @@ const CheckOut: React.FC = () => {
             const rzp = new window.Razorpay(options);
             rzp.open();
         } else {
-            alert("Razorpay SDK failed to load. Are you online?");
+            Swal.fire({
+                title: "Razorpay SDK failed to load. Are you online?",
+                icon: "warning"
+            });
         }
 
         setLoading(false);
     };
+
+
 
 
     return (

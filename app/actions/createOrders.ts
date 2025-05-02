@@ -14,7 +14,7 @@ export async function createOrder(prevState: string,formData: FormData) {
   const contact = Number(formData.get("contact"))
   const address = formData.get("address") as string
   const pincode = Number(formData.get("pincode"))
-  const userName = formData.get("username") as string
+  const username = formData.get("username") as string
   const useremail= formData.get("useremail") as string
   const products = formData.get("product");
   if (typeof products === 'string') {
@@ -32,8 +32,8 @@ export async function createOrder(prevState: string,formData: FormData) {
 
   console.log(formData);
 
-  // const data = await prisma.order.create({
-  // userName:userName,
+  // await prisma.order.create({
+  // userName:username,
   // userEmail: useremail,        
   // phoneNumber: contact,      
   // address: address,         

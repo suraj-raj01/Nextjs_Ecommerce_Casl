@@ -464,6 +464,13 @@ body {
     height: auto;
     padding: 20px;
   }
+  #icons{
+    display: flex;
+    background-color: #0a0a0a;
+  }
+  #badge{
+    position: relative;
+   }
 }
 
 @media screen and (max-width: 480px) {
@@ -508,6 +515,9 @@ body {
 
   #icons {
     display: flex;
+  }
+  #badge{
+   position: relative;
   }
 }
 
@@ -629,3 +639,4 @@ textarea {
   /* height: 250px; */
   border-radius: 5px;
 }
+

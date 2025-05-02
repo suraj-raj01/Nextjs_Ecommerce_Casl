@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { ClerkProvider } from '@clerk/nextjs'
+import ClerkWrapper from '../ClerkWrapper';
 import ReduxProvider from '../store/ReduxProvider';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -25,12 +25,12 @@ export default function RootLayout({
   
   return (
     
-    <ClerkProvider>
+    <ClerkWrapper>
       <TopNav />
       <ReduxProvider>
         {children}
       </ReduxProvider>
       <Footer />
-    </ClerkProvider>
+    </ClerkWrapper>
   );
 }

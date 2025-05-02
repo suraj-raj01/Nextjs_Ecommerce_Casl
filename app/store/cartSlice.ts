@@ -58,6 +58,7 @@ const cartSlice = createSlice({
         },
         addToLike(state, action: PayloadAction<Product>) {
             const item = action.payload;
+            console.log(state);
             const exists = state.likeItems.find(i => i.id === item.id);
             if (!exists) {
                 state.likeItems.push(item);
@@ -67,7 +68,7 @@ const cartSlice = createSlice({
                   });
             } else {
                 Swal.fire({
-                    title: "Item dislike",
+                    title: "Item already liked❤️",
                     icon: "warning"
                   });
             }
@@ -75,7 +76,10 @@ const cartSlice = createSlice({
 
         removeFromLike(state, action: PayloadAction<number>) {
             state.likeItems = state.likeItems.filter(i => i.id !== action.payload);
-            alert("Item removed from likes");
+            Swal.fire({
+                title: "Item disliked",
+                icon: "warning"
+              });
         },
 
         clearLikes(state) {
