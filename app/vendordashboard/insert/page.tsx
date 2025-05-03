@@ -5,6 +5,7 @@ import { useState, useRef, ChangeEvent, useEffect, startTransition } from 'react
 import getCategory from "../../../app/actions/categories/getCategory";
 import React from "react";
 import Image from "next/image";
+import Swal from "sweetalert2";
 
 const initialstate = {
   success: undefined,
@@ -50,21 +51,24 @@ export default function Form() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const form = event.currentTarget;
-  
+
     startTransition(() => {
       const formData = new FormData(form);
       formData.append('id', id as string);
       formAction(formData);
       form.reset();
-      setImage(null); 
+      setImage(null);
     });
   };
-  
+
 
   useEffect(() => {
     if (state.success) {
       setFormData("");
-      alert('Data inserted successfully!');
+      Swal.fire({
+        title: "Data inserted successfully!",
+        icon: "warning"
+      });
     }
   }, [state.success]);
 

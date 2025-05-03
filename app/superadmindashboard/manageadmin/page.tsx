@@ -13,6 +13,7 @@ import Modal from 'react-bootstrap/Modal';
 import approveProduct from '@/app/actions/admin/approveProduct';
 import cancelApproveProduct from '@/app/actions/admin/cancelApproveProduct';
 import Image from "next/image"
+import Swal from "sweetalert2"
 
 export default function AdminPage() {
   const [mydata, setData] = useState<any>([]);
@@ -34,19 +35,28 @@ export default function AdminPage() {
 
   const delAdmin = (id: number) => {
     deleteAdmin(id);
-    alert("Vendor deleted!!!")
+    Swal.fire({
+      title: "Admin Deleted!",
+      icon: "success"
+    });
     fetchData();
   }
 
   const activeAdmin = (id: number) => {
     activateAdmin(id)
-    alert("Vendor Activated!!")
+    Swal.fire({
+      title: "Admin Activated!",
+      icon: "success"
+    });
     fetchData();
   }
 
   const deactiveAdmin = (id: number) => {
     deActivateAdmin(id)
-    alert("Vendor De-Activated!!")
+    Swal.fire({
+      title: "Admin De-Activated!",
+      icon: "success"
+    });
     fetchData();
   }
 

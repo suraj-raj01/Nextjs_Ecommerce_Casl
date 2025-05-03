@@ -8,9 +8,12 @@ import Button from 'react-bootstrap/Button';
 import { useRouter } from 'next/navigation';
 import { MdDelete } from "react-icons/md";
 import { removeFromCart, clearCart } from '../../store/cartSlice';
+import { incrementQuantity, decrementQuantity } from '../../store/cartSlice';
 import { createOrder } from '@/app/actions/createOrders';
 import { useUser } from '@clerk/nextjs';
 import Swal from 'sweetalert2';
+import { FaPlusCircle } from "react-icons/fa";
+import { FaMinusCircle } from "react-icons/fa";
 
 declare global {
     interface Window {
@@ -22,13 +25,7 @@ const CheckOut: React.FC = () => {
     const { user } = useUser();
     const router = useRouter();
 
-    if (!user?.fullName) {
-        router.back();
-        Swal.fire({
-            title: "Please Login!!",
-            icon: "warning"
-        });
-    }
+
 
     const [loading, setLoading] = useState(false);
     const [total, setTotal] = useState<any>();
@@ -46,7 +43,13 @@ const CheckOut: React.FC = () => {
             total += value.quantity * value.proprice;
         })
         setTotal(total);
-        console.log(cartItems)
+        if (!user?.fullName) {
+            router.back();
+            Swal.fire({
+                title: "Please Login!!",
+                icon: "warning"
+            });
+        }
     }, [cartItems]);
 
 
@@ -137,9 +140,9 @@ const CheckOut: React.FC = () => {
                                         <td><Image src={item.proimgurl} alt='proimage' height={50} width={50} /></td>
                                         <td>
                                             <span className='flex items-center gap-3 content-center text-center ml-4'>
-                                                {/* <FaMinusCircle onClick={() => dispatch(decrementQuantity(item.id))} /> */}
+                                                <FaMinusCircle onClick={() => dispatch(decrementQuantity(item.id))} />
                                                 {item.quantity}
-                                                {/* <FaPlusCircle onClick={() => dispatch(incrementQuantity(item.id))} /> */}
+                                                <FaPlusCircle onClick={() => dispatch(incrementQuantity(item.id))} />
                                             </span>
                                         </td>
                                         <td><Button size='sm' variant='danger' onClick={() => removeItm(item.id)}><MdDelete /></Button></td>

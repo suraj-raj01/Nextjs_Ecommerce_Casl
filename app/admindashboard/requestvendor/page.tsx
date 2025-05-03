@@ -10,6 +10,7 @@ import deActivateVendor from '@/app/actions/admin/deActivateVendor';
 import Button from "react-bootstrap/Button"
 
 import searchVendor from "@/app/actions/admin/searchVendor"
+import Swal from "sweetalert2"
 
 
 // const initialstate = {
@@ -37,19 +38,28 @@ export default function VendorsPage() {
 
   const delVendor = (id: any) => {
     deleteVendor(id);
-    alert("Vendor deleted!!!")
+    Swal.fire({
+      title: "Vendor Deleted!!",
+      icon: "warning"
+    });
     fetchData();
   }
 
   const activeVendor = (id: any) => {
     activateVendor(id)
-    alert("Vendor conformed!!")
+     Swal.fire({
+          title: "Vendor conformed!!",
+          icon: "success"
+        });
     fetchData();
   }
 
   const dectiveVendor = (id: any) => {
     deActivateVendor(id)
-    alert("Vendor De-Activated!!")
+    Swal.fire({
+      title: "Vendor De-Activated!!",
+      icon: "warning"
+    });
     fetchData();
   }
 
@@ -79,7 +89,7 @@ export default function VendorsPage() {
             <th>Email</th>
             <th>Contact</th>
             <th>Request</th>
-            <th>Update</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>

@@ -14,13 +14,14 @@ import Modal from 'react-bootstrap/Modal';
 import approveProduct from '@/app/actions/admin/approveProduct';
 import cancelApproveProduct from '@/app/actions/admin/cancelApproveProduct';
 import Image from "next/image"
+import Swal from "sweetalert2"
 
 export default function VendorsPage() {
   const [mydata, setData] = useState<any>([]);
   const [searchData, setSearchData] = useState<any>([])
   const [status, setStatus] = useState<boolean>(true);
   const [data, setVendorProduct] = useState<any>([]);
-  const [searchInput,setSearch] = useState<any>("");
+  const [searchInput, setSearch] = useState<any>("");
 
   const [show, setShow] = useState(false);
 
@@ -35,36 +36,45 @@ export default function VendorsPage() {
 
   const delVendor = (id: number) => {
     deleteVendor(id);
-    alert("Vendor deleted!!!")
+    Swal.fire({
+      title: "Vendor deleted!!!",
+      icon: "warning"
+    });
     fetchData();
   }
 
   const activeVendor = (id: number) => {
     activateVendor(id)
-    alert("Vendor Activated!!")
+    Swal.fire({
+      title: "Vendor Activated!!",
+      icon: "success"
+    });
     fetchData();
   }
 
   const dectiveVendor = (id: number) => {
     deActivateVendor(id)
-    alert("Vendor De-Activated!!")
+    Swal.fire({
+      title: "Vendor De-Activated!!",
+      icon: "success"
+    });
     fetchData();
   }
 
   const search = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setSearch(value);
-  
+
     if (value.trim() === "") {
-      setStatus(true); 
+      setStatus(true);
       return;
     }
-  
+
     const data = await searchVendor(value);
     setSearchData(data?.data || []);
     setStatus(false);
   };
-  
+
 
 
   const vendorProduct = async (id: number) => {
@@ -78,10 +88,10 @@ export default function VendorsPage() {
     setShow(true)
   }
 
-  const approve=(id:number)=>{
+  const approve = (id: number) => {
     approveProduct(id);
   }
-  const cancelApprove=(id:number)=>{
+  const cancelApprove = (id: number) => {
     cancelApproveProduct(id);
   }
 
@@ -92,7 +102,7 @@ export default function VendorsPage() {
       <div id='search'>
         <p className="text-2xl font-bold">Vendor List</p>
         <form id="search-form" >
-          <input type="text" name="search" placeholder="Search vendors" value={searchInput} onChange={search}/>
+          <input type="text" name="search" placeholder="Search vendors" value={searchInput} onChange={search} />
           <button type="submit" onSubmit={(e) => e.preventDefault()}>Search</button>
         </form>
       </div>
@@ -109,65 +119,65 @@ export default function VendorsPage() {
         </thead>
         <tbody>
           {
-           status?(
-            mydata.map((item: any, index: number) => (
-              <tr key={index}>
-                <td>{item.name}</td>
-                <td>{item.email}</td>
-                <td>{item.contact}</td>
-                <td>
-                  {item.status === "pending" ? (
-                    <Button size="sm" variant="success" onClick={() => activeVendor(item.id)}>
-                      Activate
+            status ? (
+              mydata.map((item: any, index: number) => (
+                <tr key={index}>
+                  <td>{item.name}</td>
+                  <td>{item.email}</td>
+                  <td>{item.contact}</td>
+                  <td>
+                    {item.status === "pending" ? (
+                      <Button size="sm" variant="success" onClick={() => activeVendor(item.id)}>
+                        Activate
+                      </Button>
+                    ) : (
+                      <Button size="sm" variant="warning" onClick={() => dectiveVendor(item.id)}>
+                        Deactivate
+                      </Button>
+                    )}
+                  </td>
+                  <td>
+                    <Button size="sm" variant="danger" onClick={() => delVendor(item.id)}>
+                      <span className="flex items-center content-center gap-2">
+                        <AiFillDelete /> Delete
+                      </span>
                     </Button>
-                  ) : (
-                    <Button size="sm" variant="warning" onClick={() => dectiveVendor(item.id)}>
-                      Deactivate
+                  </td>
+                  <td>
+                    <Button size="sm" variant="success" onClick={() => { vendorProduct(item.id) }}>See Products</Button>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              searchData.map((item: any, index: number) => (
+                <tr key={index}>
+                  <td>{item.name}</td>
+                  <td>{item.email}</td>
+                  <td>{item.contact}</td>
+                  <td>
+                    {item.status === "pending" ? (
+                      <Button size="sm" variant="success" onClick={() => activeVendor(item.id)}>
+                        Activate
+                      </Button>
+                    ) : (
+                      <Button size="sm" variant="warning" onClick={() => dectiveVendor(item.id)}>
+                        Deactivate
+                      </Button>
+                    )}
+                  </td>
+                  <td>
+                    <Button size="sm" variant="danger" onClick={() => delVendor(item.id)}>
+                      <span className="flex items-center content-center gap-2">
+                        <AiFillDelete /> Delete
+                      </span>
                     </Button>
-                  )}
-                </td>
-                <td>
-                  <Button size="sm" variant="danger" onClick={() => delVendor(item.id)}>
-                    <span className="flex items-center content-center gap-2">
-                      <AiFillDelete /> Delete
-                    </span>
-                  </Button>
-                </td>
-                <td>
-                  <Button size="sm" variant="success" onClick={() => { vendorProduct(item.id) }}>See Products</Button>
-                </td>
-              </tr>
-            ))
-           ):(
-            searchData.map((item: any, index: number) => (
-              <tr key={index}>
-                <td>{item.name}</td>
-                <td>{item.email}</td>
-                <td>{item.contact}</td>
-                <td>
-                  {item.status === "pending" ? (
-                    <Button size="sm" variant="success" onClick={() => activeVendor(item.id)}>
-                      Activate
-                    </Button>
-                  ) : (
-                    <Button size="sm" variant="warning" onClick={() => dectiveVendor(item.id)}>
-                      Deactivate
-                    </Button>
-                  )}
-                </td>
-                <td>
-                  <Button size="sm" variant="danger" onClick={() => delVendor(item.id)}>
-                    <span className="flex items-center content-center gap-2">
-                      <AiFillDelete /> Delete
-                    </span>
-                  </Button>
-                </td>
-                <td>
-                  <Button size="sm" variant="success" onClick={() => { vendorProduct(item.id) }}>See Products</Button>
-                </td>
-              </tr>
-            ))
-           )
+                  </td>
+                  <td>
+                    <Button size="sm" variant="success" onClick={() => { vendorProduct(item.id) }}>See Products</Button>
+                  </td>
+                </tr>
+              ))
+            )
           }
         </tbody>
       </Table>
@@ -196,7 +206,7 @@ export default function VendorsPage() {
                   <td>{item?.proname}</td>
                   <td>{item?.proprice}{" ₹"}</td>
                   <td>
-                    <Image src={item?.proimgurl} alt="pro image" height={40} width={40}/>
+                    <Image src={item?.proimgurl} alt="pro image" height={40} width={40} />
                   </td>
                   <td>{item?.approve === "no" ? (
                     <Button size='sm' variant='warning' onClick={() => { approve(item.id) }}>Approve</Button>
@@ -205,7 +215,7 @@ export default function VendorsPage() {
                   )}</td>
                 </tr>
               ))}
-            </tbody>  
+            </tbody>
 
           </Table>
         </Modal.Body>

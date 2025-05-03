@@ -1,7 +1,7 @@
 'use client'
 import "../managevendor/style.css"
 import React, { useEffect, useState } from 'react'
-import getVendors from '@/app/actions/admin/showVendors'
+import getAllVendors from "@/app/actions/admin/getAllVendors"
 import Table from "react-bootstrap/Table"
 import { AiFillDelete } from "react-icons/ai";
 import deleteVendor from '@/app/actions/admin/deleteVendor';
@@ -14,6 +14,7 @@ import Modal from 'react-bootstrap/Modal';
 import approveProduct from '@/app/actions/admin/approveProduct';
 import cancelApproveProduct from '@/app/actions/admin/cancelApproveProduct';
 import Image from "next/image"
+import Swal from "sweetalert2"
 
 export default function VendorsPage() {
   const [mydata, setData] = useState<any>([]);
@@ -25,7 +26,7 @@ export default function VendorsPage() {
   const [show, setShow] = useState(false);
 
   const fetchData = async () => {
-    const data = await getVendors();
+    const data = await getAllVendors();
     setData(data);
   }
 
@@ -35,19 +36,28 @@ export default function VendorsPage() {
 
   const delVendor = (id: number) => {
     deleteVendor(id);
-    alert("Vendor deleted!!!")
+    Swal.fire({
+      title: "Vendor Deleted!",
+      icon: "success"
+    });
     fetchData();
   }
 
   const activeVendor = (id: number) => {
     activateVendor(id)
-    alert("Vendor Activated!!")
+    Swal.fire({
+      title: "Vendor Activated!",
+      icon: "success"
+    });
     fetchData();
   }
 
   const dectiveVendor = (id: number) => {
     deActivateVendor(id)
-    alert("Vendor De-Activated!!")
+    Swal.fire({
+      title: "Vendor De-Activated!",
+      icon: "success"
+    });
     fetchData();
   }
 

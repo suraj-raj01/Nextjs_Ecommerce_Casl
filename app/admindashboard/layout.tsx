@@ -86,14 +86,10 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', fontSize: '18px' }}>
-
-          {userEmail}
+          <p className='text-center'>{userEmail}</p>
           {userEmail ? (
-            <IoMdLogOut className='text-red-600' onClick={logOut} />
-          ) : (
-            "login"
-          )}
-
+            <p onClick={logOut} className='text-red-500 text-2xs flex items-center content-center gap-1 cursor-pointer'><IoMdLogOut />Logout</p>
+          ) : null}
         </div>
 
 
@@ -126,10 +122,10 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
             <AiFillProduct />
             Categories
           </Link>
-          <Link href="#" className="flex items-center gap-3 text-2xs" onClick={() => setSmShow(true)}>
+          {/* <Link href="#" className="flex items-center gap-3 text-2xs" onClick={() => setSmShow(true)}>
             <IoSettingsSharp />
             Settings
-          </Link>
+          </Link> */}
         </div>
         <main style={{ width: '100%' }}>
           {children}

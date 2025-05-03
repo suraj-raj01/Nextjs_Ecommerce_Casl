@@ -29,7 +29,7 @@ export default function Form(){
     <LoginNav/>
     <div id="insertform">
     <form action={formAction} className='flex flex-col items-center p-4'>
-      <p className="text-center font-bold text-2xl">SignUp Page</p>
+      <p className="text-center font-bold text-2xl">SIGNUP</p>
       <select name="role" id="" title="Choose Role">
         <option>Select Role</option>
         <option value="Vendor">Vendor</option>
@@ -39,8 +39,9 @@ export default function Form(){
       <input type="email" required name="email"  placeholder='email' className='p-2 border-1 mt-2 w-70'/>
       <input type="text" required name="contacts"  placeholder='contact'  className='p-2 border-1 mt-2 w-70'/>
       <input type="password" required name="password"  placeholder='password'  className='p-2 border-1 mt-2 w-70'/>
-      <button type="submit" className='p-2 border-1 mt-2 w-70'>Submit</button>
-      <p className="text-center p-2 cursor-pointer" onClick={()=>{router.push("/Auth/login")}}>already have an account</p>
+      <button type="submit" className='p-2 border-1 mt-2 w-70'>SIGNUP</button>
+      <br />
+      <p className="text-center p-2 cursor-pointer" >Already have an account?  <span className="font-bold text-blue-700" onClick={()=>{router.push("/Auth/login")}}>LOGIN</span> </p>
     </form>
     </div>
     </>

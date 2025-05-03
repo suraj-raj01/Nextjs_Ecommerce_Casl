@@ -3,7 +3,7 @@
 import React, { ReactNode, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { FaBars } from 'react-icons/fa';
-import { ImCancelCircle } from 'react-icons/im';
+import { GoSidebarExpand } from "react-icons/go";
 import { AiFillDashboard } from 'react-icons/ai';
 import { RiInsertColumnRight } from 'react-icons/ri';
 import { AiFillProduct } from "react-icons/ai";
@@ -71,6 +71,7 @@ export default function VendorLayout({ children }: VendorLayoutProps) {
   const logOut = () => {
     if (typeof window !== 'undefined') {
       localStorage.clear();
+      window.confirm("do you want to logOut")
       router.push("/Auth/login");
     }
   };
@@ -80,7 +81,7 @@ export default function VendorLayout({ children }: VendorLayoutProps) {
       <header id="vendor-nav">
         <div className="flex items-center content-center gap-3">
           <FaBars onClick={sidebar} id="menu" style={{ display: 'none' }} />
-          <ImCancelCircle id="cancelbtn" onClick={cancelbtn} style={{ display: 'block' }} />
+          <GoSidebarExpand id="cancelbtn" onClick={cancelbtn} style={{ display: 'block' }} />
           VENDOR DASHBOARD
         </div>
 

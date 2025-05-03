@@ -55,12 +55,12 @@ model Admin {
   created_at DateTime @default(now()) @db.Timestamptz(6)
 }
 
-model Order {
+model CustomerOrder {
   id                Int      @id @default(autoincrement())
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
-  userName          String
-  userEmail         String
+  username          String
+  useremail         String
   phoneNumber       String
   address           String
   pincode           String
@@ -82,9 +82,9 @@ model Customers {
   updatedAt DateTime @updatedAt
 }
 
-model Otp {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  otp       String
+model otpgenerate {
+  id           Int      @id @default(autoincrement())
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime
+  generatedOtp String
 }

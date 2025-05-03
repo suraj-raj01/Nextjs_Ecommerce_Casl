@@ -9,6 +9,7 @@ import deleteAdmin from "@/app/actions/superadmin/deleteAdmin"
 import activateAdmin from "@/app/actions/superadmin/activeAdmin"
 import deActivateAdmin from "@/app/actions/superadmin/deactiveAdmin"
 import Button from "react-bootstrap/Button"
+import Swal from "sweetalert2"
 
 
 export default function AdminPage() {
@@ -26,19 +27,28 @@ export default function AdminPage() {
 
   const delAdmin = (id: any) => {
     deleteAdmin(id);
-    alert("Vendor deleted!!!")
+    Swal.fire({
+      title: "Admin Deleted!",
+      icon: "success"
+    });
     fetchData();
   }
 
   const activeAdmin = (id: any) => {
     activateAdmin(id)
-    alert("Admin Activated!!")
+    Swal.fire({
+      title: "Admin Activated!",
+      icon: "success"
+    });
     fetchData();
   }
 
   const deactiveAdmin = (id: any) => {
     deActivateAdmin(id)
-    alert("Admin De-Activated!!")
+    Swal.fire({
+      title: "Admin De-Activated!",
+      icon: "success"
+    });
     fetchData();
   }
 
@@ -56,7 +66,7 @@ export default function AdminPage() {
 
       <div id='search'>
         <p className="text-2xl font-bold">Admin Request List</p>
-        <form  id="search-form" >
+        <form id="search-form" >
           <input type="text" name="search" placeholder="Search vendors" />
           <button type="submit">Search</button>
         </form>
@@ -88,8 +98,8 @@ export default function AdminPage() {
                 </td>
               </tr>
             ))
-          
-            }
+
+          }
         </tbody>
       </Table>
     </div>

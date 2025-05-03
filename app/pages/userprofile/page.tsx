@@ -15,7 +15,7 @@ const UserProfile: React.FC = () => {
 
   return (
     <div>
-      <div id="main">
+      <div id="profile-main">
         <div id="profile">
           {imageurl && <Image src={imageurl} alt='profile' height={50} width={50} />}
           <p className='font-bold '>{user?.fullName}</p>

@@ -32,9 +32,9 @@ export async function createOrder(prevState: string,formData: FormData) {
 
   console.log(formData);
 
-  // await prisma.order.create({
-  // userName:username,
-  // userEmail: useremail,        
+  // await prisma.customerOrder.create({
+  // username:username,
+  // useremail: useremail,        
   // phoneNumber: contact,      
   // address: address,         
   // pincode: pincode,  

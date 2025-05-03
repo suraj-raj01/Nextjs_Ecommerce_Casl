@@ -47,7 +47,7 @@ const CartItems: React.FC = () => {
         })
         setTotal(total);
         if (!user?.user) {
-            router.back();
+            // router.back();
             Swal.fire({
                 title: "Please Login!!",
                 icon: "warning"
