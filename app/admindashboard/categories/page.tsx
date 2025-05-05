@@ -8,6 +8,7 @@ import { AiFillDelete } from "react-icons/ai";
 import { FaEdit } from "react-icons/fa";
 import Table from "react-bootstrap/Table"
 import Image from 'next/image'
+import Swal from 'sweetalert2'
 const page= ()=>{
   
   const [category, setCategory] = useState<any>([])
@@ -30,7 +31,10 @@ const page= ()=>{
   const deleteItem=(id:any)=>{
       updateCategory(id)
       fetchData()
-      alert("data delete success")
+      Swal.fire({
+            title: "data delete success!!",
+            icon: "success",
+          });
     }
 
   const editItem=(id:any)=>{
@@ -42,7 +46,7 @@ const page= ()=>{
       <div id='cate-header'>
         <p className='text-2xl font-bold'>Categories</p>
         <button onClick={() => { router.push("/admindashboard/addcategory") }} 
-          className='bg-black p-2 text-white'
+          className='bg-green-700 p-2 text-white'
           >Add Category</button>
       </div>
       <Table striped hover responsive>
@@ -59,13 +63,13 @@ const page= ()=>{
             <tr key={index}>
             <td>{item.catename}</td>
             <td>
-              <Image src={item.cateurl} alt='cateimage' height={50} width={50}/>
+              <Image src={item.cateurl} alt='cateimage' height={50} width={50} className='rounded-4xl'/>
             </td>
             <td >
-              <button onClick={()=>{deleteItem(item.id)}} className='text-center p-2 bg-black text-white'><AiFillDelete /></button>
+              <button onClick={()=>{deleteItem(item.id)}} className='text-center p-2 bg-green-700 text-white'><AiFillDelete /></button>
             </td>
             <td >
-             <button onClick={()=>{editItem(item.id)}} className='text-center p-2 bg-black text-white'><FaEdit /></button>
+             <button onClick={()=>{editItem(item.id)}} className='text-center p-2 bg-green-700 text-white'><FaEdit /></button>
             </td>
           </tr>
           ))}

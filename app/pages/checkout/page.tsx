@@ -25,8 +25,6 @@ const CheckOut: React.FC = () => {
     const { user } = useUser();
     const router = useRouter();
 
-
-
     const [loading, setLoading] = useState(false);
     const [total, setTotal] = useState<any>();
     const dispatch = useDispatch();
@@ -86,7 +84,6 @@ const CheckOut: React.FC = () => {
                 formData.append("razorpayPaymentId", response.razorpay_payment_id)
                 formData.append("razorpayOrderId", response.razorpay_order_id)
                 formData.append("razorpaySignature", response.razorpay_signature)
-                // dispatch(clearCart());
                 router.push("/pages/userprofile");
             },
             prefill: {

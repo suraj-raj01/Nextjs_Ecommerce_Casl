@@ -1,4 +1,4 @@
-#insertform{
+/* #insertform{
     height: 100%;
     width: 100%;
     display: flex;
@@ -6,7 +6,6 @@
     justify-content: center;
 }
 #formdata{
-    background-color: #d2d4d4;
     width: 750px;
     margin: 50px auto;
     padding: 30px;
@@ -21,7 +20,6 @@
     display: flex;
     align-items: start;
     justify-content: space-between;
-    box-shadow: 0 0 5px #d2d4d4;
 }
 
 #insertform  #box{
@@ -37,21 +35,21 @@
     border-radius: 0px;
     margin-bottom: 15px;
     width: 100%;
-    border: 1px solid #11150d;
+    border: 1px solid grey;
 }
 #insertform textarea{
     padding: 10px;
     border-radius: 0px;
     margin-bottom: 15px;
     width: 100%;
-    border: 1px solid #11150d;
+    border: 1px solid grey;
 }
 #insertform select{
     margin-bottom: 15px;
     padding: 8px;
     border-radius: 0px;
     width: 100%;
-    border: 1px solid #11150d;
+    border: 1px solid grey;
 }
 
 #btn{
@@ -76,4 +74,4 @@
 }
 #tabledata thead th{
     padding: 15px 10px;
-}
+} */

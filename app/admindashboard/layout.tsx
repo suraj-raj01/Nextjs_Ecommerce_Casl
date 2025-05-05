@@ -28,8 +28,8 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
   const [userEmail, setUserEmail] = useState<string | null>(null);
 
   useEffect(() => {
+   if(typeof window!="undefined"){
     const email = localStorage.getItem("email");
-
     if (!email) {
       Swal.fire({
         title: "Please Login!!",
@@ -39,6 +39,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
     } else {
       setUserEmail(email);
     }
+  }
   }, []);
 
 
@@ -69,8 +70,10 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
 
   const router = useRouter();
   const logOut = () => {
+   if(typeof window != "undefined"){
     localStorage.clear();
     router.push("/Auth/login")
+   }
   }
 
 

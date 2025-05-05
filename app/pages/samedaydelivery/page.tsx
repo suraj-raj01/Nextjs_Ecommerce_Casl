@@ -80,9 +80,9 @@ const SameDayDelivery: React.FC = () => {
       <div id='products' className='flex items-center flex-wrap justify-between gap-3'>
         {mydata?.map((item: any, index: number) => (
           <Card style={{ width: '300px' }} key={index}>
-            <Image src={item.proimgurl} alt='proimage' height={200} width={300} onClick={() => { details(item.id) }} />
+            <Image src={item.proimgurl} alt='proimage' height={150} width={300} onClick={() => { details(item.id) }} />
             <Card.Body>
-              <Card.Title className='h-10'>{item.proname}</Card.Title>
+              <Card.Title className='h-12 overflow-hidden'>{item.proname}</Card.Title>
               <p>{item.protitle}</p>
               <p className='text-red-500 font-bold'>Price {item.proprice} {" ₹"}</p>
               <Card.Text>

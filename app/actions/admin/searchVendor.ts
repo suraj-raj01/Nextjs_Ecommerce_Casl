@@ -12,7 +12,10 @@ export default async function searchVendor(searchData: string) {
   try {
     const vendors = await prisma.vendor.findMany({
       where: {
-        name: searchData as string,
+        name: {
+          contains: searchData as string,
+          mode: 'insensitive',
+        },
       },
     });
 

@@ -20,7 +20,7 @@ export default function AdminPage() {
   const [searchData, setSearchData] = useState<any>([])
   const [status, setStatus] = useState<boolean>(false);
   const [data, setVendorProduct] = useState<any>([]);
-  const [searchInput,setSearch] = useState<any>("");
+  const [searchInput, setSearch] = useState<any>("");
 
   const [show, setShow] = useState(false);
 
@@ -60,19 +60,23 @@ export default function AdminPage() {
     fetchData();
   }
 
-  const search = async(e:any) => {
-    let stdsearch = e.target.value
-    setSearch(stdsearch);
-    const data = await searchVendor(searchData);
-    setSearchData(data?.data || []);
-    console.log(data?.data);
-    setStatus(true);
-  }
+  const search = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setSearch(value);
 
-  const approve=(id:number)=>{
+    if (value.trim() === "") {
+      setStatus(true);
+      return;
+    }
+
+    const data = await searchVendor(value);
+    setSearchData(data?.data || []);
+    setStatus(false);
+  };
+  const approve = (id: number) => {
     approveProduct(id);
   }
-  const cancelApprove=(id:number)=>{
+  const cancelApprove = (id: number) => {
     cancelApproveProduct(id);
   }
 
@@ -80,11 +84,24 @@ export default function AdminPage() {
   return (
     <div>
 
-      <div id='search'>
-        <p className="text-2xl font-bold">Admin List</p>
-        <form id="search-form" >
-          <input type="text" name="search" placeholder="Search vendors" value={searchInput} onChange={search}/>
-          <button type="submit" >Search</button>
+      <div className="w-full h-auto p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <p className="text-2xl font-bold text-gray-800">Vendor List</p>
+
+        <form id="search-form" className="flex w-full md:w-auto gap-2" onSubmit={(e) => e.preventDefault()}>
+          <input
+            type="text"
+            name="search"
+            placeholder="Search vendors"
+            value={searchInput}
+            onChange={search}
+            className="w-full md:w-64 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
+          />
+          <button
+            type="submit"
+            className="bg-green-700 text-white px-4 py-2 rounded-md hover:bg-green-900 transition"
+          >
+            Search
+          </button>
         </form>
       </div>
       <Table striped hover responsive>
@@ -152,7 +169,7 @@ export default function AdminPage() {
                   <td>{item?.proname}</td>
                   <td>{item?.proprice}{" ₹"}</td>
                   <td>
-                    <Image src={item?.proimgurl} alt="pro image" height={40} width={40}/>
+                    <Image src={item?.proimgurl} alt="pro image" height={40} width={40} />
                   </td>
                   <td>{item?.approve === "no" ? (
                     <Button size='sm' variant='warning' onClick={() => { approve(item.id) }}>Approve</Button>
@@ -161,7 +178,7 @@ export default function AdminPage() {
                   )}</td>
                 </tr>
               ))}
-            </tbody>  
+            </tbody>
 
           </Table>
         </Modal.Body>

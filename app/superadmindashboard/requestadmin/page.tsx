@@ -52,29 +52,33 @@ export default function AdminPage() {
     fetchData();
   }
 
-  // const search = () => {
-  //   setSearchData(state?.data);
-  //   console.log(state.data);
-  //   console.log(state.message);
-  //   setStatus(true);
-  // }
-
-
-
   return (
     <div>
 
-      <div id='search'>
-        <p className="text-2xl font-bold">Admin Request List</p>
-        <form id="search-form" >
-          <input type="text" name="search" placeholder="Search vendors" />
-          <button type="submit">Search</button>
+      <div className="w-full h-auto p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <p className="text-2xl font-bold text-gray-800">Vendor List</p>
+
+        <form id="search-form" className="flex w-full md:w-auto gap-2" onSubmit={(e) => e.preventDefault()}>
+          <input
+            type="text"
+            name="search"
+            placeholder="Search vendors"
+            // value={searchInput}
+            // onChange={search}
+            className="w-full md:w-64 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
+          />
+          <button
+            type="submit"
+            className="bg-green-700 text-white px-4 py-2 rounded-md hover:bg-green-900 transition"
+          >
+            Search
+          </button>
         </form>
       </div>
       <Table striped hover responsive>
         <thead>
           <tr>
-            <th>Vendor Name</th>
+            <th>Admin Name</th>
             <th>Email</th>
             <th>Contact</th>
             <th>Request</th>

@@ -20,8 +20,5 @@ export default async function activateVendor(id: number) {
   } catch (error) {
     console.error("Error updating vendor:", error);
     return { success: false, error: (error as Error).message };
-  } finally {
-    // Don't disconnect Prisma in serverless environments like Vercel/Next.js
-    // await prisma.$disconnect(); ❌
   }
 }

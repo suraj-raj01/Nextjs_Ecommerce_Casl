@@ -3,11 +3,11 @@
 import React, { ReactNode } from 'react';
 import Link from 'next/link';
 import { FaBars } from 'react-icons/fa';
-import { ImCancelCircle } from 'react-icons/im';
+import { GoSidebarExpand } from "react-icons/go";
 import { FaRegCircleUser, FaUserGroup } from 'react-icons/fa6';
 import { AiFillDashboard } from 'react-icons/ai';
-import { FaEdit } from 'react-icons/fa';
 import DashbaordFooter from '../_components/DashbaordFooter';
+import { FaCodePullRequest } from "react-icons/fa6";
 
 interface AdminLayoutProps {
   children: ReactNode;
@@ -43,7 +43,7 @@ export default function SuperAdminLayout({ children }: AdminLayoutProps){
       <header id="vendor-nav">
         <div className="flex items-center content-center gap-3">
           <FaBars onClick={sidebar} id="menu" style={{display:'none'}}/>
-          <ImCancelCircle id="cancelbtn" onClick={cancelbtn} style={{ display: 'block' }} />
+          <GoSidebarExpand id="cancelbtn" onClick={cancelbtn} style={{ display: 'block' }} />
           SUPER ADMIN DASHBOARD
         </div>
         <FaRegCircleUser />
@@ -63,7 +63,7 @@ export default function SuperAdminLayout({ children }: AdminLayoutProps){
             Manage Admins
           </Link>
           <Link href="/superadmindashboard/requestadmin" className="flex items-center gap-3 text-2xs">
-            <FaUserGroup />
+          <FaCodePullRequest />
             Request Admins
           </Link>
           {/* <Link href="#" className="flex items-center gap-3 text-2xs">

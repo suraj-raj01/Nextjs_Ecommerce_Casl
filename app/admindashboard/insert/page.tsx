@@ -1,5 +1,4 @@
 "use client"
-import "../../admindashboard/insert/style.css"
 import { productData } from '../../actions/products'
 import { useState, useRef, ChangeEvent } from 'react';
 import React from "react";

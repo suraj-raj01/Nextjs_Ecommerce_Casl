@@ -71,7 +71,7 @@ const ProductCard: React.FC = () => {
         <Card style={{width:'300px'}} key={index}>
           <Image src={item.proimgurl} alt='proimage' height={200} width={300}/>
           <Card.Body>
-            <Card.Title>{item.proname}</Card.Title>
+            <Card.Title className='h-12 overflow-hidden'>{item.proname}</Card.Title>
             <p>{item.protitle}</p>
             <p className='text-red-500 font-bold'>Price {item.proprice} {" ₹"}</p>
             <Card.Text>

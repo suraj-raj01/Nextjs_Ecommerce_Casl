@@ -15,6 +15,7 @@ import approveProduct from '@/app/actions/admin/approveProduct';
 import cancelApproveProduct from '@/app/actions/admin/cancelApproveProduct';
 import Image from "next/image"
 import Swal from "sweetalert2"
+import { useRouter } from "next/navigation"
 
 export default function VendorsPage() {
   const [mydata, setData] = useState<any>([]);
@@ -75,19 +76,6 @@ export default function VendorsPage() {
     setStatus(false);
   };
 
-
-
-  const vendorProduct = async (id: number) => {
-    const vendorData = await getVendorsProduct(id);
-    if ('data' in vendorData && Array.isArray(vendorData.data)) {
-      setVendorProduct(vendorData.data);
-    } else {
-      setVendorProduct([]);
-    }
-    console.log(vendorData);
-    setShow(true)
-  }
-
   const approve = (id: number) => {
     approveProduct(id);
   }
@@ -95,17 +83,36 @@ export default function VendorsPage() {
     cancelApproveProduct(id);
   }
 
+  const router = useRouter();
+
+  const seeProduct=(id:number)=>{
+    router.push(`/admindashboard/products/${id}`)
+  }
+
 
   return (
     <div>
+      <div className="w-full h-auto p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <p className="text-2xl font-bold text-gray-800">Vendor List</p>
 
-      <div id='search'>
-        <p className="text-2xl font-bold">Vendor List</p>
-        <form id="search-form" >
-          <input type="text" name="search" placeholder="Search vendors" value={searchInput} onChange={search} />
-          <button type="submit" onSubmit={(e) => e.preventDefault()}>Search</button>
+        <form id="search-form" className="flex w-full md:w-auto gap-2" onSubmit={(e) => e.preventDefault()}>
+          <input
+            type="text"
+            name="search"
+            placeholder="Search vendors"
+            value={searchInput}
+            onChange={search}
+            className="w-full md:w-64 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
+          />
+          <button
+            type="submit"
+            className="bg-green-700 text-white px-4 py-2 rounded-md hover:bg-green-900 transition"
+          >
+            Search
+          </button>
         </form>
       </div>
+
       <Table striped hover responsive>
         <thead>
           <tr>
@@ -144,7 +151,7 @@ export default function VendorsPage() {
                     </Button>
                   </td>
                   <td>
-                    <Button size="sm" variant="success" onClick={() => { vendorProduct(item.id) }}>See Products</Button>
+                    <Button size="sm" variant="success" onClick={() => { seeProduct(item.id) }}>See Products</Button>
                   </td>
                 </tr>
               ))
@@ -173,7 +180,7 @@ export default function VendorsPage() {
                     </Button>
                   </td>
                   <td>
-                    <Button size="sm" variant="success" onClick={() => { vendorProduct(item.id) }}>See Products</Button>
+                    <Button size="sm" variant="success" onClick={() => { seeProduct(item.id) }}>See Products</Button>
                   </td>
                 </tr>
               ))

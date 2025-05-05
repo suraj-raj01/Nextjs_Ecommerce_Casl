@@ -410,10 +410,6 @@ body {
     height: auto;
     padding: 20px;
   }
-  #icons{
-    display: flex;
-    background-color: #0a0a0a;
-  }
   #badge{
     position: relative;
    }

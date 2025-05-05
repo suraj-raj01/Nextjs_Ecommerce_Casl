@@ -9,7 +9,6 @@ export async function createOrder(prevState: string,formData: FormData) {
     key_secret: process.env.RAZORPAY_KEY_SECRET!,
   })
 
-
   const amount = Number(formData.get('total'))*100
   const contact = Number(formData.get("contact"))
   const address = formData.get("address") as string

@@ -107,10 +107,10 @@ export default function VendorLayout({ children }: VendorLayoutProps) {
             <AiFillProduct />
             Display Products
           </Link>
-          <Link href="#" className="flex items-center gap-3 text-2xs">
+          {/* <Link href="#" className="flex items-center gap-3 text-2xs">
             <IoSettingsSharp />
             Settings
-          </Link>
+          </Link> */}
         </div>
         <div className="flex-1">{children}</div>
       </div>

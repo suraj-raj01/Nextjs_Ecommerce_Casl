@@ -1,57 +1,57 @@
 'use server';
 import bcrypt from 'bcryptjs';
 import { PrismaClient } from '@prisma/client';
-const prisma = new PrismaClient();
 
-let otp = 0
+const prisma = new PrismaClient();
+let otp = 0;
 
 export default async function loginUser(prevState: any, formData: FormData) {
   try {
     const role = formData.get("role") as string;
     const email = formData.get("email") as string;
-    const enteredOtp = formData.get("otp") as string
+    const enteredOtp = formData.get("otp") as string;
     const password = formData.get("password") as string;
 
-    if (!role || !email || !password || !enteredOtp) {
+    if (!role || !email || !password) {
       return { error: "Missing required fields" };
     }
 
-    let user;
+    const user = await (role === "Vendor"
+      ? prisma.vendor.findFirst({ where: { email } })
+      : role === "Admin"
+      ? prisma.admin.findFirst({ where: { email } })
+      : null);
 
-    if (role === "Vendor") {
-      user = await prisma.vendor.findFirst({
-        where: { email: email },
-      });
-    } else if (role === "Admin") {
-      user = await prisma.admin.findFirst({
-        where: { email },
-      });
-    } else {
-      return { error: "Invalid role" };
-    }
+    if (!user) return { error: "User not found" };
 
-    if (!user) {
-      console.log("User not found");
-      return { error: "User not found" };
-    }
-
-    if (enteredOtp !== otp.toString()) {
-      return { error: "Otp Incorrect" }
+    if (user.isverified === "pending" && enteredOtp !== otp.toString()) {
+      return { error: "Otp Incorrect" };
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-      console.log("Incorrect password");
-      return { error: "Incorrect password" };
+    if (!isMatch) return { error: "Incorrect password" };
+
+    if (user.role === "Vendor") {
+    await prisma.vendor.update({
+        where: { email },
+        data: { isverified: "success" },
+      });
     }
 
-    console.log("Login successful:", user);
+    if(user.role === "Admin"){
+      await prisma.admin.update({
+        where: { email },
+        data: { isverified: "success" },
+      });
+    }
+
     return { success: true, data: user };
   } catch (error) {
     console.error("Error logging in user:", error);
-    return { error: "You don't have access control Please Contact to Admin or SuperAdmin" };
+    return { error: "Something went wrong" };
   }
 }
+
 
 // -----------------------------------------------------------------
 

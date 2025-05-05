@@ -17,22 +17,20 @@ const UserProfile: React.FC = () => {
     <div>
       <div id="profile-main">
         <div id="profile">
-          {imageurl && <Image src={imageurl} alt='profile' height={50} width={50} />}
+          {imageurl && <Image src={imageurl} alt='profile' height={50} width={50}/>}
           <p className='font-bold '>{user?.fullName}</p>
           <div id='about'>
             <p>{user?.emailAddresses[0].emailAddress}</p>
           </div>
         </div>
         <div id="purchased">
-          <Table>
+          <Table>      
             <thead>
               <tr>
                 <th>Product Name</th>
                 <th>Title</th>
                 <th>Price</th>
                 <th>Image</th>
-                {/* <th>Quantity</th>
-                <th>Remove</th> */}
               </tr>
             </thead>
             <tbody>

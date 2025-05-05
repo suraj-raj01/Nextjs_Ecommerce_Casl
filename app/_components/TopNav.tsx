@@ -23,15 +23,15 @@ import {
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 
-export default function TopNav(){
+export default function TopNav() {
   const router = useRouter();
-  const[count,setCount] = React.useState<any>(0);
-  const[likes,setLikes] = React.useState<any>(0);
+  const [count, setCount] = React.useState<any>(0);
+  const [likes, setLikes] = React.useState<any>(0);
 
   const cartItems = useSelector((state: RootState) => state.cart.cartItems);
   const likeItems = useSelector((state: RootState) => state.cart.likeItems);
-  
-  React.useEffect(()=>{
+
+  React.useEffect(() => {
     setCount(cartItems.length);
     setLikes(likeItems.length);
   })
@@ -78,7 +78,7 @@ export default function TopNav(){
                 backgroundColor: 'ghostwhite',
                 height: '30px',
                 width: '30px',
-                cursor:'pointer'
+                cursor: 'pointer'
               }}
             />
           </Navbar.Brand>
@@ -94,7 +94,7 @@ export default function TopNav(){
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto"></Nav>
-{/* 
+            {/* 
             <Form className="d-flex mr-4">
               <Form.Control
                 type="search"
@@ -110,24 +110,34 @@ export default function TopNav(){
                 <HiCurrencyRupee className="text-2xl" />
               </Nav.Link> */}
               <Nav.Link href="/pages/wishlist">
-                {likes<1?(
-                  <span className='flex gap-2 p-1.5 font-bold'><FaRegHeart className="text-2xl"/><span id='badge' className='position-absolute top-2 pl-2 text-xs'>{likes}</span>
-                </span>
-                ):(
-                  <span className='flex gap-2 p-1.5 font-bold text-red-800'><FaHeart className="text-2xl"/><span id='badge' className='position-absolute top-2 pl-2 text-xs'>{likes}</span>
-                </span>
+                {likes < 1 ? (
+                  <div className='flex item-center content-between text-center font-bold'>
+                    <span className=' flex flex-col item-center content-between text-2xl'> <span className='text-xs rounded-lg bg-gray-100'>{likes}</span> <FaHeart /></span>
+                  </div>
+                ) : (
+
+                  <div className='flex item-center content-between text-center font-bold'>
+                    <span className=' flex flex-col item-center content-between text-2xl'> <span className='text-xs rounded-lg bg-gray-100'>{likes}</span> <FaHeart className='text-red-400'/></span>
+                  </div>
                 )}
               </Nav.Link>
               <Nav.Link href="/pages/cartitems">
-                <span className='flex gap-2  p-1.5 font-bold'><IoMdCart className="text-2xl"/>Carts <span id='badge' className='position-absolute top-2 pl-2 text-xs'>{count}</span>
-                </span>
+                {/* <span className='flex gap-2  p-1.5 font-bold'><IoMdCart className="text-2xl"/>Carts <span id='badge' className='position-absolute top-2 pl-2 text-xs'>{count}</span>
+                </span> */}
+
+
+                <div className='flex item-center content-between text-center font-bold'>
+                  <span className=' flex flex-col item-center content-between text-2xl'> <span className='text-xs rounded-lg bg-gray-100'>{count}</span> <IoMdCart /></span>
+                </div>
+
+
               </Nav.Link>
               <Nav.Link>
                 {/* Custom dropdown logic if needed */}
               </Nav.Link>
               <SignedOut>
-              {/* <FiUserPlus /> */}
-              <SignInButton/>
+                {/* <FiUserPlus /> */}
+                <SignInButton />
               </SignedOut>
               <SignedIn>
                 <UserButton />
@@ -147,13 +157,13 @@ export default function TopNav(){
                 <p className="text-2xl font-bold">Top Collections</p>
                 <Image src={bag} alt="bag" />
               </span>
-              <p className="font-bold ml-2 hover:text-red-600 cursor-pointer" onClick={()=>{router.push("/pages/samedaydelivery")}}>
+              <p className="font-bold ml-2 hover:text-red-600 cursor-pointer" onClick={() => { router.push("/pages/samedaydelivery") }}>
                 Same Day Delivery Gifts
               </p>
-              <p className="font-bold ml-2 hover:text-red-600 cursor-pointer" onClick={()=>{router.push("/pages/cakes")}}>
+              <p className="font-bold ml-2 hover:text-red-600 cursor-pointer" onClick={() => { router.push("/pages/cakes") }}>
                 Birthday Gifts
               </p>
-              <p className="font-bold ml-2 hover:text-red-600 cursor-pointer" onClick={()=>{router.push("/pages/personalized")}}>
+              <p className="font-bold ml-2 hover:text-red-600 cursor-pointer" onClick={() => { router.push("/pages/personalized") }}>
                 Personalized Gifts
               </p>
             </div>

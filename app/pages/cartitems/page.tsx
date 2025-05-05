@@ -32,13 +32,11 @@ const CartItems: React.FC = () => {
     const router = useRouter();
     const user = useUser();
 
-   
+
 
     const clearCartItem = () => {
         dispatch(clearCart())
     }
-
-    let price = 0;
 
     useEffect(() => {
         let total = 0;
@@ -76,7 +74,7 @@ const CartItems: React.FC = () => {
                                 <tr key={index}>
                                     <td>{item.proname}</td>
                                     <td>{item.protitle}</td>
-                                    <td>{item.proprice * item.quantity}</td>
+                                    <td>{item.proprice * item.quantity}{"₹"}</td>
                                     <td><Image src={item.proimgurl} alt='proimage' height={50} width={50} /></td>
                                     <td>
                                         <span className='flex items-center gap-3 content-center text-center ml-4'>
@@ -92,10 +90,11 @@ const CartItems: React.FC = () => {
                     </Table>
                 ) : (
                     <>
-                        <div className='flex items-center text-center '>
-                            <h2 className='text-center m-5 text-red-800'>Seems Like You're not LoggedIn!</h2>
+                        <div className='flex items-center justify-center h-50 text-center'>
+                            <h2 className='text-center m-5 text-red-800'>Seems Like You're not Logged In!</h2>
                             <Button onClick={() => { router.push("https://joint-krill-9.accounts.dev/sign-in?redirect_url=http%3A%2F%2Flocalhost%3A3000%2Fpages%2Fcartitems") }}>Login</Button>
                         </div>
+
                     </>
                 )}
 

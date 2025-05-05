@@ -55,7 +55,7 @@ const WishList: React.FC = () => {
 
     return (
         <>
-            <p className='text-2xl font-bold text-center p-3 '>Likes Items</p>
+            <p className='text-2xl font-bold text-center p-3 '>Liked Items</p>
             <div id="products" className='p-10'>
                 <Table>
                     <thead>
