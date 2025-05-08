@@ -4,9 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "build": "npx prisma && next build",
+    "start": "next start"
   },
   "dependencies": {
     "@casl/ability": "^6.7.3",
@@ -28,24 +27,18 @@
     "react-bootstrap": "^2.10.9",
     "react-chartjs-2": "^5.3.0",
     "react-dom": "^19.0.0",
-    "react-hot-toast": "^2.5.2",
     "react-icons": "^5.5.0",
     "react-redux": "^9.2.0",
-    "react-toastify": "^11.0.5",
     "redux-persist": "^6.0.0",
     "sweetalert2": "^11.19.1",
-    "swr": "^2.3.3",
     "tailwind-merge": "^3.2.0"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20.17.32",
     "@types/nodemailer": "^6.4.17",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "eslint": "^9",
-    "eslint-config-next": "15.3.1",
     "prisma": "^6.7.0",
     "tailwindcss": "^4",
     "ts-node": "^10.9.2",
