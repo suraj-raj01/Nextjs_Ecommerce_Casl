@@ -55,56 +55,72 @@ export default function DisplayPage() {
     currentPage * itemsPerPage
   );
 
-  let sno=0;
+  let sno = 0;
 
   return (
     <div>
       <div className='overflow-y-scroll' style={{ height: '88vh' }}>
-        <Table striped hover responsive>
-          <thead>
-            <tr className='border-1'>
-              <th>SNo</th>
-              <th>Product Name</th>
-              <th>Product Title</th>
-              <th>Price</th>
-              <th>Category</th>
-              <th>Product Image</th>
-              <th>Approve Status</th>
-              <th>Update</th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              currentItems.map((item: any, index: number) => (
-                <tr key={index}>
-                  <td>{++sno}</td>
-                  <td>{item.proname}</td>
-                  <td>{item.protitle}</td>
-                  <td>{item.proprice}</td>
-                  <td>{item.proCategory}</td>
-                  <td>
+        <div className="overflow-x-auto">
+          <table className="min-w-full table-auto border border-gray-300 rounded-lg shadow-sm">
+            <thead className="bg-gray-100 text-gray-700">
+              <tr>
+                <th className="px-4 py-2 border">SNo</th>
+                <th className="px-4 py-2 border">Product Name</th>
+                <th className="px-4 py-2 border">Product Title</th>
+                <th className="px-4 py-2 border">Price</th>
+                <th className="px-4 py-2 border">Category</th>
+                <th className="px-4 py-2 border">Product Image</th>
+                <th className="px-4 py-2 border">Approve Status</th>
+                <th className="px-4 py-2 border">Update</th>
+              </tr>
+            </thead>
+            <tbody className="text-gray-800">
+              {currentItems.map((item: any, index: number) => (
+                <tr key={index} className="hover:bg-gray-50 transition">
+                  <td className="px-4 py-2 border">{++sno}</td>
+                  <td className="px-4 py-2 border">{item.proname}</td>
+                  <td className="px-4 py-2 border">{item.protitle}</td>
+                  <td className="px-4 py-2 border">₹{item.proprice}</td>
+                  <td className="px-4 py-2 border">{item.proCategory}</td>
+                  <td className="px-4 py-2 border">
                     {item.proimgurl ? (
-                      <Image src={item.proimgurl} alt='img' height={50} width={50} />
+                      <img
+                        src={item.proimgurl}
+                        alt="img"
+                        className="h-12 w-12 object-cover rounded"
+                      />
                     ) : (
-                      "No Image"
+                      <span className="text-sm text-gray-500">No Image</span>
                     )}
                   </td>
-                  <td>
-                    {item.approve === "yes" ? (
-                      <p className='font-bold ml-2'>Active</p>
-                    ) : (
-                      <p className='font-bold ml-2'>Pending</p>
-                    )}
+                  <td className="px-4 py-2 border">
+                    <span
+                      className={`font-semibold ${item.approve === "yes" ? "text-green-600" : "text-yellow-600"
+                        }`}
+                    >
+                      {item.approve === "yes" ? "Active" : "Pending"}
+                    </span>
                   </td>
-                  <td>
-                    <Button className='ml-2' variant='danger' size='sm' onClick={() => { deletePro(item.id) }}><AiFillDelete /></Button>
-                    <br />
-                    <Button className='ml-2' variant='success' size='sm' onClick={() => { editpage(item.id) }}><FaEdit /></Button>
+                  <td className="px-4 py-2 border space-y-1">
+                    <button
+                      onClick={() => deletePro(item.id)}
+                      className="bg-red-600 hover:bg-red-700 text-white px-2 py-1 rounded text-sm w-full flex items-center justify-center gap-1"
+                    >
+                      <AiFillDelete /> Delete
+                    </button>
+                    <button
+                      onClick={() => editpage(item.id)}
+                      className="bg-green-600 hover:bg-green-700 text-white mt-1 px-2 py-1 rounded text-sm w-full flex items-center justify-center gap-1"
+                    >
+                      <FaEdit /> Edit
+                    </button>
                   </td>
                 </tr>
               ))}
-          </tbody>
-        </Table>
+            </tbody>
+          </table>
+        </div>
+
         <div className="flex justify-center gap-3 space-x-2 mt-4">
           <button
             onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}

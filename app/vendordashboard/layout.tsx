@@ -12,6 +12,7 @@ import { IoSettingsSharp } from "react-icons/io5";
 import { useRouter } from 'next/navigation';
 import { IoMdLogOut } from "react-icons/io";
 import Swal from 'sweetalert2';
+import { FaUserFriends } from "react-icons/fa";
 
 interface VendorLayoutProps {
   children: ReactNode;
@@ -107,10 +108,10 @@ export default function VendorLayout({ children }: VendorLayoutProps) {
             <AiFillProduct />
             Display Products
           </Link>
-          {/* <Link href="#" className="flex items-center gap-3 text-2xs">
-            <IoSettingsSharp />
-            Settings
-          </Link> */}
+          <Link href="/vendordashboard/orders" className="flex items-center gap-3 text-2xs">
+          <FaUserFriends />
+            Orders
+          </Link>
         </div>
         <div className="flex-1">{children}</div>
       </div>

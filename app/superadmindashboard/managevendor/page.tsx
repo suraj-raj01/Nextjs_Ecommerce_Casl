@@ -14,6 +14,7 @@ import approveProduct from '@/app/actions/admin/approveProduct';
 import cancelApproveProduct from '@/app/actions/admin/cancelApproveProduct';
 import Image from "next/image"
 import Swal from "sweetalert2"
+import { useRouter } from "next/navigation"
 
 export default function VendorsPage() {
   const [mydata, setData] = useState<any>([]);
@@ -81,12 +82,18 @@ export default function VendorsPage() {
     cancelApproveProduct(id);
   }
 
+  const router = useRouter();
+
+  const seeProduct=(id:number)=>{
+    router.push(`/superadmindashboard/products/${id}`)
+  }
+
 
   return (
     <div>
 
       <div className="w-full h-auto p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-        <p className="text-2xl font-bold text-gray-800">Vendor List</p>
+        <p className="text-2xl font-bold text-gray-800">Vendors List</p>
 
         <form id="search-form" className="flex w-full md:w-auto gap-2" onSubmit={(e) => e.preventDefault()}>
           <input
@@ -114,6 +121,7 @@ export default function VendorsPage() {
             <th>Contact</th>
             <th>Status</th>
             <th>Update</th>
+           <th> See Products</th>
           </tr>
         </thead>
         <tbody>
@@ -141,6 +149,9 @@ export default function VendorsPage() {
                         <AiFillDelete /> Delete
                       </span>
                     </Button>
+                  </td>
+                  <td>
+                    <Button size="sm" variant="success" onClick={() => { seeProduct(item.id) }}>See Products</Button>
                   </td>
                 </tr>
               ))
@@ -174,47 +185,6 @@ export default function VendorsPage() {
           }
         </tbody>
       </Table>
-
-      <Modal show={show} onHide={() => setShow(false)}
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Products</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Table striped hover responsive>
-            <thead>
-              <tr>
-                <th>Product Name</th>
-                <th>Price</th>
-                <th>Image</th>
-                <th>Approve</th>
-              </tr>
-            </thead>
-            <tbody>
-              {Array.isArray(data) && data.map((item: any, index: number) => (
-                <tr key={index}>
-                  <td>{item?.proname}</td>
-                  <td>{item?.proprice}{" ₹"}</td>
-                  <td>
-                    <Image src={item?.proimgurl} alt="pro image" height={40} width={40} />
-                  </td>
-                  <td>{item?.approve === "no" ? (
-                    <Button size='sm' variant='warning' onClick={() => { approve(item.id) }}>Approve</Button>
-                  ) : (
-                    <Button size='sm' variant='success' onClick={() => { cancelApprove(item.id) }}>Approved</Button>
-                  )}</td>
-                </tr>
-              ))}
-            </tbody>
-
-          </Table>
-        </Modal.Body>
-      </Modal>
-
-
     </div>
   )
 }

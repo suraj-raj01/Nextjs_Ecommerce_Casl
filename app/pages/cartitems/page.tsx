@@ -44,50 +44,78 @@ const CartItems: React.FC = () => {
             total += value.quantity * value.proprice;
         })
         setTotal(total);
-        if (!user?.user) {
-            // router.back();
-            Swal.fire({
-                title: "Please Login!!",
-                icon: "warning"
-            });
-        }
+        setTimeout(() => {
+            if (!user?.user) {
+                Swal.fire({
+                    title: "Please Login!!",
+                    icon: "warning"
+                });
+            }
+        }, 1500)
     }, [cartItems]);
 
     return (
         <>
             <p className='text-2xl font-bold text-center p-3 '>Cart Items 🛒</p>
-            <div id="cartproducts">
+            <div >
                 {user?.isSignedIn ? (
-                    <Table>
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Title</th>
-                                <th>Price</th>
-                                <th>Image</th>
-                                <th>Quantity</th>
-                                <th>Remove</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {cartItems.map((item: any, index: number) => (
-                                <tr key={index}>
-                                    <td>{item.proname}</td>
-                                    <td>{item.protitle}</td>
-                                    <td>{item.proprice * item.quantity}{"₹"}</td>
-                                    <td><Image src={item.proimgurl} alt='proimage' height={50} width={50} /></td>
-                                    <td>
-                                        <span className='flex items-center gap-3 content-center text-center ml-4'>
-                                            <FaMinusCircle onClick={() => dispatch(decrementQuantity(item.id))} />
-                                            {item.quantity}
-                                            <FaPlusCircle onClick={() => dispatch(incrementQuantity(item.id))} />
-                                        </span>
-                                    </td>
-                                    <td><Button size='sm' variant='danger' onClick={() => removeItm(item.id)}><MdDelete /></Button></td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </Table>
+                    <div className="p-4 sm:p-6 md:p-10 w-full">
+                        <div className="overflow-x-auto">
+                            <table className="min-w-full table-auto border border-gray-300 text-sm sm:text-base">
+                                <thead className="bg-gray-100">
+                                    <tr className="text-left">
+                                        <th className="p-3 font-semibold">Name</th>
+                                        <th className="p-3 font-semibold">Title</th>
+                                        <th className="p-3 font-semibold">Price</th>
+                                        <th className="p-3 font-semibold">Image</th>
+                                        <th className="p-3 font-semibold">Quantity</th>
+                                        <th className="p-3 font-semibold">Remove</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {cartItems.map((item: any, index: number) => (
+                                        <tr key={index} className="border-t border-gray-300">
+                                            <td className="p-3">{item.proname}</td>
+                                            <td className="p-3">{item.protitle}</td>
+                                            <td className="p-3">{item.proprice * item.quantity} ₹</td>
+                                            <td className="p-3">
+                                                <Image
+                                                    src={item.proimgurl}
+                                                    alt="proimage"
+                                                    height={50}
+                                                    width={50}
+                                                    className="rounded"
+                                                />
+                                            </td>
+                                            <td className="p-3">
+                                                <div className="flex items-center gap-2">
+                                                    <FaMinusCircle
+                                                        className="text-red-500 cursor-pointer"
+                                                        onClick={() => dispatch(decrementQuantity(item.id))}
+                                                    />
+                                                    <span>{item.quantity}</span>
+                                                    <FaPlusCircle
+                                                        className="text-green-500 cursor-pointer"
+                                                        onClick={() => dispatch(incrementQuantity(item.id))}
+                                                    />
+                                                </div>
+                                            </td>
+                                            <td className="p-3">
+                                                <Button
+                                                    size="sm"
+                                                    variant="danger"
+                                                    onClick={() => removeItm(item.id)}
+                                                >
+                                                    <MdDelete />
+                                                </Button>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
                 ) : (
                     <>
                         <div className='flex items-center justify-center h-50 text-center'>

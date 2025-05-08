@@ -181,7 +181,7 @@ export default function Form() {
           <div id="btn" className="text-center mt-6">
             <button
               type="submit"
-              className="w-full p-2 bg-black text-white rounded-md hover:bg-black focus:outline-none focus:ring-2 focus:ring-black"
+              className="w-full p-2 bg-green-700 text-white rounded-md hover:bg-green-900 focus:outline-none focus:ring-2 focus:ring-black"
             >
              Submit
             </button>

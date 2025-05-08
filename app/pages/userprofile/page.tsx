@@ -16,13 +16,14 @@ const UserProfile: React.FC = () => {
   return (
     <div>
       <div id="profile-main">
-        <div id="profile">
-          {imageurl && <Image src={imageurl} alt='profile' height={50} width={50}/>}
+        <div id="profile" className='w-1/4 p-2 mt-4'>
+          {imageurl && <Image src={imageurl} alt='profile' height={50} width={50} className='rounded-4xl'/>}
           <p className='font-bold '>{user?.fullName}</p>
           <div id='about'>
             <p>{user?.emailAddresses[0].emailAddress}</p>
           </div>
         </div>
+        <hr/>
         <div id="purchased">
           <Table>      
             <thead>
@@ -35,7 +36,7 @@ const UserProfile: React.FC = () => {
             </thead>
             <tbody>
               {cartItems.map((item: any, index: number) => (
-                <tr key={index}>
+                <tr key={index || null}>
                   <td>{item.proname}</td>
                   <td>{item.protitle}</td>
                   <td>{item.proprice * item.quantity} {"₹"}</td>

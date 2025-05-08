@@ -30,7 +30,7 @@ const WishList: React.FC = () => {
     }
     const router = useRouter();
     const { user } = useUser();
-   
+
 
     const clearCartItem = () => {
         dispatch(clearLikes())
@@ -45,55 +45,59 @@ const WishList: React.FC = () => {
         })
         setTotal(total);
         if (!user?.fullName) {
-            router.back();
             Swal.fire({
                 title: "Please Login!!",
                 icon: "warning"
             });
+            router.back();
         }
     }, [cartItems]);
 
     return (
         <>
             <p className='text-2xl font-bold text-center p-3 '>Liked Items</p>
-            <div id="products" className='p-10'>
-                <Table>
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Title</th>
-                            <th>Price</th>
-                            <th>Image</th>
-                            {/* <th>Quantity</th> */}
-                            <th>Dislike</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {cartItems.map((item: any, index: number) => (
-                            <tr key={index}>
-                                <td>{item.proname}</td>
-                                <td>{item.protitle}</td>
-                                <td>{item.proprice * item.quantity}</td>
-                                <td><Image src={item.proimgurl} alt='proimage' height={50} width={50} /></td>
-                                {/* <td>
-                                    <span className='flex items-center gap-3 content-center text-center ml-4'>
-                                        <FaMinusCircle onClick={() => dispatch(decrementQuantity(item.id))} />
-                                        {item.quantity}
-                                        <FaPlusCircle onClick={() => dispatch(incrementQuantity(item.id))} />
-                                    </span>
-                                </td> */}
-                                <td><Button size='sm' variant='danger' onClick={() => removeItm(item.id)}><SlDislike /></Button></td>
+            <div className="p-4 sm:p-6 md:p-10 w-full">
+                <div className="overflow-x-auto">
+                    <table className="min-w-full table-auto border border-gray-300 text-sm sm:text-base">
+                        <thead className="bg-gray-200">
+                            <tr className="text-left">
+                                <th className="p-2">Name</th>
+                                <th className="p-2">Title</th>
+                                <th className="p-2">Price</th>
+                                <th className="p-2">Image</th>
+                                <th className="p-2">Dislike</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </Table>
-                <div id='clrbtn'>
-
-                    {/* <Button size='sm' variant='success' onClick={() => { router.push("/pages/checkout") }}>WishList</Button> */}
-                    <Button size='sm' variant='danger' onClick={clearCartItem} >Clear Cart</Button>
-                    <Button size='sm' variant='' ><span className='font-bold text-2xl'>Total Price : {total}</span></Button>
+                        </thead>
+                        <tbody>
+                            {cartItems.map((item: any, index: number) => (
+                                <tr key={index} className="border-t border-gray-300">
+                                    <td className="p-2">{item.proname}</td>
+                                    <td className="p-2">{item.protitle}</td>
+                                    <td className="p-2">${item.proprice * item.quantity}</td>
+                                    <td className="p-2">
+                                        <Image src={item.proimgurl} alt="proimage" height={50} width={50} className="rounded" />
+                                    </td>
+                                    <td className="p-2">
+                                        <Button size="sm" variant="danger" onClick={() => removeItm(item.id)}>
+                                            <SlDislike />
+                                        </Button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
                 </div>
+
             </div>
+            <div id="clrbtn" className="mt-6 flex flex-col sm:flex-row sm:items-center gap-4">
+                <Button size="sm" variant="danger" onClick={clearCartItem}>
+                    Clear Cart
+                </Button>
+                <Button size="sm" variant="">
+                    <span className="font-bold text-xl sm:text-2xl">Total Price : ${total}</span>
+                </Button>
+            </div>
+
         </>
     )
 }

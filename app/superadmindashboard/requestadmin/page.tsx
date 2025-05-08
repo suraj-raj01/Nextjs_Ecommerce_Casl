@@ -56,7 +56,7 @@ export default function AdminPage() {
     <div>
 
       <div className="w-full h-auto p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-        <p className="text-2xl font-bold text-gray-800">Vendor List</p>
+        <p className="text-2xl font-bold text-gray-800">Admins List</p>
 
         <form id="search-form" className="flex w-full md:w-auto gap-2" onSubmit={(e) => e.preventDefault()}>
           <input

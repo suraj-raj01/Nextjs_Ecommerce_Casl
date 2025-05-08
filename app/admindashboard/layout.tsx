@@ -100,7 +100,6 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       <div id="vendor-main" className="flex">
         <div id="vendordashboard" style={{ display: 'block' }}>
           <p></p>
-          <hr className='text-white' />
           <Link href="/admindashboard" className="flex items-center gap-3 text-2xs">
             <AiFillDashboard />
             Dashboard

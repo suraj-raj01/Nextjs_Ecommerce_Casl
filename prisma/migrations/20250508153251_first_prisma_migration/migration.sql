@@ -58,21 +58,36 @@ CREATE TABLE "Admin" (
 );
 
 -- CreateTable
+CREATE TABLE "Superadmin" (
+    "id" BIGSERIAL NOT NULL,
+    "role" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "contact" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
+    "isverified" TEXT NOT NULL DEFAULT 'success',
+    "created_at" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "Superadmin_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "CustomerOrder" (
     "id" SERIAL NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "username" TEXT NOT NULL,
+    "username" TEXT,
     "useremail" TEXT NOT NULL,
     "phoneNumber" TEXT NOT NULL,
     "address" TEXT NOT NULL,
     "pincode" TEXT NOT NULL,
     "products" JSONB NOT NULL,
     "amount" INTEGER NOT NULL,
-    "razorpayOrderId" TEXT NOT NULL,
-    "razorpayPaymentId" TEXT NOT NULL,
-    "razorpaySignature" TEXT NOT NULL,
+    "razorpayOrderId" TEXT,
+    "razorpayPaymentId" TEXT,
+    "razorpaySignature" TEXT,
     "paymentStatus" TEXT NOT NULL DEFAULT 'pending',
+    "vendorId" TEXT,
 
     CONSTRAINT "CustomerOrder_pkey" PRIMARY KEY ("id")
 );
@@ -105,6 +120,9 @@ CREATE UNIQUE INDEX "Vendor_email_key" ON "Vendor"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Admin_email_key" ON "Admin"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Superadmin_email_key" ON "Superadmin"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "CustomerOrder_useremail_key" ON "CustomerOrder"("useremail");
