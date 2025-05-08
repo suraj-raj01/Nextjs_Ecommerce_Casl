@@ -1,61 +1,85 @@
-'use server'
-import { PrismaClient } from "@prisma/client";
-const prisma = new PrismaClient();
-import Razorpay from 'razorpay'
+'use server';
 
-export async function createOrder(prevState: string,formData: FormData) {
+import { PrismaClient } from "@prisma/client";
+import Razorpay from "razorpay";
+
+const prisma = new PrismaClient();
+
+export async function createOrder(prevState: any, formData: FormData) {
   const razorpay = new Razorpay({
     key_id: process.env.RAZORPAY_KEY_ID!,
     key_secret: process.env.RAZORPAY_KEY_SECRET!,
-  })
+  });
 
-  const amount = Number(formData.get('total'))*100
-  const contact = Number(formData.get("contact"))
-  const address = formData.get("address") as string
-  const pincode = Number(formData.get("pincode"))
-  const username = formData.get("username") as string
-  const useremail= formData.get("useremail") as string
-  const products = formData.get("product");
-  if (typeof products === 'string') {
-    try {
-      const parsedProducts = JSON.parse(products);
-    } catch (error) {
-      throw new Error("Invalid JSON format for products");
+  try {
+    const amount = Number(formData.get("total")) * 100;
+    const contact = formData.get("contact");
+    const address = formData.get("address") as string;
+    const pincode = formData.get("pincode");
+    const username = formData.get("username") as string;
+    const useremail = formData.get("useremail") as string;
+    const productsRaw = JSON.parse(formData.get("products") as unknown as string);
+    const vendoremail = formData.get("vendoremail") as string;
+    const razorpayPaymentId = formData.get("razorpayPaymentId") as string;
+    const razorpayOrderId = formData.get("razorpayOrderId") as string;
+    const razorpaySignature = formData.get("razorpaySignature") as string;
+
+    if (
+      !username ||
+      !useremail ||
+      !contact ||
+      !address ||
+      !pincode ||
+      !productsRaw ||
+      !amount
+    ) {
+      throw new Error("Missing required form data");
     }
-  } else {
-    throw new Error("Products field is missing or not a string");
+
+    let parsedProducts;
+    if (typeof productsRaw.toString() ==="string") {
+      try {
+        parsedProducts = productsRaw;
+      } catch (error) {
+        throw new Error("Invalid JSON format for products");
+      }
+    }
+
+    
+
+    console.log(formData);
+
+    await prisma.customerOrder.create({
+      data: {
+        username:username,
+        useremail:"",
+        phoneNumber:contact.toString(),
+        address:address,
+        pincode: pincode.toString(),
+        products: parsedProducts,
+        amount:Number(amount/100),
+        razorpayOrderId:"razorpayOrderId",
+        razorpayPaymentId:"razorpayPaymentId",
+        razorpaySignature:"razorpaySignature",
+        paymentStatus: "true",
+        vendorId:vendoremail
+      },
+    });
+
+    const currency = "INR";
+
+    const options = {
+      amount,
+      currency,
+      receipt: `receipt_order_${Date.now()}`,
+    };
+
+    const order = await razorpay.orders.create(options);
+    console.log("Razorpay Order:", order);
+    return order;
+
+  } catch (error) {
+    console.error("Order creation failed:", error);
+    throw new Error("Failed to create order");
   }
-  const razorpayPaymentId = formData.get("razorpayPaymentId") as string
-  const razorpayOrderId = formData.get("razorpayOrderId") as string
-  const razorpaySignature = formData.get("razorpaySignature") as string
-
-  console.log(formData);
-
-  // await prisma.customerOrder.create({
-  // username:username,
-  // useremail: useremail,        
-  // phoneNumber: contact,      
-  // address: address,         
-  // pincode: pincode,  
-  // products: products, 
-  // amount: amount,      
-  // razorpayOrderId: razorpayOrderId,
-  // razorpayPaymentId: razorpayPaymentId,
-  // razorpaySignature: razorpaySignature, 
-  // paymentStatus: "true"  
-  // })
-
-
-  const currency = 'INR'
-
-  const options = {
-    amount,
-    currency,
-    receipt: 'receipt_order_74394',
-  }
-
-  const order = await razorpay.orders.create(options)
-  console.log(order)
-  return order
-
 }
