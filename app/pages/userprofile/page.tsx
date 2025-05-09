@@ -1,17 +1,28 @@
 'use client'
-import React from 'react'
-import { useSelector } from 'react-redux';
-import { RootState } from '../../store/store';
+import React, { useEffect } from 'react'
 import Table from "react-bootstrap/Table"
 import Image from 'next/image'
 import { useUser } from '@clerk/nextjs'
-
+import getUserProducts from '../../../app/actions/getUsersProduct';
 const UserProfile: React.FC = () => {
   const { user } = useUser();
   const imageurl = user?.imageUrl;
+  const [products,setProducts] = React.useState<any>([]);
+  const email = user?.emailAddresses[0].emailAddress;
+  const getUserProductsData = async () => {
+    const userProducts = await getUserProducts(email || '');
+    return userProducts;
+  }
 
-  const cartItems = useSelector((state: RootState) => state.cart.cartItems);
-  console.log(cartItems);
+  useEffect(() => { 
+    const fetchUserProducts = async () => {
+      const userProducts = await getUserProductsData();
+      console.log(userProducts[0]?.products);
+      setProducts(userProducts);
+    }
+    fetchUserProducts();
+  }, [email]);
+
 
   return (
     <div>
@@ -35,16 +46,16 @@ const UserProfile: React.FC = () => {
               </tr>
             </thead>
             <tbody>
-              {cartItems.map((item: any, index: number) => (
-                <tr key={index || null}>
-                  <td>{item.proname}</td>
-                  <td>{item.protitle}</td>
-                  <td>{item.proprice * item.quantity} {"₹"}</td>
-                  <td>
-                    <Image src={item.proimgurl} alt='proimage' height={50} width={50} />
-                  </td>
-                </tr>
-              ))}
+              {
+                products[0]?.products.map((product: any) => (
+                  <tr key={product.id}>
+                    <td>{product.proname}</td>
+                    <td>{product.protitle}</td>
+                    <td>{product.proprice}</td>
+                    <td><Image src={product.proimgurl} alt='product' height={50} width={50}/></td>
+                  </tr>
+                ))
+              }
             </tbody>
           </Table>
         </div>

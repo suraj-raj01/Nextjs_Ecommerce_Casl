@@ -1,4 +1,4 @@
-// app/users/page.tsx
+// app/users/page.jsx
 'use client';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';

@@ -88,7 +88,7 @@ export default function VendorsPage() {
     router.push(`/superadmindashboard/products/${id}`)
   }
 
-
+let sno=0;
   return (
     <div>
 
@@ -116,6 +116,7 @@ export default function VendorsPage() {
       <Table striped hover responsive>
         <thead>
           <tr>
+            <th>SNo</th>
             <th>Vendor Name</th>
             <th>Email</th>
             <th>Contact</th>
@@ -129,6 +130,7 @@ export default function VendorsPage() {
             status ? (
               mydata.map((item: any, index: number) => (
                 <tr key={index}>
+                  <td>{++sno}</td>
                   <td>{item.name}</td>
                   <td>{item.email}</td>
                   <td>{item.contact}</td>

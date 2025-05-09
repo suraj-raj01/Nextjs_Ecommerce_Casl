@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import Image from 'next/image';
-import Table from "react-bootstrap/Table"
 import { useDispatch } from 'react-redux';
 import { removeFromCart } from '../../store/cartSlice';
 import { clearCart } from '../../store/cartSlice';
@@ -14,7 +13,6 @@ import { FaPlusCircle } from "react-icons/fa";
 import { FaMinusCircle } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { useUser } from '@clerk/nextjs';
-import Swal from 'sweetalert2';
 
 const CartItems: React.FC = () => {
 
@@ -45,12 +43,12 @@ const CartItems: React.FC = () => {
         })
         setTotal(total);
         setTimeout(() => {
-            if (!user?.user) {
-                Swal.fire({
-                    title: "Please Login!!",
-                    icon: "warning"
-                });
-            }
+            // if (!user?.user) {
+            //     Swal.fire({
+            //         title: "Please Login!!",
+            //         icon: "warning"
+            //     });
+            // }
         }, 1500)
     }, [cartItems]);
 

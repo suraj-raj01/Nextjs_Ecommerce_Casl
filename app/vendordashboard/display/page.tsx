@@ -1,10 +1,7 @@
-// app/users/page.tsx
+// app/users/page.jsx
 'use client';
-import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import Button from 'react-bootstrap/Button';
 import getVendorsProduct from '@/app/actions/admin/getVendorProduct';
-import Table from "react-bootstrap/Table"
 import { FaEdit } from "react-icons/fa";
 import { AiFillDelete } from "react-icons/ai";
 import "../insert/style.css"

@@ -44,13 +44,13 @@ const WishList: React.FC = () => {
             total += value.quantity * value.proprice;
         })
         setTotal(total);
-        if (!user?.fullName) {
-            Swal.fire({
-                title: "Please Login!!",
-                icon: "warning"
-            });
-            router.back();
-        }
+        // if (!user?.fullName) {
+        //     Swal.fire({
+        //         title: "Please Login!!",
+        //         icon: "warning"
+        //     });
+        //     router.back();
+        // }
     }, [cartItems]);
 
     return (
