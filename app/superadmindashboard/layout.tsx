@@ -58,10 +58,19 @@ export default function SuperAdminLayout({ children }: AdminLayoutProps){
           <FaUserGroup />
             Create Role
           </Link>
+          <Link href="/superadmindashboard/adduser" className="flex items-center gap-3 text-2xs">
+          <FaUserGroup />
+            Add User
+          </Link>
+          <Link href="/superadmindashboard/assignrole" className="flex items-center gap-3 text-2xs">
+          <FaUserGroup />
+            Assign Role
+          </Link>
           <Link href="/superadmindashboard/permissions" className="flex items-center gap-3 text-2xs">
           <FaUserGroup />
             Manage Permissions
           </Link>
+          
           {/* <Link href="/superadmindashboard/managevendor" className="flex items-center gap-3 text-2xs">
           <FaUserGroup />
             Manage Vendors
