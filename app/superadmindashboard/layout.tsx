@@ -54,7 +54,15 @@ export default function SuperAdminLayout({ children }: AdminLayoutProps){
             <AiFillDashboard />
             Dashboard
           </Link>
-          <Link href="/superadmindashboard/managevendor" className="flex items-center gap-3 text-2xs">
+          <Link href="/superadmindashboard/createrole" className="flex items-center gap-3 text-2xs">
+          <FaUserGroup />
+            Create Role
+          </Link>
+          <Link href="/superadmindashboard/permissions" className="flex items-center gap-3 text-2xs">
+          <FaUserGroup />
+            Manage Permissions
+          </Link>
+          {/* <Link href="/superadmindashboard/managevendor" className="flex items-center gap-3 text-2xs">
           <FaUserGroup />
             Manage Vendors
           </Link>
@@ -65,7 +73,7 @@ export default function SuperAdminLayout({ children }: AdminLayoutProps){
           <Link href="/superadmindashboard/requestadmin" className="flex items-center gap-3 text-2xs">
           <FaCodePullRequest />
             Request Admins
-          </Link>
+          </Link> */}
           {/* <Link href="#" className="flex items-center gap-3 text-2xs">
             <FaEdit />
             Update

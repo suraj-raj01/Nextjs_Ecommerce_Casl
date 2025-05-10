@@ -7,14 +7,14 @@ import getUserProducts from '../../../app/actions/getUsersProduct';
 const UserProfile: React.FC = () => {
   const { user } = useUser();
   const imageurl = user?.imageUrl;
-  const [products,setProducts] = React.useState<any>([]);
+  const [products, setProducts] = React.useState<any>([]);
   const email = user?.emailAddresses[0].emailAddress;
   const getUserProductsData = async () => {
     const userProducts = await getUserProducts(email || '');
     return userProducts;
   }
 
-  useEffect(() => { 
+  useEffect(() => {
     const fetchUserProducts = async () => {
       const userProducts = await getUserProductsData();
       console.log(userProducts[0]?.products);
@@ -28,15 +28,15 @@ const UserProfile: React.FC = () => {
     <div>
       <div id="profile-main">
         <div id="profile" className='w-1/4 p-2 mt-4'>
-          {imageurl && <Image src={imageurl} alt='profile' height={50} width={50} className='rounded-4xl'/>}
+          {imageurl && <Image src={imageurl} alt='profile' height={50} width={50} className='rounded-4xl' />}
           <p className='font-bold '>{user?.fullName}</p>
           <div id='about'>
             <p>{user?.emailAddresses[0].emailAddress}</p>
           </div>
         </div>
-        <hr/>
+        <hr />
         <div id="purchased">
-          <Table>      
+          <Table>
             <thead>
               <tr>
                 <th>Product Name</th>
@@ -52,7 +52,7 @@ const UserProfile: React.FC = () => {
                     <td>{product.proname}</td>
                     <td>{product.protitle}</td>
                     <td>{product.proprice}</td>
-                    <td><Image src={product.proimgurl} alt='product' height={50} width={50}/></td>
+                    <td><Image src={product.proimgurl} alt='product' height={50} width={50} /></td>
                   </tr>
                 ))
               }

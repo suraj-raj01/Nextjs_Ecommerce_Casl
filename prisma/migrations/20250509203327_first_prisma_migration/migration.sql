@@ -77,7 +77,7 @@ CREATE TABLE "CustomerOrder" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "username" TEXT,
-    "useremail" TEXT NOT NULL,
+    "useremail" TEXT,
     "phoneNumber" TEXT NOT NULL,
     "address" TEXT NOT NULL,
     "pincode" TEXT NOT NULL,
@@ -115,6 +115,31 @@ CREATE TABLE "otpgenerate" (
     CONSTRAINT "otpgenerate_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "User" (
+    "id" TEXT NOT NULL,
+    "roleId" TEXT,
+    "permissions" TEXT[],
+    "name" TEXT,
+    "email" TEXT,
+    "password" TEXT,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "User_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Role" (
+    "id" TEXT NOT NULL,
+    "role" TEXT NOT NULL,
+    "permissions" TEXT[],
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Role_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "Vendor_email_key" ON "Vendor"("email");
 
@@ -125,10 +150,13 @@ CREATE UNIQUE INDEX "Admin_email_key" ON "Admin"("email");
 CREATE UNIQUE INDEX "Superadmin_email_key" ON "Superadmin"("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "CustomerOrder_useremail_key" ON "CustomerOrder"("useremail");
+CREATE UNIQUE INDEX "Customers_email_key" ON "Customers"("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Customers_email_key" ON "Customers"("email");
+CREATE UNIQUE INDEX "Role_role_key" ON "Role"("role");
 
 -- AddForeignKey
 ALTER TABLE "Product" ADD CONSTRAINT "Product_vendorId_fkey" FOREIGN KEY ("vendorId") REFERENCES "Vendor"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "User" ADD CONSTRAINT "User_roleId_fkey" FOREIGN KEY ("roleId") REFERENCES "Role"("id") ON DELETE SET NULL ON UPDATE CASCADE;
