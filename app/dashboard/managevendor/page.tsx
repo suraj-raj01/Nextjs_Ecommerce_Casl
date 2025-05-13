@@ -1,20 +1,20 @@
 'use client'
 import "../managevendor/style.css"
 import React, { useEffect, useState } from 'react'
-import getAllVendors from "@/app/actions/admin/getAllVendors"
+import getAllVendors from "../../../app/actions/admin/getAllVendors"
 import Table from "react-bootstrap/Table"
 import { AiFillDelete } from "react-icons/ai";
-import deleteVendor from '@/app/actions/admin/deleteVendor';
-import activateVendor from '@/app/actions/admin/activateVendor';
-import deActivateVendor from '@/app/actions/admin/deActivateVendor';
+import deleteVendor from '../../../app/actions/admin/deleteVendor';
+import activateVendor from '../../../app/actions/admin/activateVendor';
+import deActivateVendor from '../../../app/actions/admin/deActivateVendor';
 import Button from "react-bootstrap/Button"
-import searchVendor from "@/app/actions/admin/searchVendor"
-import Modal from 'react-bootstrap/Modal';
-import approveProduct from '@/app/actions/admin/approveProduct';
-import cancelApproveProduct from '@/app/actions/admin/cancelApproveProduct';
+import searchVendor from "../../../app/actions/admin/searchVendor"
+import approveProduct from '../../../app/actions/admin/approveProduct';
+import cancelApproveProduct from '../../../app/actions/admin/cancelApproveProduct';
 import Image from "next/image"
 import Swal from "sweetalert2"
 import { useRouter } from "next/navigation"
+import Link from "next/link"
 
 export default function VendorsPage() {
   const [mydata, setData] = useState<any>([]);
@@ -85,7 +85,7 @@ export default function VendorsPage() {
   const router = useRouter();
 
   const seeProduct=(id:number)=>{
-    router.push(`/superadmindashboard/products/${id}`)
+    router.push(`/dashboard/products/${id}`)
   }
 
 let sno=0;
@@ -93,7 +93,9 @@ let sno=0;
     <div>
 
       <div className="w-full h-auto p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-        <p className="text-2xl font-bold text-gray-800">Vendors List</p>
+        <div className="text-xl font-bold text-gray-800">
+          <Link href="/dashboard/addvendor"> Add Vendor </Link>
+        </div>
 
         <form id="search-form" className="flex w-full md:w-auto gap-2" onSubmit={(e) => e.preventDefault()}>
           <input
@@ -113,7 +115,8 @@ let sno=0;
         </form>
       </div>
 
-      <Table striped hover responsive>
+      <div className="p-2 w-full">
+        <Table striped hover responsive>
         <thead>
           <tr>
             <th>SNo</th>
@@ -187,6 +190,7 @@ let sno=0;
           }
         </tbody>
       </Table>
+      </div>
     </div>
   )
 }
