@@ -3,9 +3,6 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 import axios from "axios"
 
-// import { PrismaClient } from "@prisma/client";
-// const prisma = new PrismaClient();
-
 export async function productData(prevState: any, formData: FormData) {
   const title = formData.get("title") as string
   const products = formData.get("products") as string;
@@ -17,9 +14,10 @@ export async function productData(prevState: any, formData: FormData) {
   const samedaydelivery = formData.get("sameday") as string;
   const type = formData.get("type") as string;
   const id = formData.get('id') as string;
-  const vendorId = parseInt(id, 10);
-
-  if (!title || !products || !price || !details || !category || !proinfo || !myimg) {
+  const vendorId = id;
+  console.log(vendorId);
+  
+  if (!title || !products || !price || !details || !category || !proinfo || !myimg || !vendorId) {
     return { error: 'All fields are required' };
   }
   let imgurl = "";
@@ -51,23 +49,13 @@ export async function productData(prevState: any, formData: FormData) {
         samedaydelivery: samedaydelivery,
         proinfo: proinfo,
         proimgurl: imgurl,
-        type:type,
-        vendorId:vendorId
+        type: type,
+        userId: vendorId
       }
     })
+    console.log(data);
+    return { success: true, productId: data };
 
-    await prisma.vendor.update({
-      where: { id: vendorId },
-      data: {
-          products: {
-              connect: { id: data.id }
-          }
-      }
-  });
-
-  console.log(data);
-  return { success: true, productId: data };
-  
   } catch (error) {
     console.error('Error registering user:', error);
     return { error: 'Failed to register user' };

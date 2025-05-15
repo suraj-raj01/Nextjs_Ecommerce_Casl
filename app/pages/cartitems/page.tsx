@@ -53,7 +53,7 @@ const CartItems: React.FC = () => {
     }, [cartItems]);
 
     return (
-        <>
+        <div>
             <p className='text-2xl font-bold text-center p-3 '>Cart Items 🛒</p>
             <div >
                 {user?.isSignedIn ? (
@@ -136,7 +136,7 @@ const CartItems: React.FC = () => {
                     )
                 }
             </div>
-        </>
+        </div>
     )
 }
 

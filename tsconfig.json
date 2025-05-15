@@ -22,6 +22,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.jsx", ".next/types/**/*.ts", "app/profiles/page.js", "app/admindashboard/insert/page.jsx", "app/pages/details/[id]"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.jsx", ".next/types/**/*.ts", "app/profiles/page.js", "app/admindashboard/insert/page.jsx", "app/pages/details/[id]", "app/dashboard/products/page.tsx"],
   "exclude": ["node_modules"]
 }

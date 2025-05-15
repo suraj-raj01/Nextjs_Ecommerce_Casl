@@ -2,10 +2,15 @@
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
-export default async function getVendorbyId(id:number) {
+export default async function getVendorbyId(id:string) {
   try {
-    const users = await prisma.vendor.findFirst({
-      where :{id:Number(id)}
+    const users = await prisma.user.findFirst({
+      where :{
+        id:id,
+        role:{
+          role:"Vendor"
+        }
+      }
     });
     console.log(users)
     return users;

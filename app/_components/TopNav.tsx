@@ -13,6 +13,7 @@ import { AiOutlineClose } from 'react-icons/ai';
 import { IoMdCart } from "react-icons/io";
 import logo from '../../public/logo/logo.png';
 import bag from '../../public/bag.svg';
+import { useUser } from "@clerk/nextjs"
 
 import {
   SignInButton,
@@ -30,6 +31,9 @@ export default function TopNav() {
 
   const cartItems = useSelector((state: RootState) => state.cart.cartItems);
   const likeItems = useSelector((state: RootState) => state.cart.likeItems);
+
+  const { user } = useUser();
+  console.log(user);
 
   React.useEffect(() => {
     setCount(cartItems.length);
@@ -63,7 +67,7 @@ export default function TopNav() {
   };
 
   return (
-    <>
+    <div>
       <Navbar collapseOnSelect expand="lg" id="navbar">
         <Container>
           <Navbar.Brand >
@@ -117,7 +121,7 @@ export default function TopNav() {
                 ) : (
 
                   <div className='flex item-center content-between text-center font-bold'>
-                    <span className=' flex flex-col item-center content-between text-2xl'> <span className='text-xs rounded-lg bg-gray-100'>{likes}</span> <FaHeart className='text-red-400'/></span>
+                    <span className=' flex flex-col item-center content-between text-2xl'> <span className='text-xs rounded-lg bg-gray-100'>{likes}</span> <FaHeart className='text-red-400' /></span>
                   </div>
                 )}
               </Nav.Link>
@@ -135,13 +139,19 @@ export default function TopNav() {
               <Nav.Link>
                 {/* Custom dropdown logic if needed */}
               </Nav.Link>
-              <SignedOut>
-                {/* <FiUserPlus /> */}
+              {!user ? (<button className="font-bold p-2 bg-red-400 text-white rounded-md" onClick={() => { router.push("/Auth/login") }}>Login</button>) :
+                (
+                  <SignedIn>
+                    <UserButton />
+                  </SignedIn>
+                )}
+
+              {/* <SignedOut>
                 <SignInButton />
               </SignedOut>
               <SignedIn>
                 <UserButton />
-              </SignedIn>
+              </SignedIn> */}
             </Nav>
           </Navbar.Collapse>
         </Container>
@@ -224,6 +234,6 @@ export default function TopNav() {
           </div>
         </div>
       </Navbar>
-    </>
+    </div>
   );
 }

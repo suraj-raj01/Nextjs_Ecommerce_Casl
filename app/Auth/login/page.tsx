@@ -2,8 +2,16 @@
 
 import React, { useEffect, useState } from 'react'
 import LoginNav from './../../_components/LoginNav'
-import loginUser from '@/app/actions/login/login'
+import loginUser from '../../../app/actions/login/login'
 import { useRouter } from 'next/navigation'
+import Swal from 'sweetalert2'
+import { useUser } from '@clerk/nextjs'
+import {
+  SignInButton,
+  SignedIn,
+  SignedOut,
+  UserButton,
+} from '@clerk/nextjs';
 
 const initialState = {
   success: undefined,
@@ -15,11 +23,17 @@ const Login = () => {
   const [state, formAction] = React.useActionState(loginUser, initialState);
   const [loading, setLoading] = useState(false)
   const router = useRouter()
-
+  const {user} = useUser();
   // Perform side effects when login is successful
   useEffect(() => {
     if (state?.user) {
-      localStorage.setItem('user', JSON.stringify(state.user))
+      localStorage.setItem('user', JSON.stringify(state?.user))
+      console.log(state.user.id)
+      localStorage.setItem("id", JSON.stringify(state?.user?.id))
+      Swal.fire({
+        title: "Login Successfully Completed!",
+        icon: "success"
+      });
       router.push('/dashboard')
       setLoading(true);
     }
@@ -62,14 +76,22 @@ const Login = () => {
 
 
             <div className="text-center mt-4">
-              <p>
+              <div className="text-sm text-gray-600 font-semibold">
                 Don't have an account?{' '}
                 <span
-                  className="font-bold text-red-700 cursor-pointer"
+                  className="font-bold text-red-400 cursor-pointer"
                   onClick={() => router.push('/Auth/signup')}
                 >
                   SignUp
                 </span>
+                <hr />
+                <SignedOut>
+                  <SignInButton />
+                </SignedOut>
+                <SignedIn>
+                  Signed In
+                </SignedIn>
+                <span className='text-red-400 cursor-pointer'> With Google or Github</span>
                 <br />
                 {state?.success && (
                   <span className="text-green-600 text-center">Login Successfully Completed!</span>
@@ -77,7 +99,7 @@ const Login = () => {
                 {state?.error && (
                   <span className="text-red-600 text-center">{state.error}</span>
                 )}
-              </p>
+              </div>
             </div>
           </form>
         </div>

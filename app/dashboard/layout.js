@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import { FaBars } from 'react-icons/fa';
 import { GoSidebarExpand } from "react-icons/go";
-import {  FaUserGroup } from 'react-icons/fa6';
+import { FaUserGroup } from 'react-icons/fa6';
 import { AiFillDashboard } from 'react-icons/ai';
 import DashbaordFooter from '../_components/DashbaordFooter';
 import { TbCategoryPlus } from "react-icons/tb";
@@ -11,6 +11,12 @@ import { createContextualCan } from '@casl/react';
 import { createContext, useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { AiFillProduct } from "react-icons/ai";
+import { IoIosPersonAdd } from "react-icons/io";
+import { MdAssignmentInd } from "react-icons/md";
+import { MdPrivacyTip } from "react-icons/md";
+import { PiUserCirclePlusFill } from "react-icons/pi";
+import { FaRegEdit } from "react-icons/fa";
+import Swal from 'sweetalert2';
 
 const AbilityContext = createContext();
 
@@ -60,10 +66,22 @@ export default function SuperAdminLayout({ children }) {
     }
   };
 
-  const logout=()=>{
+  const logout = () => {
     localStorage.clear();
-    router.push("/Auth/login")
-    window.confirm("Do you want to LogOut")
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Do you want to LogOut!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Logout"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        router.push("/Auth/login")
+        Swal.fire("You Logged Out", "Your file has been deleted.", "success");
+      }
+    });
   }
 
   return (
@@ -74,7 +92,9 @@ export default function SuperAdminLayout({ children }) {
           <GoSidebarExpand id="cancelbtn" onClick={cancelbtn} style={{ display: 'block' }} />
           {username.toUpperCase()} DASHBOARD
         </div>
-        <span onClick={logout} className="font-semibold text-lg text-red-700 cursor-pointer">LOGOUT</span>
+        <div>
+        <span onClick={logout} className="font-semibold text-sm text-white cursor-pointer bg-red-600 p-2 rounded-md">LOGOUT</span>
+        </div>
       </header>
       <AbilityContext.Provider value={ability}>
         <div id="vendor-main" className="flex">
@@ -85,29 +105,29 @@ export default function SuperAdminLayout({ children }) {
             </Link>
             <CanComponent I="manage" a="Admin">
               <Link href="/dashboard/createrole" className="flex items-center gap-3 text-2xs">
-                <FaUserGroup />
+                <PiUserCirclePlusFill />
                 Create Role
               </Link>
               <Link href="/dashboard/adduser" className="flex items-center gap-3 text-2xs">
-                <FaUserGroup />
+                <IoIosPersonAdd />
                 Add User
               </Link>
               <Link href="/dashboard/assignrole" className="flex items-center gap-3 text-2xs">
-                <FaUserGroup />
+                <MdAssignmentInd />
                 Assign Role
               </Link>
               <Link href="/dashboard/permissions" className="flex items-center gap-3 text-2xs">
-                <FaUserGroup />
+                <MdPrivacyTip />
                 Manage Permissions
               </Link>
-             
+
             </CanComponent>
 
             <CanComponent I="manage" a="Vendor">
-              <Link href="/dashboard/addvendor" className="flex items-center gap-3 text-2xs">
+              {/* <Link href="/dashboard/addvendor" className="flex items-center gap-3 text-2xs">
                 <FaUserGroup />
                 Add Vendors
-              </Link>
+              </Link> */}
               <Link href="/dashboard/managevendor" className="flex items-center gap-3 text-2xs">
                 <FaUserGroup />
                 Manage Vendors
@@ -122,10 +142,6 @@ export default function SuperAdminLayout({ children }) {
                 <FaUserGroup />
                 See Users
               </Link>
-              <Link href="/dashboard/managevendor" className="flex items-center gap-3 text-2xs">
-                <AiFillProduct />
-                See Product
-              </Link>
             </CanComponent>
             <CanComponent I="create" a="Products">
 
@@ -134,13 +150,17 @@ export default function SuperAdminLayout({ children }) {
                 Insert Product
               </Link>
               <Link href="/dashboard/products" className="flex items-center gap-3 text-2xs">
-                <FaUserGroup />
+                <FaRegEdit />
                 Update Product
+              </Link>
+              <Link href="/dashboard/orders" className="flex items-center gap-3 text-2xs">
+                <AiFillProduct />
+                Orders
               </Link>
             </CanComponent>
             <CanComponent I="read" a="Products">
 
-              <Link href="/dashboard/insert" className="flex items-center gap-3 text-2xs">
+              <Link href="/dashboard/customers" className="flex items-center gap-3 text-2xs">
                 <AiFillProduct />
                 See Products
               </Link>

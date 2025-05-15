@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { registerUser } from "../../actions/login/registration";
+import Registration from "../../../app/actions/login/registration";
 import LoginNav from "@/app/_components/LoginNav";
 import React from "react";
 import Swal from "sweetalert2";
@@ -11,7 +11,7 @@ const initialstate = {
 };
 
 export default function Form() {
-  const [state, formAction] = React.useActionState(registerUser, initialstate);
+  const [state, formAction] = React.useActionState(Registration, initialstate);
   const router = useRouter();
 
   if (state?.success) {
@@ -29,36 +29,19 @@ export default function Form() {
         <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
           <p className="text-center font-bold text-2xl text-red-600 mb-6">SIGNUP</p>
           <form action={formAction} className="space-y-4 flex flex-col gap-3">
-            <select
-              name="role"
-              id=""
-              title="Choose Role"
-              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
-            >
-              <option>Select Role</option>
-              <option value="Vendor">Vendor</option>
-              <option value="Admin">Admin</option>
-            </select>
 
             <input
               type="text"
               required
-              name="name"
-              placeholder="Name"
+              name="username"
+              placeholder="Enter your name"
               className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
             />
             <input
               type="email"
               required
-              name="email"
-              placeholder="Email"
-              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
-            />
-            <input
-              type="text"
-              required
-              name="contacts"
-              placeholder="Contact Number"
+              name="useremail"
+              placeholder="Enter your email"
               className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
             />
             <input
@@ -91,7 +74,7 @@ export default function Form() {
             </div>
 
             {state?.error && (
-              <p className="text-red-800 text-center mt-4">{state?.error}</p>
+              <p className="text-red-800 text-center mt-2">{state?.error}</p>
             )}
           </form>
         </div>

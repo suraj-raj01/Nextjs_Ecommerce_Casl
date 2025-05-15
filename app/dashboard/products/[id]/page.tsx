@@ -5,12 +5,12 @@ import { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Table from "react-bootstrap/Table"
 import { MdDelete } from "react-icons/md";
-import deleteProduct from '@/app/actions/deleteProduct';
-import getVendorsProduct from "@/app/actions/admin/getVendorProduct"
-import approveProduct from '@/app/actions/admin/approveProduct';
-import cancelApproveProduct from '@/app/actions/admin/cancelApproveProduct';
+import deleteProduct from '../../../../app/actions/deleteProduct';
+import getVendorsProduct from "../../../../app/actions/admin/getVendorProduct"
+import approveProduct from '../../../../app/actions/admin/approveProduct';
+import cancelApproveProduct from '../../../../app/actions/admin/cancelApproveProduct';
 import { useParams } from 'next/navigation';
-import getVendorbyId from '@/app/actions/admin/getVendorbyId';
+import getVendorbyId from '../../../../app/actions/admin/getVendorbyId';
 import Swal from 'sweetalert2';
 
 const data = Array.from({ length: 100 }, (_, i) => `Item ${i + 1}`);
@@ -19,10 +19,10 @@ export default function DisplayPage() {
   const [data, setVendorProduct] = useState<any>([]);
   const [vendor, setVendor] = useState<any>({});
   const params = useParams();
-  const id = params.id ? Number(params.id) : undefined;
+  const id = params.id ? (params.id) : undefined;
 
   const fetchData = async () => {
-    const vendorData = await getVendorsProduct(id as number);
+    const vendorData = await getVendorsProduct(id as string);
     if ('data' in vendorData && Array.isArray(vendorData.data)) {
       setVendorProduct(vendorData.data || []);
     } else {
@@ -32,7 +32,7 @@ export default function DisplayPage() {
   };
 
   const getVendor = async () => {
-    const vendorinfo = await getVendorbyId(id as number)
+    const vendorinfo = await getVendorbyId(id as string);
     setVendor(vendorinfo || {});
   }
 
@@ -83,7 +83,7 @@ export default function DisplayPage() {
     <div>
       <p className='text-center p-2 text-2xl font-bold'>{vendor?.name + "'s PRODUCTS"}</p>
 
-      {data ? (
+      {data && data.length > 0 ? (
         <div style={{ height: '77vh' }} className='flex flex-col items-center content-between'>
           <Table striped hover responsive>
             <thead>
@@ -102,7 +102,7 @@ export default function DisplayPage() {
               {
                 currentItems.map((item: any, index: number) => (
                   <tr key={index}>
-                    <td>{index + 1}</td>
+                    <td>{(currentPage - 1) * itemsPerPage + index + 1}</td>
                     <td>{item.proname}</td>
                     <td>{item.protitle}</td>
                     <td>{item.proprice}</td>
@@ -125,6 +125,8 @@ export default function DisplayPage() {
               }
             </tbody>
           </Table>
+
+          {/* Pagination */}
           <div className="flex justify-center gap-3 space-x-2 mt-4">
             <button
               onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
@@ -144,9 +146,7 @@ export default function DisplayPage() {
               </button>
             ))}
             <button
-              onClick={() =>
-                setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-              }
+              onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
               disabled={currentPage === totalPages}
               className="px-3 py-1 border rounded disabled:opacity-50"
             >
@@ -154,7 +154,10 @@ export default function DisplayPage() {
             </button>
           </div>
         </div>
-      ) : (" ")}
+      ) : (
+        <div className="text-center py-10 text-lg font-semibold text-gray-500">No Data Found</div>
+      )}
     </div>
   );
+
 }

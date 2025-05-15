@@ -1,7 +1,7 @@
 'use server';
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
-export default async function Registration(prevState: any, formData: FormData) {
+export default async function AddUserAction(prevState: any, formData: FormData) {
     const name = formData.get('username') as string;
     const email = formData.get('useremail') as string;
     const password = formData.get('password') as string;
@@ -20,7 +20,7 @@ export default async function Registration(prevState: any, formData: FormData) {
 
         const data = await prisma.role.findFirst({
             where:{
-                role:"User"
+                role:"Vendor"
             }
         })
 
@@ -38,7 +38,7 @@ export default async function Registration(prevState: any, formData: FormData) {
         return {
             success: true,
             error: "",
-            message: "User Registration successfully!"
+            message: "Vendor added successfully!"
         };
     } catch (err) {
         return {

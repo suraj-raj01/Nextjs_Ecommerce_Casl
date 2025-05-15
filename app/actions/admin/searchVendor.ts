@@ -5,17 +5,38 @@ const prisma = new PrismaClient();
 export default async function searchVendor(searchData: string) {
   console.log("Search Query:", searchData);
 
-  if (!searchData) {
+  if (!searchData.trim()) {
     return { success: false, message: "Search query cannot be empty.", data: [] };
   }
 
   try {
-    const vendors = await prisma.vendor.findMany({
+    const vendorRole = await prisma.role.findFirst({
+      where: { role: "Vendor" },
+    });
+
+    if (!vendorRole) {
+      return { success: false, message: "Vendor role not found.", data: [] };
+    }
+
+    const vendors = await prisma.user.findMany({
       where: {
-        name: {
-          contains: searchData as string,
-          mode: 'insensitive',
+        role: {
+          role: "Vendor",
         },
+        OR: [
+          {
+            name: {
+              contains: searchData,
+              mode: "insensitive",
+            },
+          },
+          {
+            email: {
+              contains: searchData,
+              mode: "insensitive",
+            },
+          },
+        ],
       },
     });
 
@@ -26,7 +47,7 @@ export default async function searchVendor(searchData: string) {
       data: vendors,
     };
   } catch (error) {
-    console.error("Search error:",error);
+    console.error("Search error:", error);
     return { success: false, message: "An error occurred while searching.", data: [] };
   }
 }
